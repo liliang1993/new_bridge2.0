@@ -3,22 +3,7 @@
 
         <header class="head-nav">
             <el-row>
-                <el-col :span="4" class='logo-container'>
-                    <img src="../../assets/logo-sm.png" class='logo' alt="">
-                </el-col>
-                <el-col :span="16">
-                    <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
-                             mode="horizontal" unique-opened router>
-                        <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)' -->
-                        <el-menu-item
-                                v-for='(item,index) in $router.options.routes'
-                                :index="item.path"
-                                :key='item.path'
-                                v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
-                            {{item.name}}<!-- {{item.path}} -->
-                        </el-menu-item>
-                    </el-menu>
-                </el-col>
+
                 <el-col :span="4" class="userinfo">
                     <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
                     <span class='username'>
@@ -30,13 +15,9 @@
                                     class="el-icon-caret-bottom el-icon--right"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command='info'>修改信息</el-dropdown-item>
                                 <el-dropdown-item
                                         command='pass'
-                                        v-if='$store.state.user.userinfo.is_update_pass'>修改密码</el-dropdown-item>
-                                <el-dropdown-item
-                                        command='set'
-                                        v-if='$store.state.user.userinfo.pid==0'>系统设置</el-dropdown-item>
+                                        >修改密码</el-dropdown-item>
                                 <el-dropdown-item
                                         command='logout'>退出</el-dropdown-item>
                             </el-dropdown-menu>
@@ -44,96 +25,35 @@
                     </span>
                     <i class="fa fa-sign-out logout" @click='logout'></i>
                 </el-col>
+                <el-col :span="2" class="langinfo">
+                <el-dropdown @command="handleCommand" trigger="click">
+                        <span class="el-dropdown-link lang">{{$t('locales.' + locale)}}</span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item v-for="(item,key,index) in langs" :key="index" :command="key">{{$t('locales.' + key)}}</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-col>
             </el-row>
         </header>
 
+<!--         <drag-dialog
+            v-if="changePassDialog.show"
+            :isModal = "changePassDialog.isModal"
+            title="Change Password"
+            @close = "onclose('changePassDialog')"
+        >   
+                <form-data
+                 ref='changePass-form'
+                  style="padding:20px 40px 20px 20px"
+                  :LabelWidth = 'changePassDialog.labelWidth' 
+                  :FieldList='fieldlist'
+                  :DefaultValue='changePassDialog.default_value'
+                  :Rules='changePassDialog.rules'
+                  @onSubmit='updUserPass'
+                  >
+                  </form-data>
+        </drag-dialog>    --> 
 
-        <el-dialog size="small" :title="dialog.title"
-                   v-model="dialog.show_pass">
-            <el-form style="margin:20px;width:80%;"
-                     label-width="100px"
-                     :model="dialog.user_info"
-                     :rules="dialog.user_info_rules"
-                     ref='user_info'>
-                <el-form-item class='edit-form'
-                              label="邮箱"
-                              prop='email'>
-                    <el-input v-model="dialog.user_info.email" disabled placeholder='常用邮箱'></el-input>
-                </el-form-item>
-                <el-form-item class='edit-form'
-                              label="用户名称"
-                              prop='username'>
-                    <el-input v-model="dialog.user_info.username" disabled placeholder='用户名'></el-input>
-                </el-form-item>
-                <el-form-item class='edit-form'
-                              label="当前密码"
-                              prop='old_password'>
-                    <el-input
-                            type='password'
-                            placeholder='当前密码'
-                            auto-complete='off'
-                            v-model="dialog.user_info.old_password"></el-input>
-                </el-form-item>
-                <el-form-item class='edit-form'
-                              label="新密码"
-                              prop='password'>
-                    <el-input
-                            type='password'
-                            placeholder='新密码'
-                            auto-complete='off'
-                            v-model="dialog.user_info.password"></el-input>
-                </el-form-item>
-                <el-form-item class='edit-form'
-                              label="确认密码"
-                              prop='password_confirm'>
-                    <el-input
-                            type='password'
-                            placeholder='确认密码'
-                            auto-complete='off'
-                            v-model="dialog.user_info.password_confirm"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialog.show_pass = false">取 消</el-button>
-                <el-button type="primary" @click="updUserPass('user_info')">确 定</el-button>
-            </span>
-        </el-dialog>
-
-
-        <el-dialog size="small" :title="dialog.title"
-                   v-model="dialog.show_set">
-            <el-form style="margin:20px;width:80%;"
-                     label-width="100px"
-                     v-model='dialog.set_info'
-                     ref='set_info'>
-                <el-form-item label="登录方式">
-                    <el-select placeholder="请选择登录方式"
-                               v-model='dialog.set_info.login_style'>
-                        <el-option label="单一登录" value="1"></el-option>
-                        <el-option label="多点登录" value="2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="禁止修改密码">
-                    <el-select placeholder="请选择用户"
-                               multiple
-                               v-model='dialog.set_info.disabled_update_pass'>
-                        <!-- value的值的ID是number，disabled_update_pass的元素中的是字符串，
-                            所以在value上，需要拼装一个空串，来转化
-                            因为elementUI内部用了=== 
-                        -->
-                        <el-option
-                                v-for='(user,index) in dialog.set_info.select_users'
-                                :key='index'
-                                :label='user.username'
-                                :value='user.id+""'></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialog.show_set = false">取 消</el-button>
-                <el-button type="primary" @click="onUpdateSetting">确 定</el-button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -190,9 +110,14 @@
         line-height: 60px;
         cursor: pointer;
 
-    .el-dropdown {
-        color: #FFF;
+        .el-dropdown {
+            color: #FFF;
+        }
     }
-
-    }
+    .lang {
+          height: 60px;
+          line-height: 60px;
+          cursor: pointer;
+          color: #fff;
+        }
 </style>

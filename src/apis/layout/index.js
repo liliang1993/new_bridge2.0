@@ -6,4 +6,4 @@
  * 顶部导航模块
  * @type {Object}
  */
-export default [{];
+export default [{}];

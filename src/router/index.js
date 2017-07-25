@@ -7,12 +7,18 @@ Vue.use(Router);
 
 import {Home, Content} from 'layout/';
 import {Login} from 'views/';
-
-import Adv from './adv/';
-import Function from './function/';
-import Demo from './demo/';
-import components from './components/';
-
+import User from './user/';
+import AuditLog from './aduitLog/';
+import Lp from './lp/';
+import LpSymbol from './lpSymbol/';
+import TradeRule from './tradeRule/';
+import QuoteRule from './quoteRule/';
+import CurrentOrder from './currentOrder/';
+import TradeLog from './tradeLog/';
+import LpPosition from './lpPosition/';
+import QuoteAdjust from './quoteAdjust/';
+import StdSymbolPosition from './stdSymbolPosition/';
+import Diagnosis from './diagnosis/';
 
 export default new Router({
 	routes: [
@@ -29,9 +35,17 @@ export default new Router({
 			hidden   : true,
 			component: Login
 		},
-		Function,
-		Demo,
-		components,
-		Adv,
+		User,
+		AuditLog,
+		Lp,
+		LpSymbol,
+		TradeRule,
+		QuoteRule,
+		CurrentOrder,
+		TradeLog,
+		LpPosition,
+		QuoteAdjust,
+		StdSymbolPosition,
+		Diagnosis
 	]
 })

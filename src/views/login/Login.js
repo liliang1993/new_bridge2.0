@@ -15,15 +15,9 @@ export default {
 				left: '',
 				top: ''
 			},
-
-			remumber: this.$store.state.user.remumber,
-
-			register: false,
-
 			login_actions: {
 				disabled: false
 			},
-
 			data: {
 				username: '',
 				password: '',
@@ -44,39 +38,27 @@ export default {
 						}
 					},
 					trigger: 'blur'
-				}],
-				password: [{
-					validator: (rule, value, callback) => {
-						if (value === '') {
-							callback(new Error('请输入密码'));
-						} else {
-							if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-								callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-							} else {
-								if (this.register === true) {
-									if (this.data.repassword !== '') {
-										this.$refs.data.validateField('repassword');
-									}
-								}
-								callback();
-							}
-
-						}
-					},
-					trigger: 'blur'
-				}],
-				repassword: [{
-					validator: (rule, value, callback) => {
-						if (value === '') {
-							callback(new Error('请再次输入密码'));
-						} else if (value !== this.data.password) {
-							callback(new Error('两次输入密码不一致!'));
-						} else {
-							callback();
-						}
-					},
-					trigger: 'blur'
 				}]
+				// password: [{
+				// 	validator: (rule, value, callback) => {
+				// 		if (value === '') {
+				// 			callback(new Error('请输入密码'));
+				// 		} else {
+				// 			if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
+				// 				callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
+				// 			} else {
+				// 				if (this.register === true) {
+				// 					if (this.data.repassword !== '') {
+				// 						this.$refs.data.validateField('repassword');
+				// 					}
+				// 				}
+				// 				callback();
+				// 			}
+
+				// 		}
+				// 	},
+				// 	trigger: 'blur'
+				// }]
 			}
 		}
 	},
@@ -90,59 +72,37 @@ export default {
 		},
 
 		onLogin(ref, type) {
-			if (type && this.register === true) {
-				this.$message.error('请输入确认密码');
-				return;
-			}
 			this.$refs[ref].validate((valid) => {
 				if (valid) {
 					this.login_actions.disabled = true;
-					//如果记住密码，提交的信息包括真实token，密码则是假的
-					//服务端登录验证优先级：用户名必须，其次先取token，不存在时再取密码
 					this.$$api_user_login({
 						data: this[ref],
 						fn: data => {
-							//登录成功之后，验证是否记住密码，如果记住密码，本地保存记住信息
-							//如果没有记住，就初始化本地记住信息
-							if (this.remumber.remumber_flag === true) {
-								this.$store.dispatch('update_remumber', {
-									remumber_flag: this.remumber.remumber_flag,
-									remumber_login_info: {
-										username: this[ref].username,
-										token: data.userinfo.token
-									}
-								});
-							} else {
-								this.$store.dispatch('remove_remumber');
-							}
-
-							// this.$set(data.userinfo, 'access', ['/adv', '/demo/user', '/demo/user/list']);
-							try {
-								data.userinfo.web_routers = JSON.parse(data.userinfo.web_routers) ? JSON.parse(data.userinfo.web_routers) : {};
-							} catch (e) {
-								data.userinfo.web_routers = {};
-							}
-							try {
-								data.userinfo.api_routers = JSON.parse(data.userinfo.api_routers) ? JSON.parse(data.userinfo.api_routers) : {};
-							} catch (e) {
-								data.userinfo.api_routers = {};
-							}
-							this.$store.dispatch('update_userinfo', {
-								userinfo: data.userinfo
+							if(data.result == true){
+								console.log('1234',data);
+								this.$store.dispatch('update_userinfo', {
+								userinfo: data.data
 							}).then(() => {
 								this.login_actions.disabled = false;
-								if (data.userinfo.default_web_routers) {
-									this.$router.push(data.userinfo.default_web_routers);
-								} else {
-									this.$router.push('/function/open/echarts');
-								}
+								if(data.data.role === 'Admin'){
+                                        this.$router.push({
+                                                path: '/home/user'
+                                        });
+                                }else if (data.data.role === 'RulesEditor'){
+                                         this.$router.push({
+                                                path: '/home/lp'
+                                        });
+                                }
 							});
+							}else {
+								this.login_actions.disabled = false;
+                                this.$message.error(data.message);
+							}		
 						},
 						errFn: (err) => {
 							this.$message.error(err.msg);
 							this.login_actions.disabled = false;
-						},
-						tokenFlag: true
+						}
 					});
 				}
 			});
@@ -150,15 +110,6 @@ export default {
 
 		resetForm(ref) {
 			this.$refs[ref].resetFields();
-		},
-
-		toggleStatus(type) {
-			this.register = type;
-			if (this.register === true) {
-				this.$set(this.data, 'repassword', '');
-			} else {
-				this.$delete(this.data, 'repassword');
-			}
 		}
 	},
 	created() {
@@ -167,15 +118,5 @@ export default {
 			this.setSize();
 		});
 	},
-	mounted() {
-		// this.toggleStatus(true);
-		// console.log(this.remumber);
-
-		//如果上次登录选择的是记住密码并登录成功，则会保存状态，用户名以及token
-		if (this.remumber.remumber_flag === true) {
-			this.data.username = this.remumber.remumber_login_info.username;
-			this.data.password = this.remumber.remumber_login_info.token.substring(0, 16);
-			this.$set(this.data, 'token', this.remumber.remumber_login_info.token);
-		}
-	}
+	mounted() {}
 }

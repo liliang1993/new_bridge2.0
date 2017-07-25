@@ -18,20 +18,17 @@ export default [{
 	type: 'post',
 }, {
 	name: '获取用户列表',
-	method: 'createUser',
-	func_name: 'user.page_user'
+	method: 'findUserPage',
 	path: '/ajax/api',
 	type: 'post',
-}， {
+}, {
 	name: '创建用户',
 	method: 'createUser',
-	func_name: 'user.create_user'
 	path: '/ajax/api',
 	type: 'post',
 }, {
 	name: '更新用户',
-	method: 'selectUser',
-	func_name: 'user.update_user'
+	method: 'updateUser',
 	path: '/ajax/api',
 	type: 'post',
 }];

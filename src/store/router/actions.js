@@ -1,6 +1,6 @@
 import * as types from './mutations_types';
 
-export default  {
+export default {
     set_cur_route: ({
         commit
     }, paths) => {

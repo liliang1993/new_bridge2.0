@@ -38,6 +38,7 @@ module.exports = {
 			'libs'   : resolve('src/libs'),
 			'apis'   : resolve('src/apis'),
 			'router'   : resolve('src/router'),
+			'i18n' : resolve('src/i18n')
 		}
 	},
 	module : {

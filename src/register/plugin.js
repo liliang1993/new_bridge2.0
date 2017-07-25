@@ -16,20 +16,13 @@ for (var i = 0; i < request.length; i++) {
 				return function({
 					type = request[n].list[m].type,
 					path = request[n].list[m].path,
-					func_name = request[n].list[m].func_name,
-					args,
-					kwargs,
+					data,
 					fn,
 					errFn,
 					headers,
 					opts
 				} = {}) {
 					//request[n].list[m].type, request[n].list[m].path, data, fn, opts
-					var data = {
-						func_name,
-						args,
-						kwargs
-					}
 					ajax.call(this, {
 						type,
 						path,

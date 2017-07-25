@@ -7,13 +7,14 @@ import {
 	Content
 } from 'layout/';
 
-import from './user';
+import User from './user';
 
 export default {
 	path: '/home',
-	name: '静态演示',
+	name: 'home',
 	icon: 'inbox',
 	component: Home,
 	redirect: '/home/user',
-	children: [user]
+	leaf: true,
+	children: [User]
 };

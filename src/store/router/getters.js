@@ -1,4 +1,4 @@
-export default  {
+module.exports = {
     // getCartList(state) {
     //     return state.cartList;
     // }

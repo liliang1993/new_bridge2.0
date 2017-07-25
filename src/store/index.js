@@ -2,18 +2,19 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
-import cart from './cart/';
-import user from './user/';
-import global from './global/';
-import leftmenu from './leftmenu/';
 import router from './router/';
+import leftmenu from './leftmenu/';
+import user from './userinfo/';
+import global from './global/';
+import traderule from './traderule/';
+
 
 export default new Vuex.Store({
     modules: {
-        cart,
+        global,
+        router,
+        leftmenu,
         user,
-		global,
-		router,
-		leftmenu
+        traderule
     }
 });

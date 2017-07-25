@@ -10,6 +10,5 @@ export default [{
 	name: '获取日志列表',
 	method: 'findLog',
 	path: '/ajax/api',
-	func_name: 'audit_log.page_log'
 	type: 'post',
 }];
