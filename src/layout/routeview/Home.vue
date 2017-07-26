@@ -1,10 +1,11 @@
 <template v-loading.fullscreen.lock="$store.state.global.ajax_loading">
     <div class="home">
-        <head-nav></head-nav>
-        <div class="left-fixed-right-auto">
-            <left-menu></left-menu>
-            <div class="right-content">
-                <div class="content" :style="{marginLeft:$store.state.leftmenu.width}">
+        <div class='left-fixed'>
+             <left-menu></left-menu>
+        </div>
+        <div class="right-auto" :style="{marginLeft:$store.state.leftmenu.width}">
+              <head-nav></head-nav>
+                <div class="content">
                     <bread></bread>
                     <router-view></router-view>
                 </div>
@@ -33,5 +34,8 @@
     }
     .right-content{
         margin-bottom: 60px;
+    }
+    .right-auto{
+        position:relative;
     }
 </style>

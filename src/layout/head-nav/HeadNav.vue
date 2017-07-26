@@ -1,9 +1,8 @@
 <template>
     <div>
 
-        <header class="head-nav">
+        <header class="head-nav" :style="{marginLeft:$store.state.leftmenu.width}">
             <el-row>
-
                 <el-col :span="4" class="userinfo">
                     <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
                     <span class='username'>
@@ -25,6 +24,9 @@
                     </span>
                     <i class="fa fa-sign-out logout" @click='logout'></i>
                 </el-col>
+                 <div class='logo-container'>
+                    <img src="../../assets/logo-sm.png" class='logo' alt="">
+                </div>
                 <el-col :span="2" class="langinfo">
                 <el-dropdown @command="handleCommand" trigger="click">
                         <span class="el-dropdown-link lang">{{$t('locales.' + locale)}}</span>
@@ -70,7 +72,6 @@
     .logo {
         height: 50px;
         width: auto;
-        margin-left: 10px;
         margin-top: 5px;
     }
 
@@ -82,11 +83,12 @@
 
     .head-nav {
         width: 100%;
-        height: 60px;
-        background: #324057;
+        height: 100px;
+        background: #4150b6;
         position: fixed;
         top: 0px;
         left: 0px;
+
         z-index: 99;
         color: #FFF;
         border-bottom: 1px solid #1F2D3D;

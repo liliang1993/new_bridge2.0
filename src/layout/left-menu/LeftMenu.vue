@@ -3,6 +3,9 @@
         <div id='left-menu'>
             <el-row class='tac'>
                 <el-col :span="24">
+                    <div class="logo">
+                            
+                    </div>
                     <el-menu
                             class="el-menu-vertical-demo"
                             theme="dark"
