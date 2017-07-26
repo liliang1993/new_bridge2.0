@@ -4,9 +4,6 @@
         <el-col :span='24' class='actions-top'>
             <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
         </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
     </el-row>
     <bel-table
       ref="table"    
@@ -30,6 +27,8 @@
                 :layout="pagination.layout"
                 :total="pagination.total"
                 :current-page='pagination.current_page'
+                @current-change='onChangeCurrentPage'
+                @size-change='onChangePageSize'
              >
             </el-pagination>
       </el-col>
@@ -40,13 +39,14 @@
                 :isModal = 'add_user_dialog.isModal'
                 @close="onCloseDialog('add_user_dialog')"
           >
-                <form-data1
+                <form-data
                  ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
+                  :DefaultValue='add_user_dialog.default_value'
+                  :FieldList='add_user_dialog.fields'
                   @onSubmit='add_user_submit'
+
                   >
-                  </form-data1>
+                  </form-data>
         </drag-dialog>
 
          <drag-dialog
@@ -55,14 +55,13 @@
                 :isModal = 'edit_user_dialog.isModal'
                 @close="onCloseDialog('edit_user_dialog')"
           >
-                <form-data1
+                <form-data
                  ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
+                  :DefaultValue='edit_user_dialog.default_value'
+                  :FieldList='edit_user_dialog.fields'
                   @onSubmit='edit_user_submit'
                   >
-                  </form-data1>
+                  </form-data>
         </drag-dialog>
   </div>
 </template>
@@ -72,14 +71,5 @@ import UserJs from './User.js';
 export default UserJs;
 </script>
 <style scoped lang='less'>
-    .actions-top{
-        margin-bottom: 10px;
-    }
-    .btm-action{
-        margin-top: 20px;
-        text-align: center;
-    }
-     .pagination{
-        display: inline-block;
-    }
+     @import url(User.less);
 </style>

@@ -1,67 +1,101 @@
 <template>
-    <div class='clearfix'>
-<!--     <el-row>
+  <div class='list'>
+    <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
+            <el-button type='primary' @click='onAddSymbol()'>{{this.$t('Add symbol')}}</el-button>
         </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
     </el-row>
     <bel-table
       ref="table"    
       :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
           <template slot="handler" scope="scope">
               <el-button
+                v-if ='!scope.row.editFlag'
                   type="info"
                   icon='edit'
                   size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
+                  @click='onEditSymbol(scope.row)'></el-button>
+                  <el-button
+                  v-if = 'scope.row.editFlag'
+                  type="info"
+                  icon='upload'
+                  size="mini"
+                  @click='edit_lpsymbol_submit(scope.row)'></el-button>
+                   <el-button
+                  type="info"
+                  icon='plus'
+                  size="mini"
+                 @click='' ></el-button>
+              <el-button
+                  type="danger"
+                  icon='delete'
+                  size="mini"
+                 @click='onDeleteSymbol(scope.row,scope.$index)' ></el-button>
+          </template>
+          <template slot="weight_attr" scope="scope">
+              <span v-if='!scope.row.editFlag' >{{scope.row.weight}}</span>
+              <el-input v-if='scope.row.editFlag' v-model='scope.row.weight'></el-input>  
+          </template>
+          <template slot="min_qty_attr" scope="scope">
+              <span v-if='!scope.row.editFlag' >{{scope.row.min_qty}}</span>
+              <el-input v-if='scope.row.editFlag' v-model='scope.row.min_qty'></el-input>  
+          </template>
+           <template slot="contract_size_attr" scope="scope">
+              <span v-if='!scope.row.editFlag' >{{scope.row.contract_size}}</span>
+              <el-input v-if='scope.row.editFlag' v-model='scope.row.contract_size'></el-input>  
+          </template>
+          <template slot="quote_attr" scope="scope">
+              <span v-if='!scope.row.editFlag' :style="scope.row.quote_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.quote_enable == "true" ? 'O' : 'X'}}</span>
+              <el-switch
+                v-if='scope.row.editFlag'
+                v-model="scope.row.quote_enable"
+                on-color="#13ce66"
+                off-color="#ff4949"
+                on-value="true"
+                off-value="false">
+              </el-switch>
+          </template>
+          <template slot="trade_attr" scope="scope">
+              <span v-if='!scope.row.editFlag' :style="scope.row.trade_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.trade_enable == "true" ? 'O' : 'X'}}</span>
+              <el-switch
+                v-if='scope.row.editFlag'
+                v-model="scope.row.trade_enable"
+                on-color="#13ce66"
+                off-color="#ff4949"
+                on-value='true'
+                off-value='false'>
+              </el-switch>
           </template>
     </bel-table> 
-    <el-col :span="24" class='btm-action'>
-            <el-pagination
-                class='pagination'
-                :page-sizes="pagination.page_sizes"
-                :page-size="pagination.page_size"
-                :layout="pagination.layout"
-                :total="pagination.total"
-                :current-page='pagination.current_page'
-                @current-change='onChangeCurrentPage'
-                @size-change='onChangePageSize'>
-            </el-pagination>
-      </el-col>
 
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
+  <!--   <drag-dialog
+                v-if = 'add_symbol_dialog.show'
+                :title="add_symbol_dialog.title"
+                :isModal = "add_symbol_dialog.isModal"
+                @close="onCloseDialog('add_symbol_dialog')"
+        >
                 <form-data1
-                 ref='add_user_form'
                   style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
+                  ref='form-data'
+                  :FieldList='add_symbol_fieldlist'
+                  @onSubmit='add_symbol_submit'
                   >
                   </form-data1>
         </drag-dialog>
 
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
+        <drag-dialog
+                v-if = 'edit_symbol_dialog.show'
+                :title="edit_symbol_dialog.title"
+                :isModal = "edit_symbol_dialog.isModal"
+                @close="onCloseDialog('edit_symbol_dialog')"
+        >
+
                 <form-data1
-                 ref='edit_user_form'
                   style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
+                  ref='form-data1'
+                  :FieldList='edit_symbol_fieldlist'
                   :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
+                  @onSubmit='edit_symbol_submit'
                   >
                   </form-data1>
         </drag-dialog> -->

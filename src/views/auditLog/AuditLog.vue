@@ -1,9 +1,6 @@
 <template>
     <div class='clearfix'>
-<!--     <el-row>
-        <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
+    <el-row>
         <el-col :span='24' >
             <strong>Users - </strong>{{nowTime}}
         </el-col>
@@ -12,14 +9,7 @@
       ref="table"    
       :configs="tableConfig">
           <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
+              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 1 ? 'Error' : 'OK'}}</span>
           </template>
     </bel-table> 
     <el-col :span="24" class='btm-action'>
@@ -34,37 +24,6 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
-
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
-                <form-data1
-                 ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog>
-
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data1
-                 ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
   </div>
 </template>
   
@@ -73,5 +32,5 @@ import AuditLogJs from './AuditLog.js';
 export default AuditLogJs;
 </script>
 <style scoped lang='less'>
-    @import url(AuditLog.less);
+     @import url(AuditLog.less);
 </style>

@@ -1,121 +1,108 @@
-/**
- * Created by sailengsi on 2017/5/11.
- */
 export default {
-  name: 'login',
-  data() {
-    return {
-      winSize: {
-        width: '',
-        height: ''
-      },
-
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-      login_actions: {
-        disabled: false
-      },
-      data: {
-        username: '',
-        password: '',
-        // token: ''
-      },
-
-      rule_data: {
-        username: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'));
-            } else {
-              if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback();
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'));
-              }
-            }
-          },
-          trigger: 'blur'
-        }]
-        // password: [{
-        //  validator: (rule, value, callback) => {
-        //    if (value === '') {
-        //      callback(new Error('请输入密码'));
-        //    } else {
-        //      if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-        //        callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-        //      } else {
-        //        if (this.register === true) {
-        //          if (this.data.repassword !== '') {
-        //            this.$refs.data.validateField('repassword');
-        //          }
-        //        }
-        //        callback();
-        //      }
-
-        //    }
-        //  },
-        //  trigger: 'blur'
-        // }]
+    name: 'lp',
+    data () {
+      return {
+        tableData: [],
       }
-    }
-  },
-  methods: {
-    setSize() {
-      this.winSize.width = this.$$lib_$(window).width() + "px";
-      this.winSize.height = this.$$lib_$(window).height() + "px";
-
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px';
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px';
     },
-
-    onLogin(ref, type) {
-      this.$refs[ref].validate((valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          this.$$api_user_login({
-            data: this[ref],
-            fn: data => {
-              if(data.result == true){
-                this.$store.dispatch('update_userinfo', {
-                userinfo: data.data
-              }).then(() => {
-                this.login_actions.disabled = false;
-                if(res.data.role === 'Admin'){
-                                        this.$router.push({
-                                                path: '/home/user/index'
-                                        });
-                                }else if (res.data.role === 'RulesEditor'){
-                                         this.$router.push({
-                                                path: '/home/lp/index'
-                                        });
-                                }
-              });
-              }else {
-                this.login_actions.disabled = false;
-                                this.$message.error(res.message);
-              }   
+    computed: {
+      tableConfig: {
+        get () {
+          return {
+            table: {
+              attr: {
+                data: this.tableData,
+                maxHeight: '100%',
+                defaultSort:{prop: 'std_symbol'}
+              }
             },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-              this.login_actions.disabled = false;
-            }
-          });
+            columns: [
+              {
+                attr: {
+                  prop: 'lp',
+                  label: this.$t('lp'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },
+              {
+                attr: {
+                  prop: 'type',
+                  label: this.$t('type'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },
+              {
+                attr: {
+                  prop: 'username',
+                  label: this.$t('username'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },{
+                attr: {
+                  prop: 'sender',
+                  label: this.$t('sender'),
+                  width: 180,
+                  sortable: true,
+                  align: 'center',
+                }
+              },{
+                attr: {
+                  prop: 'target',
+                  label:  this.$t('target'),
+                  width: 180,
+                  sortable: true,
+                  align: 'center',
+                  scopedSlot: 'status'
+                }
+              },{
+                attr: {
+                  prop: 'host',
+                  label: this.$t('host'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },{
+                attr: {
+                  prop: 'debug',
+                  label: this.$t('debug'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(item){
+                    return item.debug ==  false ? 'false' : 'true'
+                  }
+                }
+              }
+            ]
+          }
         }
-      });
+      }
     },
-
-    resetForm(ref) {
-      this.$refs[ref].resetFields();
+    methods: {
+        render_lp_table(){
+           this.$$api_common_ajax({
+                    data: {
+                      func_name:'router_api.lp_host_get_all_conf',
+                      args:[],
+                      kwargs:{}
+                    },
+                    fn: data => {
+                      this.tableData = data;
+                    }
+                  });      
+        },
+        init(){
+            this.render_lp_table();
+        }
+    },
+    mounted() {
+        this.init();
     }
-  },
-  created() {
-    this.setSize();
-    this.$$lib_$(window).resize(() => {
-      this.setSize();
-    });
-  },
-  mounted() {}
 }

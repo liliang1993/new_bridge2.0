@@ -12,7 +12,7 @@ import plugins from './plugin';
 // console.log(plugins);
 // console.log(libs);
 // console.log(cps);
-// console.log(mixins);
+console.log(mixins);
 
 /**
  * 把一些全局对象和一些全局方法，注册到Vue原型上

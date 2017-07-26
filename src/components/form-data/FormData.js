@@ -48,11 +48,11 @@ export default {
 		 */
 		onSubmit(ref) {
 
-			var data = {
-				data: this.submit_data,
-				info: this.submit_info
-			};
-
+			// var data = {
+			// 	data: this.submit_data,
+			// 	info: this.submit_info
+			// };
+			var data = this.submit_data;
 			if (this.rules) {
 				this.$refs[ref].validate((valid) => {
 					if (valid) {

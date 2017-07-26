@@ -84,7 +84,9 @@ export default function ({
 				if(gbs.api_custom[res.data[gbs.api_status_key_field]]){
 					gbs.api_custom[res.data[gbs.api_status_key_field]].call(this,res.data);
 				}else{
+					console.log('res1',res);
 					if(errFn){
+						console.log('res2',res);
 						errFn.call(this,res.data);
 					}else{
 						cbs.statusError.call(this, res.data);
@@ -92,8 +94,15 @@ export default function ({
 				}
 			}
 		}).catch((err) => {
+			console.dir(err);
 			this.$store.dispatch('hide_loading');
-			cbs.requestError.call(this, err);
+			if(errFn){	
+				console.log('this',this);
+						errFn.call(this,err);
+					}else{
+						cbs.requestError.call(this, err);
+					}
+			// cbs.requestError.call(this, err);
 		});
 	} else {
 		this.$alert('您没用权限请求该接口！', '请求错误', {

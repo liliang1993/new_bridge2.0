@@ -54,7 +54,6 @@ export default {
 				var CWidth = document.documentElement.clientWidth;
 				var PHeight = dom.offsetHeight;
 				var PWidth = dom.offsetWidth;
-				console.log(PHeight,PWidth)
 				this.$refs.main.style.maxHeight = CHeight - 100 +'px';
 				dom.style.top = (CHeight>PHeight?(CHeight-PHeight)/2:0) +'px';
 				dom.style.left = (CWidth-PWidth)/2 +'px';
@@ -67,7 +66,6 @@ export default {
 		},
 		close () {
 			// this.show = false;
-			console.log('123',this.id);
 			this.$emit('close');
 		},
 		click () {

@@ -4,6 +4,7 @@
                 type='input'
                 v-model="submit_data[data.key]"
                 v-bind="attrs"
+                :disabled = 'data.disabled == true'
                 :placeholder="data.desc"
                 @click="onClick"
                 @blur="onBlur"

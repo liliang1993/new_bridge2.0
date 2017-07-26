@@ -10,17 +10,133 @@ export default {
                 isModal: true,
                 title:{
                   text:'Add user'
-                }
+                },
+                fields:[
+                  {
+                      type:'input',
+                      key:'username',
+                      label: 'User'
+                  },
+                  {
+                    type:'input',
+                      key:'password',
+                      label: 'Password'
+                  },
+                  {   
+                      key:'role',
+                      type: 'select',
+                      desc: '请选择',
+                      label: 'Role',
+                      list: (()=>{
+                            var i,len,roles,role,result;
+                            result = [];
+                            roles = this.$store.state.global.roles;
+                            console.log('roles',roles);
+                            for (i = 0 ,len = roles.length; i<len; i++) {
+                                     role = roles[i];
+                                     result.push({value: role,text:role});
+                            }
+                            console.log('result',result);
+                          return result;
+                      })()
+                    
+                  },
+                  {
+                    type:'input',
+                      key:'lps',
+                      label: 'LPs'
+                  },
+                  {
+                    type:'input',
+                      key:'groups',
+                      label: 'Groups'
+                  },
+                  {
+                      type:'input',
+                      key:'symbols',
+                      label: 'MT4 Symbols'
+                  },            
+                  {
+                      type:'input',
+                      key:'desc',
+                      label: 'Description'
+                  }],
+                  default_value:{
+                    role:'Admin'
+                  }
           },
+
+
+
           edit_user_dialog:{
                 show:false,
                 isModal: true,
                 title:{
                   text:'Edit User'
-                }
+                },
+                fields:[{
+                    type:'input',
+                    key:'username',
+                    label: 'User',
+                    disabled: true,
+                },
+                {
+                  type:'input',
+                    key:'password',
+                    desc:'Input nothing means no change',
+                    label: 'Password'
+                },
+                {
+                    key: 'role',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'Role',
+                    list: (()=>{
+                              var i,len,roles,role,result;
+                              result = [];
+                              roles = this.$store.state.global.roles;
+                              for (i = 0 ,len = roles.length; i<len; i++) {
+                                       role = roles[i];
+                                       result.push({value: role,text:role});
+                              }
+                              return result;
+                        })()
+
+                },
+                   {
+                    type:'input',
+                    key:'lps',
+                    value:'',
+                    label: 'LPs'
+                },
+                 {
+                    type:'input',
+                    key:'groups',
+                    label: 'Groups'
+                },
+                {
+                    type:'input',
+                    key:'symbols',
+                    label: 'MT4 Symbols'
+                }, 
+                {
+                    key: 'status',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'status',
+                    list: [
+                          {value: 0, text : 'Enabled'},
+                          {value: 1, text : 'Disabled'}
+                        ]
+
+              },
+              {
+                    type:'input',
+                    key:'desc',
+                    label: 'Description'
+              }],
+              default_value:{}
           },
-        default_value :{},
-        nowTime: '',
         tableData: [] ,
         pagination: {
                 current_page: 1,
@@ -99,141 +215,12 @@ export default {
             ]
           }
         }
-      },
-      add_user_fieldlist(){
-        return  [
-                {
-                    type:'input',
-                    key:'username',
-                    label: 'User',
-                    value:''
-                },
-                {
-                  type:'input',
-                    key:'password',
-                    value:'',
-                    label: 'Password'
-                },
-                {
-                    type: 'select',
-                    value: {
-                        default: 'Admin',
-                        list: (()=>{
-                              var i,len,roles,role,result;
-                              result = [];
-                              roles = this.$store.state.global.roles;
-                              console.log('roles',roles);
-                              for (i = 0 ,len = roles.length; i<len; i++) {
-                                       role = roles[i];
-                                       result.push({value: role,text:role});
-                              }
-                                return result;
-                        })()
-                    },
-                    desc: '请选择',
-                    label: 'Role'
-                },
-                {
-                  type:'input',
-                    key:'lps',
-                    value:'',
-                    label: 'LPs'
-                },
-                {
-                  type:'input',
-                    key:'groups',
-                    value:'',
-                    label: 'Groups'
-                },
-                {
-                  type:'input',
-                    key:'symbols',
-                    value:'',
-                    label: 'MT4 Symbols'
-                },            
-                {
-                    type:'input',
-                    key:'desc',
-                    label: 'Description'
-                  }
-                ]
-      },
-      edit_user_fieldist(){
-          return [
-                  {
-                    type:'input',
-                    key:'username',
-                    label: 'User',
-                    disabled: true,
-                    value:''
-                },
-                {
-                  type:'input',
-                    key:'password',
-                    value:'',
-                    label: 'Password'
-                },
-                {
-                    key: 'role',
-                    type: 'select',
-                    value: {
-                        default: 'Admin',
-                        list: (()=>{
-                              var i,len,roles,role,result;
-                              result = [];
-                              roles = this.$store.state.global.roles;
-                              for (i = 0 ,len = roles.length; i<len; i++) {
-                                       role = roles[i];
-                                       result.push({value: role,text:role});
-                              }
-                              return result;
-                        })()
-                  },
-                  desc: '请选择',
-                  label: 'Role'
-                },
-                   {
-                  type:'input',
-                    key:'lps',
-                    value:'',
-                    label: 'LPs'
-                },
-                 {
-                  type:'input',
-                    key:'groups',
-                    value:'',
-                    label: 'Groups'
-                },
-                {
-                  type:'input',
-                    key:'symbols',
-                    value:'',
-                    label: 'MT4 Symbols'
-                }, 
-                {
-                    key: 'status',
-                    type: 'select',
-                    value: {
-                        default:  0,
-                        list: [
-                          {value: 0, text : 'Enabled'},
-                         {value: 1, text : 'Disabled'}
-                        ]
-                   },
-                   desc: '请选择',
-                    label: 'status'
-              },
-              {
-                    type:'input',
-                    key:'desc',
-                    label: 'Description'
-              }
-              ]
       }
     },
     methods: {
         onCloseDialog(type){
           this[type].show = false;
+
          },
         onAddUser(){      
             this.add_user_dialog.show = true; 
@@ -242,8 +229,7 @@ export default {
         onEditUser(row) {
             this.edit_user_dialog.show = true; 
             this.$nextTick(() => {
-                  Object.assign(this.default_value,row,{password:''});
-                  console.log('default',this.default_value) ;          
+                  Object.assign(this.edit_user_dialog.default_value,row,{password:''});         
             });
         },
         add_user_submit(data){
@@ -255,49 +241,66 @@ export default {
                 },
                 fn: data => {
                     this.find_page_user();
-                    this.edit_user_dialog.show  = false;
+                    this.add_user_dialog.show  = false;
                 },
                 errFn: (err) => {
-                  this.$message.error(err.msg);
                 }
               });           
         },
-    edit_user_submit(data){
-              this.$$api_common_ajax({
-                data: {
-                  func_name:'user.update_user',
-                  args:[data.user_id, data.password, data.role, data.status, data.desc ],
-                  kwargs:{groups:data.groups,  lps: data.lps ,symbols: data.symbols}
-                },
-                fn: data => {
-                    this.find_page_user();
-                    this.edit_user_dialog.show  = false;
-                },
-                errFn: (err) => {
-                  this.$message.error(err.msg);
-                }
-              });      
-    },  
-        find_page_user(){
-          this.$$api_common_ajax({
-            data: {
-              func_name:'user.page_user',
-              args:[this.pagination.current_page,this.pagination.page_size],
-              kwargs:{}
-            },
-            fn: data => {
-                this.tableData = data[0];
-                this.pagination.total = data[1];
-            },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-            }
-          });
+        edit_user_submit(data){
+                  this.$$api_common_ajax({
+                    data: {
+                      func_name:'user.update_user',
+                      args:[data.user_id, data.password, data.role, data.status, data.desc ],
+                      kwargs:{groups:data.groups,  lps: data.lps ,symbols: data.symbols}
+                    },
+                    fn: data => {
+                        this.find_page_user();
+                        this.edit_user_dialog.show  = false;
+                    },
+                    errFn: (err) => {
+                      this.$message({
+                        showClose: true,
+                        message: err.response.data,
+                        type: 'error'
+                      });
+                    }
+                  });      
+        },  
+
+    /*
+      
+    */
+    onChangeCurrentPage(page){
+        this.pagination.current_page = page;
+        this.find_page_user();
+    },
+    onChangePageSize(page_size){
+        this.pagination.page_size = page_size;
+        this.find_page_user();
+    },
+    find_page_user(){
+      this.$$api_common_ajax({
+        data: {
+          func_name:'user.page_user',
+          args:[this.pagination.current_page,this.pagination.page_size],
+          kwargs:{}
         },
-        init(){
-            this.find_page_user();
-            this.nowTime=(new Date()).toString();
+        fn: data => {
+            this.tableData = data[0];
+            this.pagination.total = data[1];
+        },
+        errFn: (err) => {
+          this.$message.error(err.msg);
         }
+      });
+    },
+
+
+    init(){
+        this.find_page_user();
+        console.log('store',this.$store.state.global.roles);
+    }
     },
     mounted() {
         this.init();

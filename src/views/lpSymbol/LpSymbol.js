@@ -1,121 +1,208 @@
-/**
- * Created by sailengsi on 2017/5/11.
- */
 export default {
-  name: 'login',
-  data() {
-    return {
-      winSize: {
-        width: '',
-        height: ''
-      },
-
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-      login_actions: {
-        disabled: false
-      },
-      data: {
-        username: '',
-        password: '',
-        // token: ''
-      },
-
-      rule_data: {
-        username: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'));
-            } else {
-              if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback();
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'));
-              }
-            }
-          },
-          trigger: 'blur'
-        }]
-        // password: [{
-        //  validator: (rule, value, callback) => {
-        //    if (value === '') {
-        //      callback(new Error('请输入密码'));
-        //    } else {
-        //      if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-        //        callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-        //      } else {
-        //        if (this.register === true) {
-        //          if (this.data.repassword !== '') {
-        //            this.$refs.data.validateField('repassword');
-        //          }
-        //        }
-        //        callback();
-        //      }
-
-        //    }
-        //  },
-        //  trigger: 'blur'
-        // }]
-      }
-    }
-  },
-  methods: {
-    setSize() {
-      this.winSize.width = this.$$lib_$(window).width() + "px";
-      this.winSize.height = this.$$lib_$(window).height() + "px";
-
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px';
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px';
-    },
-
-    onLogin(ref, type) {
-      this.$refs[ref].validate((valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          this.$$api_user_login({
-            data: this[ref],
-            fn: data => {
-              if(data.result == true){
-                this.$store.dispatch('update_userinfo', {
-                userinfo: data.data
-              }).then(() => {
-                this.login_actions.disabled = false;
-                if(res.data.role === 'Admin'){
-                                        this.$router.push({
-                                                path: '/home/user/index'
-                                        });
-                                }else if (res.data.role === 'RulesEditor'){
-                                         this.$router.push({
-                                                path: '/home/lp/index'
-                                        });
+        name: 'lp_symbol',
+        data() {
+                return {
+                      tableData: [],
+                }
+        },
+        computed: {
+                tableConfig: {
+                        get() {
+                                return {
+                                        table: {
+                                                attr: {
+                                                        data: this.tableData,
+                                                        maxHeight: '100%',
+                                                        defaultSort: {
+                                                                prop: 'std_symbol'
+                                                        }
+                                                }
+                                        },
+                                        columns: [{
+                                                attr: {
+                                                        prop: 'std_symbol',
+                                                        label: this.$t('STD symbol'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'lp',
+                                                        label: this.$t('LP'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'lp_symbol',
+                                                        label: this.$t('LP symbol'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'weight',
+                                                        label: this.$t('Weight'),
+                                                        width: 100,
+                                                        sortable: true,
+                                                        scopedSlot: 'weight_attr',
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'min_qty',
+                                                        label: this.$t('Min Qty'),
+                                                        width: 100,
+                                                        sortable: true,
+                                                        scopedSlot: 'min_qty_attr',
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'contract_size',
+                                                        label: this.$t('Contract Size'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        scopedSlot: 'contract_size_attr',
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'quote_enable',
+                                                        label: this.$t('Quote Enable'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        scopedSlot: 'quote_attr',
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        prop: 'trade_enable',
+                                                        label: this.$t('Trade Enable'),
+                                                        minWidth: 180,
+                                                        sortable: true,
+                                                        scopedSlot: 'trade_attr',
+                                                        align: 'center'
+                                                }
+                                        }, {
+                                                attr: {
+                                                        // prop: 'address',
+                                                        label: this.$t('Operation'),
+                                                        minWidth: 180,
+                                                        scopedSlot: 'handler',
+                                                        align: 'center'
+                                                }
+                                        }]
                                 }
-              });
-              }else {
-                this.login_actions.disabled = false;
-                                this.$message.error(res.message);
-              }   
-            },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-              this.login_actions.disabled = false;
-            }
-          });
+                        }
+                }
+        },
+        methods: {
+                // add_symbol_submit(data) {
+                //         var weight,min_qty,contract_size,quote_enable,trade_enable;
+                //         console.log('submit_symbols', data);
+                //          weight = data.weight*1;
+                //          min_qty = data.min_qty*1;
+                //          contract_size = data.contract_size*1;
+    
+                //          var params={
+                //                 func_name:'router_api.lp_add_symbol',
+                //                 args:[data.lp,data.std_symbol,data.lp_symbol,data.quote_enable,data.trade_enable,weight,min_qty,contract_size]
+                //          }
+                //          CommonApi.postFormAjax.call(this,params,data=>{
+                //                 this.load_data();
+                //                 this.get_global_std_symbols();
+                //                 this.onCloseDialog('add_symbol_dialog');
+                //          });
+                // },
+                // edit_symbol_submit(row) {
+                //        var weight,min_qty,contract_size,quote_enable,trade_enable;
+                //         console.log('submit_symbols', data);
+                //          weight = parseInt(data.weight);
+                //          min_qty = parseInt(data.min_qty);
+                //          contract_size = data.contract_size*1;
+                //          var params={
+                //                 func_name:'router_api.lp_add_symbol',
+                //                 args:[data.lp,data.std_symbol,data.lp_symbol,data.quote_enable,data.trade_enable,weight,min_qty,contract_size]
+                //          }
+                //          CommonApi.postFormAjax.call(this,params,data=>{
+                //                 this.load_data();
+                //                 this.onCloseDialog('edit_symbol_dialog');
+                //          }); 
+                // },
+                edit_lpsymbol_submit(row){
+                      row.weight = parseInt(row.weight);
+                      row.min_qty = parseInt(row.min_qty);
+                      row.contract_size = row.contract_size*1;
+                      var quote_enable = this.string_to_boolean(row.quote_enable); 
+                      var trade_enable = this.string_to_boolean(row.trade_enable); 
+                    this.$$api_common_ajax({
+                    data: {
+                      func_name:'router_api.lp_add_symbol',
+                      args:[row.lp,row.std_symbol,row.lp_symbol,quote_enable,trade_enable,row.weight,row.min_qty,row.contract_size],
+                      kwargs:{}
+                    },
+                    fn: data => {
+                        row.editFlag = false;
+                    },
+                    errFn: (err) => {
+                      this.$message({
+                        showClose: true,
+                        message: err.response.data,
+                        type: 'error'
+                      });
+                    }
+                  });   
+                },
+                onEditSymbol(row){
+                    this.$set(row,'editFlag',true);
+                    console.log('row',row.editFlag);
+                },
+                detele_lpsymbol_handle(row,index){
+                  console.log('index',index);
+                  this.$$api_common_ajax({
+                    data: {
+                      func_name:'router_api.lp_del_symbol',
+                      args:[row.lp, row.lp_symbol, row.std_symbol],
+                      kwargs:{}
+                    },
+                    fn: data => {
+                        this.tableData.splice(index,1);
+                        // this.get_global_std_symbols();
+                    }
+                  });    
+                },
+                onDeleteSymbol(row,index) {
+                        this.$confirm('Are you sure you want to detele this?', 'prompt', {
+                                type: 'warning'
+                        }).then(() => {
+                            this.detele_lpsymbol_handle(row,index);     
+                        });
+                },
+                reader_lpsymbol_table(){
+                    this.$$api_common_ajax({
+                    data: {
+                      func_name:'router_api.lp_get_symbols',
+                      args:[],
+                      kwargs:{}
+                    },
+                    fn: data => {
+                          for(var item of data){
+                          item.trade_enable = this.boolean_to_string(item.trade_enable);
+                          item.quote_enable = this.boolean_to_string(item.quote_enable);
+                        }
+                        this.tableData = data;
+                    }
+                  });
+                },
+                init(){
+                        this.reader_lpsymbol_table();
+                }
+        },
+        mounted() {
+                this.init();
         }
-      });
-    },
-
-    resetForm(ref) {
-      this.$refs[ref].resetFields();
-    }
-  },
-  created() {
-    this.setSize();
-    this.$$lib_$(window).resize(() => {
-      this.setSize();
-    });
-  },
-  mounted() {}
 }

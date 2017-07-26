@@ -1,121 +1,131 @@
-/**
- * Created by sailengsi on 2017/5/11.
- */
 export default {
-  name: 'login',
-  data() {
-    return {
-      winSize: {
-        width: '',
-        height: ''
-      },
-
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-      login_actions: {
-        disabled: false
-      },
-      data: {
-        username: '',
-        password: '',
-        // token: ''
-      },
-
-      rule_data: {
-        username: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'));
-            } else {
-              if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback();
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'));
-              }
-            }
-          },
-          trigger: 'blur'
-        }]
-        // password: [{
-        //  validator: (rule, value, callback) => {
-        //    if (value === '') {
-        //      callback(new Error('请输入密码'));
-        //    } else {
-        //      if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-        //        callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-        //      } else {
-        //        if (this.register === true) {
-        //          if (this.data.repassword !== '') {
-        //            this.$refs.data.validateField('repassword');
-        //          }
-        //        }
-        //        callback();
-        //      }
-
-        //    }
-        //  },
-        //  trigger: 'blur'
-        // }]
-      }
-    }
-  },
-  methods: {
-    setSize() {
-      this.winSize.width = this.$$lib_$(window).width() + "px";
-      this.winSize.height = this.$$lib_$(window).height() + "px";
-
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px';
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px';
-    },
-
-    onLogin(ref, type) {
-      this.$refs[ref].validate((valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          this.$$api_user_login({
-            data: this[ref],
-            fn: data => {
-              if(data.result == true){
-                this.$store.dispatch('update_userinfo', {
-                userinfo: data.data
-              }).then(() => {
-                this.login_actions.disabled = false;
-                if(res.data.role === 'Admin'){
-                                        this.$router.push({
-                                                path: '/home/user/index'
-                                        });
-                                }else if (res.data.role === 'RulesEditor'){
-                                         this.$router.push({
-                                                path: '/home/lp/index'
-                                        });
-                                }
-              });
-              }else {
-                this.login_actions.disabled = false;
-                                this.$message.error(res.message);
-              }   
+    name: 'audit_log',
+        data () {
+      return {
+        nowTime: '',
+        tableData: [],
+        pagination: {
+                current_page: 1,
+                total: 0,
+                page_size: 12,
+                page_sizes: [3, 9, 12, 24],
+                layout: "total, sizes, prev, pager, next, jumper"
             },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-              this.login_actions.disabled = false;
-            }
-          });
+        page_func_name: 'audit_log.page_log'
+      }
+    },
+    computed: {
+      tableConfig: {
+        get () {
+          return {
+            table: {
+              attr: {
+                data: this.tableData,
+                maxHeight: '100%',
+                defaultSort:{prop: 'std_symbol'}
+              }
+            },
+            columns: [
+              {
+                attr: {
+                  prop: 'log_id',
+                  label: this.$t('log_id'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },
+              {
+                attr: {
+                  prop: 'username',
+                  label: this.$t('username'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },
+              {
+                attr: {
+                  prop: 'api',
+                  label:  this.$t('api'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },{
+                attr: {
+                  prop: 'request',
+                  label: this.$t('request'),
+                  width: 180,
+                  sortable: true,
+                  align: 'center',
+                }
+              },{
+                attr: {
+                  prop: 'status',
+                  label: this.$t('status'),
+                  width: 180,
+                  sortable: true,
+                  align: 'center',
+                  scopedSlot: 'status'
+                }
+              },{
+                attr: {
+                  prop: 'remote_ip',
+                  label: this.$t('ip'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              },{
+                attr: {
+                  prop: 'create_time',
+                  label: this.$t('time'),
+                  minWidth: 180,
+                  sortable: true,
+                  align: 'center'
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    methods: {
+    /*
+    */
+    onChangeCurrentPage(page){
+        this.pagination.current_page = page;
+        this.find_page_aduitLog();
+    },
+    onChangePageSize(page_size){
+        this.pagination.page_size = page_size;
+        this.find_page_aduitLog();
+    },
+    find_page_aduitLog(){
+      this.$$api_common_ajax({
+        data: {
+          func_name:'audit_log.page_log',
+          args:[this.pagination.current_page,this.pagination.page_size],
+          kwargs:{}
+        },
+        fn: data => {
+            this.tableData = data[0];
+            this.pagination.total = data[1];
+        },
+        errFn: (err) => {
+          this.$message.error(err.msg);
         }
       });
     },
 
-    resetForm(ref) {
-      this.$refs[ref].resetFields();
+        init(){
+            this.find_page_aduitLog();
+            this.nowTime=(new Date()).toGMTString();
+        }
+
+    },
+    mounted() {
+        this.init();
     }
-  },
-  created() {
-    this.setSize();
-    this.$$lib_$(window).resize(() => {
-      this.setSize();
-    });
-  },
-  mounted() {}
 }

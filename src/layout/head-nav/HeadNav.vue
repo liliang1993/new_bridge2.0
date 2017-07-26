@@ -8,7 +8,7 @@
                     <span class='username'>
                         <el-dropdown
                                 trigger="click"
-                                @command='setDialogInfo'>
+                            >
                             <span class="el-dropdown-link">
                                 {{this.$store.state.user.userinfo.username}}<i
                                     class="el-icon-caret-bottom el-icon--right"></i>
