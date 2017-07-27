@@ -1,121 +1,319 @@
-/**
- * Created by sailengsi on 2017/5/11.
- */
 export default {
-  name: 'login',
+  name: 'quote_rule',
   data() {
     return {
-      winSize: {
-        width: '',
-        height: ''
+      add_rule_dialog: {
+        show: false,
+        isModal: true,
+        title: {
+          text: this.$t('Add rule'),
+        },
+        fields: [{
+          key: 'source',
+          type: 'select',
+          list: (() => {
+            var i, len, sources, source, result;
+            result = [];
+            sources = this.$store.state.global.sources;
+            for (i = 0, len = sources.length; i < len; i++) {
+              source = sources[i];
+              result.push({
+                value: source,
+                text: source
+              });
+            }
+            return result;
+          })(),
+          desc: '请选择',
+          label: this.$t('source')
+        }, {
+          key: 'mt4_symbol',
+          type: 'input',
+          value: '',
+          label: this.$t('MT4 Symbol')
+        }, {
+          key: 'std_symbol',
+          type: 'select',
+          list: (() => {
+            var i, len, std_symbols, std_symbol, result;
+            result = [];
+            std_symbols = this.$store.state.global.std_symbols;
+            for (i = 0, len = std_symbols.length; i < len; i++) {
+              std_symbol = std_symbols[i];
+              result.push({
+                value: std_symbol,
+                text: std_symbol
+              });
+            }
+            return result;
+          })(),
+          desc: '请选择',
+          label: this.$t('STD Symbol')
+        }, {
+          type: 'input',
+          key: 'digits',
+          value: '',
+          label: this.$t('digits')
+        }, {
+          type: 'input',
+          key: 'minimal_spread',
+          value: '',
+          label: this.$t('min spread')
+        }, {
+          type: 'input',
+          key: 'maximal_spread',
+          value: '',
+          label: this.$t('max spread')
+        }, {
+          key: 'aggregator',
+          type: 'select',
+          list: [{
+            value: 'median',
+            text: 'median'
+          }, {
+            value: 'bestright',
+            text: 'bestright'
+          }, {
+            value: 'bestright',
+            text: 'bestright'
+          }, {
+            value: 'bestright-option',
+            text: 'bestright-option'
+          }],
+          desc: '请选择',
+          label: 'aggregator'
+        }, {
+          type: 'number',
+          key: 'adjust',
+          value: '',
+          label: 'adjust'
+        }, {
+          key: 'type',
+          type: 'select',
+          list: (() => {
+            var i, len, results;
+            results = [];
+            var lps = this.$store.state.global.lps;
+            for (i = 0, len = lps.length; i < len; i++) {
+              var lp = lps[i];
+              console.log('lps', lps);
+              results.push(lp);
+            }
+            console.log('results', results);
+            return results;
+          })(),
+          desc: '请选择',
+          label: this.$t('type')
+        }],
+        default_value: {
+          source: this.$store.state.global.sources[0],
+          mt4_symbol: '',
+          std_symbol: this.$store.state.global.std_symbols[0],
+          digits: '',
+          minimal_spread: '',
+          maximal_spread: '',
+          aggregator: 'median',
+          adjust: '',
+          type: this.$store.state.global.quote_types[0]
+        }
       },
-
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-      login_actions: {
-        disabled: false
-      },
-      data: {
-        username: '',
-        password: '',
-        // token: ''
-      },
-
-      rule_data: {
-        username: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'));
-            } else {
-              if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback();
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'));
+      tableData: [],
+    }
+  },
+  computed: {
+    tableConfig: {
+      get() {
+        return {
+          table: {
+            attr: {
+              data: this.tableData,
+              maxHeight: '100%',
+              defaultSort: {
+                prop: 'std_symbol'
               }
             }
           },
-          trigger: 'blur'
-        }]
-        // password: [{
-        //  validator: (rule, value, callback) => {
-        //    if (value === '') {
-        //      callback(new Error('请输入密码'));
-        //    } else {
-        //      if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-        //        callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-        //      } else {
-        //        if (this.register === true) {
-        //          if (this.data.repassword !== '') {
-        //            this.$refs.data.validateField('repassword');
-        //          }
-        //        }
-        //        callback();
-        //      }
-
-        //    }
-        //  },
-        //  trigger: 'blur'
-        // }]
+          columns: [{
+            attr: {
+              prop: 'source',
+              label: this.$t('source'),
+              minWidth: 180,
+              sortable: true,
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'mt4_symbol',
+              label: this.$t('MT4 symbol'),
+              minWidth: 180,
+              sortable: true,
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'std_symbol',
+              label: this.$t('STD symbol'),
+              minWidth: 180,
+              sortable: true,
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'type',
+              label: this.$t('type'),
+              width: 100,
+              sortable: true,
+              scopedSlot: 'type_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              label: this.$t('Digits'),
+              width: 100,
+              sortable: true,
+              scopedSlot: 'digits_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.bid_delta',
+              label: this.$t('Bid Delta'),
+              minWidth: 120,
+              sortable: true,
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.ofr_delta',
+              label: this.$t('Ofr Delta'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'ofr_delta_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.minimal_spread',
+              label: this.$t('Min Spread'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'min_spread_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.maximal_spread',
+              label: this.$t('Max Spread'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'max_spread_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.adjust',
+              label: this.$t('Adjust'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'adjust_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.aggregator',
+              label: this.$t('Aggregator'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'aggregator_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              // prop: 'address',
+              label: this.$t('Operation'),
+              minWidth: 120,
+              scopedSlot: 'handler',
+              align: 'center'
+            }
+          }]
+        }
       }
     }
   },
   methods: {
-    setSize() {
-      this.winSize.width = this.$$lib_$(window).width() + "px";
-      this.winSize.height = this.$$lib_$(window).height() + "px";
-
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px';
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px';
+    onCloseRuleDialog() {
+      this.ruleDialog.show = false;
     },
-
-    onLogin(ref, type) {
-      this.$refs[ref].validate((valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          this.$$api_user_login({
-            data: this[ref],
-            fn: data => {
-              if(data.result == true){
-                this.$store.dispatch('update_userinfo', {
-                userinfo: data.data
-              }).then(() => {
-                this.login_actions.disabled = false;
-                if(res.data.role === 'Admin'){
-                                        this.$router.push({
-                                                path: '/home/user/index'
-                                        });
-                                }else if (res.data.role === 'RulesEditor'){
-                                         this.$router.push({
-                                                path: '/home/lp/index'
-                                        });
-                                }
-              });
-              }else {
-                this.login_actions.disabled = false;
-                                this.$message.error(res.message);
-              }   
-            },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-              this.login_actions.disabled = false;
-            }
-          });
+    onAddRule() {
+      this.ruleDialog.show = true;
+    },
+    onEditRule(row) {
+      console.log('123555');
+      this.$set(row, 'editFlag', true);
+    },
+    add_rule_submit(data) {
+      // if (this.ruleDialog.title == this.$t('Add rule')) {
+      //   var func_name = 'router_api.quote_add_rule';
+      // } else {
+      //   var func_name = 'router_api.quote_update_rule';
+      // }
+      var attributes = {
+        digits: parseInt(data.digits),
+        minimal_spread: parseInt(data.minimal_spread),
+        maximal_spread: parseInt(data.maximal_spread),
+        aggregator: data.aggregator,
+        adjust: parseInt(data.adjust)
+      }
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.quote_add_rule',
+          args: [data.source, data.mt4_symbol, data.std_symbol, data.type, attributes],
+          kwargs: {}
+        },
+        fn: data => {
+          this.load_data();
+          this.onCloseRuleDialog();
         }
       });
     },
+    edit_rule_submit(row) {
+      row.editFlag = false;
 
-    resetForm(ref) {
-      this.$refs[ref].resetFields();
+    },
+    onDeleteQutoeRule(row) {
+      this.$confirm('Are you sure you want to detele this?', 'prompt', {
+        type: 'warning'
+      }).then(() => {
+        this.$$api_common_ajax({
+          data: {
+            func_name: 'router_api.quote_del_rule',
+            args: [row.source, row.mt4_symbol],
+            kwargs: {}
+          },
+          fn: data => {
+            this.tableData = data;
+          }
+        });
+      })
+    },
+    load_data() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.quote_get_all_rules',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          console.log('555', data);
+          this.tableData = data;
+        }
+      });
+    },
+    init() {
+      this.load_data();
     }
   },
-  created() {
-    this.setSize();
-    this.$$lib_$(window).resize(() => {
-      this.setSize();
-    });
-  },
-  mounted() {}
+  mounted() {
+    this.init();
+  }
 }
