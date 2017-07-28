@@ -7,184 +7,180 @@ export default {
             groups: [],
             rules: [],
             create_new_group_dialog: {
-                title:{
-                  text:'Add trade rule'
+                title: {
+                    text: 'Add trade rule'
                 },
                 isModal: true,
                 show: false,
-                fields:[{
-                        key: 'source',
-                        type: 'select',
-                        desc: '请选择',
-                        label: 'source',
-                        list: (() => {
-                            var i, len, sources, source, result;
-                            result = [];
-                            sources = this.$store.state.global.sources;
-                            for (i = 0, len = sources.length; i < len; i++) {
-                                source = sources[i];
-                                result.push({
-                                    value: source,
-                                    text: source
-                                });
-                            }
-                            return result;
-                        })()
-                    }, {
-                        type: 'input',
-                        key: 'group',
-                        label: 'Group'
-                    }, {
-                        type: 'input',
-                        key: 'mt4_symbol',
-                        label: 'MT4 Symbol'
-                    }, {
-                        key: 'std_symbol',
-                        type: 'select',
-                        desc: '请选择',
-                        label: 'status',
-                        list: (() => {
-                                var i, len, std_symbols, std_symbol, result;
-                                result = [];
-                                std_symbols = this.$store.state.global.std_symbols;
-                                for (i = 0, len = std_symbols.length; i < len; i++) {
-                                    std_symbol = std_symbols[i];
-                                    result.push({
-                                        value: std_symbol,
-                                        text: std_symbol
-                                    });
-                                }
-                                return result;
-                            })()
-                    }, {
-                        key: 'route_type',
-                        type: 'RouteType',
-                        label: 'route_type',
-                        default: {
-                            threshold: 0,
-                            right: 'ratio',
-                            left: 'bestright'
+                fields: [{
+                    key: 'source',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'source',
+                    list: (() => {
+                        var i, len, sources, source, result;
+                        result = [];
+                        sources = this.$store.state.global.sources;
+                        for (i = 0, len = sources.length; i < len; i++) {
+                            source = sources[i];
+                            result.push({
+                                value: source,
+                                text: source
+                            });
                         }
-                    },
-                    {
-                        type: 'input',
-                        key: 'coverage',
-                        value: '',
-                        label: 'coverage'
-                    },{
-                        type: 'input',
-                        key: 'better_fill',
-                        value: '',
-                        label: 'better_fill'
-                    },
-                    {
-                        key: 'open_partial',
-                        type: 'select',
-                        value: {
-                            default: true,
-                            list: [{
-                                value: true,
-                                text: 'true'
-                            }, {
-                                value: false,
-                                text: 'false'
-                            }]
-                        },
-                        desc: '请选择',
-                        label: 'open_partial'
-                    }, {
-                        key: 'open_lp_rejected_retry',
-                        type: 'select',
-                        value: {
-                            default: false,
-                            list: [{
-                                value: true,
-                                text: 'true'
-                            }, {
-                                value: false,
-                                text: 'false'
-                            }]
-                        },
-                        desc: '请选择',
-                        label: 'open_lp_rejected_retry  '
-                    },{
-                        type: 'input',
-                        key: 'open_threshold',
-                        label: 'open_threshold'
-                    },{
-                        type: 'input',
-                        key: 'open_probe',
-                        label: 'open_probe'
-                    },{
-                        type: 'input',
-                        key: 'close_threshold',
-                        label: 'close_threshold'
-                    },{
-                        type: 'input',
-                        key: 'close_probe',
-                        label: 'close_probe'
-                    },{
-                        type: 'input',
-                        key: 'close_probe',
-                        label: 'close_probe'
-                    },{
-                        type: 'input',
-                        key: 'markup',
-                        label: 'markup'
-                    },{
-                        key: 'limit_order_types',
-                        type: 'CheckboxAndInputList',
-                        label: 'limit_order_types',
-                        desc: "Do not change MT4's request price",
-                        spec: ["Instant", "Market", "Pending", "Stopout", "StopLoss", "TakeProfit"]
-                    },{
-                            label: 'lps',
-                            type: 'CheckBoxList',
-                            key: 'lps',
-                            value: [],
-                             list: (()=> {
-                                          var i, len, results;
-                                          results = [];
-                                            var lps = this.$store.state.global.lps;
-                                          for (i = 0, len = lps.length; i < len; i++) {
-                                           var  lp = lps[i];
-                                            console.log('lps', lps);
-                                            results.push(lp);
-                                          }
-                                          console.log('results',results);
-                                          return results;
-                                        })()
-                    },
-                    {
-                        key: 'bbook_exec_type',
-                        type: 'select',
-                        desc: '请选择',
-                        label: 'bbook_exec_type',
-                        list: [{
-                                value:'vwap',
-                                text: 'vwap'
-                            }, {
-                                value: 'worst',
-                                text: 'worst'
-                            }]
-                        
-                    },{
-                        key: 'slippages',
-                        type: 'MultipleInput',
-                        label: 'slippages',
-                        spec: [{
-                                type: 'float',
-                                desc: '> =size'
-                        }, {
-                                type: 'float',
-                                desc: 'min slippage'
-                        }, {
-                                type: 'float',
-                                desc: 'max slippage'
-                        }]
+                        return result;
+                    })()
+                }, {
+                    type: 'input',
+                    key: 'group',
+                    label: 'Group'
+                }, {
+                    type: 'input',
+                    key: 'mt4_symbol',
+                    label: 'MT4 Symbol'
+                }, {
+                    key: 'std_symbol',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'status',
+                    list: (() => {
+                        var i, len, std_symbols, std_symbol, result;
+                        result = [];
+                        std_symbols = this.$store.state.global.std_symbols;
+                        for (i = 0, len = std_symbols.length; i < len; i++) {
+                            std_symbol = std_symbols[i];
+                            result.push({
+                                value: std_symbol,
+                                text: std_symbol
+                            });
+                        }
+                        return result;
+                    })()
+                }, {
+                    key: 'route_type',
+                    type: 'RouteType',
+                    label: 'route_type',
+                    default: {
+                        threshold: 0,
+                        right: 'ratio',
+                        left: 'bestright'
                     }
-                ],
-                default_value:{}
+                }, {
+                    type: 'input',
+                    key: 'coverage',
+                    value: '',
+                    label: 'coverage'
+                }, {
+                    type: 'input',
+                    key: 'better_fill',
+                    value: '',
+                    label: 'better_fill'
+                }, {
+                    key: 'open_partial',
+                    type: 'select',
+                    value: {
+                        default: true,
+                        list: [{
+                            value: true,
+                            text: 'true'
+                        }, {
+                            value: false,
+                            text: 'false'
+                        }]
+                    },
+                    desc: '请选择',
+                    label: 'open_partial'
+                }, {
+                    key: 'open_lp_rejected_retry',
+                    type: 'select',
+                    value: {
+                        default: false,
+                        list: [{
+                            value: true,
+                            text: 'true'
+                        }, {
+                            value: false,
+                            text: 'false'
+                        }]
+                    },
+                    desc: '请选择',
+                    label: 'open_lp_rejected_retry  '
+                }, {
+                    type: 'input',
+                    key: 'open_threshold',
+                    label: 'open_threshold'
+                }, {
+                    type: 'input',
+                    key: 'open_probe',
+                    label: 'open_probe'
+                }, {
+                    type: 'input',
+                    key: 'close_threshold',
+                    label: 'close_threshold'
+                }, {
+                    type: 'input',
+                    key: 'close_probe',
+                    label: 'close_probe'
+                }, {
+                    type: 'input',
+                    key: 'close_probe',
+                    label: 'close_probe'
+                }, {
+                    type: 'input',
+                    key: 'markup',
+                    label: 'markup'
+                }, {
+                    key: 'limit_order_types',
+                    type: 'CheckboxAndInputList',
+                    label: 'limit_order_types',
+                    desc: "Do not change MT4's request price",
+                    spec: ["Instant", "Market", "Pending", "Stopout", "StopLoss", "TakeProfit"]
+                }, {
+                    label: 'lps',
+                    type: 'CheckBoxList',
+                    key: 'lps',
+                    value: [],
+                    list: (() => {
+                        var i, len, results;
+                        results = [];
+                        var lps = this.$store.state.global.lps;
+                        for (i = 0, len = lps.length; i < len; i++) {
+                            var lp = lps[i];
+                            console.log('lps', lps);
+                            results.push(lp);
+                        }
+                        console.log('results', results);
+                        return results;
+                    })()
+                }, {
+                    key: 'bbook_exec_type',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'bbook_exec_type',
+                    list: [{
+                        value: 'vwap',
+                        text: 'vwap'
+                    }, {
+                        value: 'worst',
+                        text: 'worst'
+                    }]
+
+                }, {
+                    key: 'slippages',
+                    type: 'MultipleInput',
+                    label: 'slippages',
+                    spec: [{
+                        type: 'float',
+                        desc: '> =size'
+                    }, {
+                        type: 'float',
+                        desc: 'min slippage'
+                    }, {
+                        type: 'float',
+                        desc: 'max slippage'
+                    }]
+                }],
+                default_value: {}
             }
         }
     },
@@ -256,18 +252,18 @@ export default {
                 }
             },
         },
-        get_up_traderule_table(){
+        get_up_traderule_table() {
             return this.$store.state.traderule.update_traderule_table;
         }
     },
-    watch:{
-        get_up_traderule_table(v){
-                if(v){
-                    if(v==true){
-                         this.load_data();
-                         this.$store.dispatch('update_traderule_table',false);
-                    }
+    watch: {
+        get_up_traderule_table(v) {
+            if (v) {
+                if (v == true) {
+                    this.load_data();
+                    this.$store.dispatch('update_traderule_table', false);
                 }
+            }
         }
     },
     methods: {
@@ -275,63 +271,85 @@ export default {
             this[type].show = false;
         },
         onEditRemark(row) {
-            console.log('row',row);
+            console.log('row', row);
             var title = {
                 text: 'Edit ' + row.source + "-" + row.group + ' remark'
             }
-            var key = row.source+"_"+row.group;
+            var key = row.source + "_" + row.group;
             var default_value = {
                 remark: row.remark,
                 group: row.group
             };
-            console.log('default_value',default_value);
-            var config  = Object.assign({},{default_value},{title});
-            console.log('config',config);
+            console.log('default_value', default_value);
+            var config = Object.assign({}, {
+                default_value
+            }, {
+                title
+            });
+            console.log('config', config);
             if (!(key in this.$store.state.traderule.remark_dialogs)) {
-                this.$store.dispatch('update_remark_dialogs', {key,config});
+                this.$store.dispatch('update_remark_dialogs', {
+                    key,
+                    config
+                });
             };
         },
-        open_create_new_group_dialog(){
-               this.create_new_group_dialog.show = true;
+        open_create_new_group_dialog() {
+            this.create_new_group_dialog.show = true;
         },
-        copy_to_new_group(row){
-             console.log('row',row);
-             var source = row.source;
-             var group = row.group;
-            var key = source+"_"+group;
-            var title = 'Copy  '+source+' - '+group+' to new group';
-            var config  = Object.assign({},{source,group,title});
+        copy_to_new_group(row) {
+            console.log('row', row);
+            var source = row.source;
+            var group = row.group;
+            var key = source + "_" + group;
+            var title = 'Copy  ' + source + ' - ' + group + ' to new group';
+            var config = Object.assign({}, {
+                source,
+                group,
+                title
+            });
             if (!(key in this.$store.state.traderule.copy_to_new_group_dialogs)) {
-                this.$store.dispatch('update_copy_to_new_group_dialogs', {key,config});
+                this.$store.dispatch('update_copy_to_new_group_dialogs', {
+                    key,
+                    config
+                });
             };
         },
-        GroupTradeRulesTable(row){
+        GroupTradeRulesTable(row) {
             var title = {
-                text: 'Trade Rules - Source:' + row.source + " Group: "+row.group 
+                text: 'Trade Rules - Source:' + row.source + " Group: " + row.group
             }
             var source = row.source;
             var group = row.group;
-            var key = source+"_"+group;;
-            var title = 'Trade Rules - Source:' +source+' Group: '+group;
-            var tableData= [];
-            for(var k in this.$store.state.traderule.trade_rules){
+            var key = source + "_" + group;;
+            var title = 'Trade Rules - Source:' + source + ' Group: ' + group;
+            var tableData = [];
+            for (var k in this.$store.state.traderule.trade_rules) {
                 var rule = this.$store.state.traderule.trade_rules[k];
-                if(rule.source === source && rule.group === group){
+                if (rule.source === source && rule.group === group) {
                     var new_rule = this.deepCopy(rule);
-                        new_rule.source =source;
-                        new_rule.group = group;
-                        tableData.push(new_rule); 
+                    new_rule.source = source;
+                    new_rule.group = group;
+                    tableData.push(new_rule);
                 }
             }
-            var config = Object.assign({},{source,group,title,tableData});
+            var config = Object.assign({}, {
+                source,
+                group,
+                title,
+                tableData
+            });
             if (!(key in this.$store.state.traderule.view_rules_dialogs)) {
-                this.$store.dispatch('update_view_rules_dialogs', {key,config});
+                this.$store.dispatch('update_view_rules_dialogs', {
+                    key,
+                    config
+                });
             };
         },
         render_groups(rules) {
             var i, j, key, len, len1, rule, rule_key, source_group, source_groups, source_groups_dict;
             source_groups = [];
-            this.$store.dispatch('update_trade_rules',rules);
+            this.$store.dispatch('update_trade_rules', rules);
             source_groups_dict = new Object;
             for (i = 0, len = rules.length; i < len; i++) {
                 rule = rules[i];
@@ -370,7 +388,7 @@ export default {
                 }
             });
             this.tableData = source_groups;
-            console.log('tableData',this.tableData);
+            console.log('tableData', this.tableData);
         },
         render_remarks() {
             var i, j, len, len1, remark_dict, remark, row;
@@ -407,23 +425,23 @@ export default {
                 }
             })
         },
-        load_data(){
+        load_data() {
             this.$$api_common_ajax({
-                    data: {
-                      func_name:'router_api.trade_get_all_rules',
-                      args:[],
-                      kwargs:{}
-                    },
-                    fn: data => {
-                        this.trade_rules = data;
-                        console.log('trade_rules',this.trade_rules);
-                        this.render_groups(data);
-                        this.render_remarks();  
-                    }
-                  });
+                data: {
+                    func_name: 'router_api.trade_get_all_rules',
+                    args: [],
+                    kwargs: {}
+                },
+                fn: data => {
+                    this.trade_rules = data;
+                    console.log('trade_rules', this.trade_rules);
+                    this.render_groups(data);
+                    this.render_remarks();
+                }
+            });
         },
         init() {
-             this.load_data();
+            this.load_data();
         }
     },
     mounted() {

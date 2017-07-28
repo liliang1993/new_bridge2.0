@@ -9,7 +9,6 @@
                     <bread></bread>
                     <router-view></router-view>
                 </div>
-            </div>
         </div>
     </div>
 </template>

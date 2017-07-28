@@ -2,7 +2,83 @@ export default {
     name: 'lp_symbol',
     data() {
         return {
+            add_lpsymbol_dialog: {
+                show: false,
+                isModal: true,
+                title: {
+                    text: 'Add LP Symbol'
+                },
+                fields: [{
+                    type: 'input',
+                    key: 'std_symbol',
+                    label: 'STD symbol'
+                }, {
+                    key: 'lp',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'LP',
+                    list: (() => {
+                        var i, len, lps, lp, result;
+                        result = [];
+                        lps = this.$store.state.global.lps;
+                        for (i = 0, len = lps.length; i < len; i++) {
+                            lp = lps[i];
+                            result.push({
+                                value: lp,
+                                text: lp
+                            });
+                        }
+                        return result;
+                    })()
+                }, {
+                    type: 'input',
+                    key: 'lp_symbol',
+                    label: 'LP symbol'
+                }, {
+                    key: 'quote_enable',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'Quote Enable',
+                    list: [{
+                        value: 'true',
+                        text: 'true'
+                    }, {
+                        value: 'false',
+                        text: 'false'
+                    }]
+                }, {
+                    key: 'trade_enable',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'Trade Enable',
+                    list: [{
+                        value: 'true',
+                        text: 'true'
+                    }, {
+                        value: false,
+                        text: 'false'
+                    }]
+                }, {
+                    type: 'input',
+                    key: 'weight',
+                    label: 'Weight'
+                }, {
+                    type: 'input',
+                    key: 'min_qty',
+                    label: 'Min Qty'
+                }, {
+                    type: 'input',
+                    key: 'contract_size',
+                    label: 'Contract Size'
+                }],
+                default_value: {
+                    lp: this.$store.state.global.lps[0],
+                    quote_enable: 'true',
+                    trade_enable: 'true'
+                }
+            },
             tableData: [],
+
         }
     },
     computed: {
@@ -101,23 +177,40 @@ export default {
         }
     },
     methods: {
-        // add_symbol_submit(data) {
-        //         var weight,min_qty,contract_size,quote_enable,trade_enable;
-        //         console.log('submit_symbols', data);
-        //          weight = data.weight*1;
-        //          min_qty = data.min_qty*1;
-        //          contract_size = data.contract_size*1;
+        open_dialog(type) {
+            this[type].show = true;
+        },
+        close_dialog(type) {
+            this[type].show = false;
+        },
+        add_lpsymbol_submit(data) {
+            var weight, min_qty, contract_size, quote_enable, trade_enable;
+            weight = parseInt(data.weight);
+            min_qty = parseInt(data.min_qty);
+            contract_size = data.contract_size * 1;
+            quote_enable = this.string_to_boolean(data.quote_enable);
+            trade_enable = this.string_to_boolean(data.trade_enable);
+            this.$$api_common_ajax({
+                data: {
+                    func_name: 'router_api.lp_add_symbol',
+                    args: [data.lp, data.std_symbol, data.lp_symbol, quote_enable, trade_enable, weight, min_qty, contract_size],
+                    kwargs: {}
+                },
+                fn: data => {
+                    this.load_data();
+                    this.get_global_std_symbols();
+                    this.close_dialog('add_lpsymbol_dialog');
 
-        //          var params={
-        //                 func_name:'router_api.lp_add_symbol',
-        //                 args:[data.lp,data.std_symbol,data.lp_symbol,data.quote_enable,data.trade_enable,weight,min_qty,contract_size]
-        //          }
-        //          CommonApi.postFormAjax.call(this,params,data=>{
-        //                 this.load_data();
-        //                 this.get_global_std_symbols();
-        //                 this.onCloseDialog('add_symbol_dialog');
-        //          });
-        // },
+                },
+                errFn: (err) => {
+                    this.$message({
+                        showClose: true,
+                        message: err.response.data,
+                        type: 'error'
+                    });
+                }
+            });
+        },
         edit_lpsymbol_submit(row) {
             row.weight = parseInt(row.weight);
             row.min_qty = parseInt(row.min_qty);
@@ -156,7 +249,7 @@ export default {
                 },
                 fn: data => {
                     this.tableData.splice(index, 1);
-                    // this.get_global_std_symbols();
+                    this.get_global_std_symbols();
                 }
             });
         },
@@ -167,7 +260,7 @@ export default {
                 this.detele_lpsymbol_handle(row, index);
             });
         },
-        reader_lpsymbol_table() {
+        load_data() {
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_get_symbols',
@@ -184,7 +277,7 @@ export default {
             });
         },
         init() {
-            this.reader_lpsymbol_table();
+            this.load_data();
         }
     },
     mounted() {

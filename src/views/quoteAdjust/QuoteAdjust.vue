@@ -1,77 +1,99 @@
 <template>
-    <div class='clearfix'>
-<!--     <el-row>
-        <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
+    <div class='list'>
+    <el-row :gutter='20' class='top-action'>
+            <el-select v-model="current_source" placeholder="请选择" @change = 'changeSelect'>
+                <el-option
+                  v-for="item in options"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+            </el-select>
+         <b style='margin-left:10px;'>Status:</b>
+         <span class='ws_status'  :style="{backgroundColor: ws_status_bgcolor}">{{current_time}}</span>
+         <b style='margin-left:10px;'>Description:</b>
+         <span :style="{color: load_desc_color}">{{load_desc}}</span>
     </el-row>
+
     <bel-table
-      ref="table"    
+      v-if = 'mt4_panel_show'
+      ref="table"
       :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
-          </template>
-    </bel-table> 
-    <el-col :span="24" class='btm-action'>
-            <el-pagination
-                class='pagination'
-                :page-sizes="pagination.page_sizes"
-                :page-size="pagination.page_size"
-                :layout="pagination.layout"
-                :total="pagination.total"
-                :current-page='pagination.current_page'
-                @current-change='onChangeCurrentPage'
-                @size-change='onChangePageSize'>
-            </el-pagination>
-      </el-col>
-
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
+      <template slot="adjust_enabled" scope="scope">
+            <el-switch
+              v-model="scope.row.adjust_enabled"
+              on-color="#13ce66"
+              off-color="#ff4949"
+              @change ='changeSwitch($event,scope.row)'
+              >
+            </el-switch>
+      </template>
+      <template slot="rule_type" scope="scope">
+            <a 
+            href = "JavaScript:void(0)"
+            type="text" 
+            @click='show_json_table(scope.row)'>
+            {{scope.row.type}}
+            </a>
+      </template>
+      <template slot="edit_adjust" scope="scope">
+          <el-row>
+              <el-button icon="minus" @click="controlAdjust('reduce',scope.row)" >
+              </el-button>
+              <el-input style='display:inline-block;width:40px;'v-model="scope.row.adjust_step" ></el-input>
+              <el-button icon="plus" @click="controlAdjust('add',scope.row)"></el-button>
+          </el-row>
+      </template>
+      <template slot="adjust" scope="scope">
+            <span :style="scope.row.attributes.adjust > 0 ? 'color:green;':(scope.row.attributes.adjust < 0 ?'color:red;' : 'color:black;')">{{scope.row.attributes.adjust > 0 ? '+'+scope.row.attributes.adjust : scope.row.attributes.adjust}}</span>
+      </template>
+      <template slot="std_symbol" scope="scope">
+            <a href = "JavaScript:void(0)" type="text" @click = 'showLpQuotes(scope.row)'>{{scope.row.std_symbol}}</a>
+      </template>
+      <template   slot="bid_change" scope="scope">
+            <span class='arrow' :style="scope.row.bid_change== '&darr;' ?'color : red;' : ' color: green;' " v-html ='scope.row.bid_change'></span>
+      </template>
+      <template   slot="ask_change" scope="scope">
+            <span class='arrow' :style="scope.row.ask_change== '&darr;' ?'color : red;' : ' color: green;' " v-html ='scope.row.ask_change'></span>
+      </template>
+    </bel-table>
+    <drag-dialog
+                v-for="(rule_table,index) in rule_tables"
+                :key = 'rule_table'
+                :title="rule_table.title"
+                @close="onCloseRowDialog('rule_tables',index)"
           >
-                <form-data1
-                 ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog>
-
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data1
-                 ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
+               <rule-detail :Config='rule_table.config'></rule-detail> 
+    </drag-dialog>
+     <drag-dialog
+            v-for="(lp_quote,index) in lp_quotes"
+            :key = 'lp_quote'
+            :title="lp_quote.title"
+            @close="onCloseRowDialog('lp_quotes',index)"
+      >
+           <lp-quote :Config='lp_quote.config'></lp-quote> 
+    </drag-dialog>
   </div>
 </template>
-  
 <script >
-import QuoteAdjustJs from './QuoteAdjust.js';
-export default QuoteAdjustJs;
+  import QuoteAdjustJs from './QuoteAdjust.js';
+  export default QuoteAdjustJs;
 </script>
 <style scoped lang='less'>
-    @import url(QuoteAdjust.less);
+.negative{
+  color: red;
+}
+.positive{
+  color: green;
+}
+.ws_status{
+  display:inline-block;
+  line-height:30px;
+  height:30px;
+}
+.top-action{
+  margin-bottom:15px;
+}
+.arrow{
+  font-size:20px;
+}
 </style>

@@ -1,121 +1,139 @@
-/**
- * Created by sailengsi on 2017/5/11.
- */
 export default {
-  name: 'login',
+  name: 'dialognosis',
   data() {
     return {
-      winSize: {
-        width: '',
-        height: ''
-      },
-
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-      login_actions: {
-        disabled: false
-      },
-      data: {
-        username: '',
-        password: '',
-        // token: ''
-      },
-
-      rule_data: {
-        username: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'));
-            } else {
-              if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback();
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'));
-              }
-            }
-          },
-          trigger: 'blur'
-        }]
-        // password: [{
-        //  validator: (rule, value, callback) => {
-        //    if (value === '') {
-        //      callback(new Error('请输入密码'));
-        //    } else {
-        //      if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-        //        callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'));
-        //      } else {
-        //        if (this.register === true) {
-        //          if (this.data.repassword !== '') {
-        //            this.$refs.data.validateField('repassword');
-        //          }
-        //        }
-        //        callback();
-        //      }
-
-        //    }
-        //  },
-        //  trigger: 'blur'
-        // }]
-      }
+      log_value: '',
+      bridge_value: '',
+      bridge_status: ''
     }
   },
   methods: {
-    setSize() {
-      this.winSize.width = this.$$lib_$(window).width() + "px";
-      this.winSize.height = this.$$lib_$(window).height() + "px";
-
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px';
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px';
+    stringToXml(xmlString) {
+      var xmlDoc;
+      if (typeof xmlString == "string") {
+        //FF     
+        if (document.implementation.createDocument) {
+          var parser = new DOMParser();
+          xmlDoc = parser.parseFromString(xmlString, "text/xml");
+        } else if (window.ActiveXObject) {
+          xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+          xmlDoc.async = false;
+          xmlDoc.loadXML(xmlString);
+        }
+      } else {
+        xmlDoc = xmlString;
+      }
+      return xmlDoc;
     },
+    onGetErrLog() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'bridge_info.get_error_log',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          var xmlDate = this.stringToXml(data[1]);
+          this.log_value = xmlDate.getElementsByTagName('body')[0].innerHTML;
+        }
+      });
 
-    onLogin(ref, type) {
-      this.$refs[ref].validate((valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          this.$$api_user_login({
-            data: this[ref],
-            fn: data => {
-              if(data.result == true){
-                this.$store.dispatch('update_userinfo', {
-                userinfo: data.data
-              }).then(() => {
-                this.login_actions.disabled = false;
-                if(res.data.role === 'Admin'){
-                                        this.$router.push({
-                                                path: '/home/user/index'
-                                        });
-                                }else if (res.data.role === 'RulesEditor'){
-                                         this.$router.push({
-                                                path: '/home/lp/index'
-                                        });
-                                }
-              });
-              }else {
-                this.login_actions.disabled = false;
-                                this.$message.error(res.message);
-              }   
-            },
-            errFn: (err) => {
-              this.$message.error(err.msg);
-              this.login_actions.disabled = false;
-            }
-          });
+    },
+    onGetInfoLog() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'bridge_info.get_info_log',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          var xmlDate = this.stringToXml(data[1]);
+          this.log_value = xmlDate.getElementsByTagName('body')[0].innerHTML;
         }
       });
     },
+    onGetCurrentshopper() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.get_shoppers',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          this.log_value = JSON.stringify(data);
+        }
+      });
+    },
+    onGetBridgeStatus() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.get_status',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          this.bridge_status = JSON.stringify(data.valve);
+          delete data.valve;
+          this.bridge_value = data;
+        }
+      });
+    },
+    onSetMaxConcurrency() {
+      this.$prompt('Please Write Max Concurrency', 'prompt', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^([2-9][0-9]|[1-9][0-9]{2,})$/,
+        inputErrorMessage: '请输入大于等于20的数字'
+      }).then(({
+        value
+      }) => {
+        this.$$api_common_ajax({
+          data: {
+            func_name: 'router_api.set_max_concurrency',
+            args: [value],
+            kwargs: {}
+          },
+          fn: data => {
+            this.onGetBridgeStatus();
+          }
+        });
+      })
+    },
+    onStopBridge() {
 
-    resetForm(ref) {
-      this.$refs[ref].resetFields();
-    }
+      this.$confirm('Are you sure you want to stop?', 'prompt', {
+        type: 'warning'
+      }).then(() => {
+        this.$$api_common_ajax({
+          data: {
+            func_name: 'router_api.close_valve',
+            args: [value],
+            kwargs: {}
+          },
+          fn: data => {
+            this.bridge_value = 'close ' + data;
+          }
+        });
+      })
+    },
+    onOpenBridge() {
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.open_valve',
+          args: [],
+          kwargs: {}
+        },
+        fn: data => {
+          this.bridge_value = 'open' + data;
+        }
+      });
+    },
+    init() {}
   },
-  created() {
-    this.setSize();
-    this.$$lib_$(window).resize(() => {
-      this.setSize();
-    });
+  mounted() {
+    this.init();
   },
-  mounted() {}
+  '$route' (to, from) {
+
+  }
 }

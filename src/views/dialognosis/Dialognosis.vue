@@ -1,77 +1,43 @@
 <template>
-    <div class='clearfix'>
-<!--     <el-row>
-        <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
-    </el-row>
-    <bel-table
-      ref="table"    
-      :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
-          </template>
-    </bel-table> 
-    <el-col :span="24" class='btm-action'>
-            <el-pagination
-                class='pagination'
-                :page-sizes="pagination.page_sizes"
-                :page-size="pagination.page_size"
-                :layout="pagination.layout"
-                :total="pagination.total"
-                :current-page='pagination.current_page'
-                @current-change='onChangeCurrentPage'
-                @size-change='onChangePageSize'>
-            </el-pagination>
-      </el-col>
-
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
-                <form-data1
-                 ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog>
-
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data1
-                 ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
-  </div>
+    <div class="list">
+        <el-button :plain="true" type="info" @click='onGetErrLog()'>{{$t('Error Log')}}</el-button>
+        <el-button :plain="true" type="info" @click='onGetInfoLog()'>{{$t('Info Log')}}</el-button>
+        <el-button :plain="true" type="info" @click='onGetCurrentshopper()'>{{$t('Current Shopper')}}</el-button>
+        <el-input class="info_show" v-model="log_value" readonly></el-input>
+        <el-button type="primary" @click='onGetBridgeStatus()'>{{$t('Bridge status')}}</el-button>
+        <el-button type="danger" @click= 'onSetMaxConcurrency()'>{{$t('Set Max Bridge Concurrency')}}</el-button>
+        <p class='status_info'>{{$t('bridge status')}}:<span>{{bridge_status}}</span></p>
+        <div class='code-container'>
+                <pre class='bridge-code'>{{bridge_value}}</pre>
+        </div>
+        <P class='warn_info'>{{$t('WARNING: DO NOT CLICK BELOW BUTTONS IF YOU KNOW NOTHING!')}}</P>
+        <el-button type="danger" @click='onStopBridge()'>{{$t('stop bridge')}}</el-button>
+        <el-button type="primary" @click='onOpenBridge()'>{{$t('start bridge')}}</el-button>
+    </div>
 </template>
-  
-<script >
-import DialognosisJs from './Dialognosis.js';
-export default DialognosisJs;
+
+<script>
+    import DialognosisJs from './Dialognosis.js';
+    export default DialognosisJs;
 </script>
 <style scoped lang='less'>
-    @import url(Dialognosis.less);
+    .info_show{
+      margin:10px 0;
+    }
+    .warn_info{
+      color: red;
+      margin-bottom: 10px;
+    }
+    .status_info{
+      margin-top:10px;
+    }
+    .code-container{
+        
+       margin-top: 10px;
+    }
+.bridge-code{
+    border:1px solid black;
+    border-radius:  5px;
+    min-height: 80px;
+}
 </style>

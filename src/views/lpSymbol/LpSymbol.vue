@@ -2,7 +2,7 @@
   <div class='list'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddSymbol()'>{{this.$t('Add symbol')}}</el-button>
+            <el-button type='primary' @click='open_dialog("add_lpsymbol_dialog")'>{{this.$t('Add symbol')}}</el-button>
         </el-col> 
     </el-row>
     <bel-table
@@ -68,37 +68,20 @@
           </template>
     </bel-table> 
 
-  <!--   <drag-dialog
-                v-if = 'add_symbol_dialog.show'
-                :title="add_symbol_dialog.title"
-                :isModal = "add_symbol_dialog.isModal"
-                @close="onCloseDialog('add_symbol_dialog')"
+    <drag-dialog
+                v-if = 'add_lpsymbol_dialog.show'
+                :title="add_lpsymbol_dialog.title"
+                :isModal = "add_lpsymbol_dialog.isModal"
+                @close="close_dialog('add_lpsymbol_dialog')"
         >
-                <form-data1
-                  style="padding:20px 40px 20px 20px"
+                <form-data
                   ref='form-data'
-                  :FieldList='add_symbol_fieldlist'
-                  @onSubmit='add_symbol_submit'
+                  :FieldList='add_lpsymbol_dialog.fields'
+                  :DefaultValue='add_lpsymbol_dialog.default_value'
+                  @onSubmit='add_lpsymbol_submit'
                   >
-                  </form-data1>
+                  </form-data>
         </drag-dialog>
-
-        <drag-dialog
-                v-if = 'edit_symbol_dialog.show'
-                :title="edit_symbol_dialog.title"
-                :isModal = "edit_symbol_dialog.isModal"
-                @close="onCloseDialog('edit_symbol_dialog')"
-        >
-
-                <form-data1
-                  style="padding:20px 40px 20px 20px"
-                  ref='form-data1'
-                  :FieldList='edit_symbol_fieldlist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_symbol_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
   </div>
 </template>
   

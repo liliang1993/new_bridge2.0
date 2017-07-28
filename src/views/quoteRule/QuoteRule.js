@@ -74,9 +74,6 @@ export default {
             value: 'bestright',
             text: 'bestright'
           }, {
-            value: 'bestright',
-            text: 'bestright'
-          }, {
             value: 'bestright-option',
             text: 'bestright-option'
           }],
@@ -93,13 +90,15 @@ export default {
           list: (() => {
             var i, len, results;
             results = [];
-            var lps = this.$store.state.global.lps;
-            for (i = 0, len = lps.length; i < len; i++) {
-              var lp = lps[i];
-              console.log('lps', lps);
-              results.push(lp);
+            var quote_types = this.$store.state.global.quote_types;
+            for (i = 0, len = quote_types.length; i < len; i++) {
+              var quote_type = quote_types[i];
+              results.push({
+                value: quote_type,
+                text: quote_type
+              });
             }
-            console.log('results', results);
+            console.log('1111', results);
             return results;
           })(),
           desc: '请选择',
@@ -242,18 +241,13 @@ export default {
   },
   methods: {
     onCloseRuleDialog() {
-      this.ruleDialog.show = false;
+      this.add_rule_dialog.show = false;
     },
     onAddRule() {
-      this.ruleDialog.show = true;
+      this.add_rule_dialog.show = true;
     },
 
     add_rule_submit(data) {
-      // if (this.ruleDialog.title == this.$t('Add rule')) {
-      //   var func_name = 'router_api.quote_add_rule';
-      // } else {
-      //   var func_name = 'router_api.quote_update_rule';
-      // }
       var attributes = {
         digits: parseInt(data.digits),
         minimal_spread: parseInt(data.minimal_spread),
@@ -277,7 +271,7 @@ export default {
       this.$set(row, 'editFlag', true);
     },
     edit_rule_submit(row) {
-      console.log('row',row);
+      console.log('row', row);
       var attributes = {
         digits: parseInt(row.attributes.digits),
         minimal_spread: parseInt(row.attributes.minimal_spread),
@@ -285,13 +279,23 @@ export default {
         aggregator: row.attributes.aggregator,
         adjust: parseInt(row.attributes.adjust)
       }
-      console.log('attr',attributes);
-      if(row.type == 'delta'){
-          Object.assign(attributes,{bid_delta:row.attributes.bid_delta,ofr_delta:row.attributes.ofr_delta,random:row.attributes.random}); 
-      }else if(row.type == 'asian'){
-          Object.assign(attributes,{asian_delta:row.attributes.asian_delta,random:row.attributes.random}); 
-      }else if(row.type == 'spread'){
-        Object.assign(attributes,{spread_delta : row.attributes.spread_delta,random:row.attributes.random}); 
+      console.log('attr', attributes);
+      if (row.type == 'delta') {
+        Object.assign(attributes, {
+          bid_delta: row.attributes.bid_delta,
+          ofr_delta: row.attributes.ofr_delta,
+          random: row.attributes.random
+        });
+      } else if (row.type == 'asian') {
+        Object.assign(attributes, {
+          asian_delta: row.attributes.asian_delta,
+          random: row.attributes.random
+        });
+      } else if (row.type == 'spread') {
+        Object.assign(attributes, {
+          spread_delta: row.attributes.spread_delta,
+          random: row.attributes.random
+        });
       }
       this.$$api_common_ajax({
         data: {
@@ -304,7 +308,7 @@ export default {
         }
       });
     },
-    onDeleteQutoeRule(row,index) {
+    onDeleteQutoeRule(row, index) {
       this.$confirm('Are you sure you want to detele this?', 'prompt', {
         type: 'warning'
       }).then(() => {
@@ -315,8 +319,8 @@ export default {
             kwargs: {}
           },
           fn: data => {
-            console.log('index',index);
-            this.tableData.splice(index,1);
+            console.log('index', index);
+            this.tableData.splice(index, 1);
           }
         });
       })

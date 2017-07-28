@@ -96,6 +96,21 @@
               <el-input class='db' v-if='scope.row.type!== "raw"&&scope.row.editFlag' v-model='scope.row.attributes.random'></el-input> 
           </template>
     </bel-table> 
+    <drag-dialog
+                v-if="add_rule_dialog.show"
+                :title="add_rule_dialog.title"
+                :buttons="add_rule_dialog.buttons"
+                :isModal = "add_rule_dialog.isModal"
+                @close="onCloseRuleDialog"
+          >
+                <form-data
+                  ref='form-data'
+                  :FieldList='add_rule_dialog.fields'
+                  :DefaultValue='add_rule_dialog.default_value'
+                  @onSubmit='add_rule_submit'
+                  >
+                  </form-data>
+      </drag-dialog>
   </div>
 </template>
   

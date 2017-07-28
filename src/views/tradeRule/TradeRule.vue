@@ -42,6 +42,22 @@
                 >  
                 </form-data1>
       </drag-dialog> 
+      <!-- <traderule-dialog></traderule-dialog>  -->
+     <!-- <drag-dialog
+                v-if = 'edit.show'
+                :title="create_new_group_dialog.title"
+                :isModal = 'create_new_group_dialog.isModal'
+                @close="onCloseDialog('create_new_group_dialog')"
+      >
+                <form-data1
+                style = 'padding: 10px;'
+                ref='form-data'
+                :FieldList='fieldlist'
+                :DefaultValue='create_new_group_dialog.default_value'
+                @onSubmit= "create_new_group_submit"
+                >  
+                </form-data1>
+      </drag-dialog>  -->
   </div>
 </template>
 

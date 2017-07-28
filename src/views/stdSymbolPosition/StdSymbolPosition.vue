@@ -1,77 +1,125 @@
 <template>
-    <div class='clearfix'>
-<!--     <el-row>
-        <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
-    </el-row>
-    <bel-table
-      ref="table"    
-      :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
-          </template>
-    </bel-table> 
-    <el-col :span="24" class='btm-action'>
-            <el-pagination
-                class='pagination'
-                :page-sizes="pagination.page_sizes"
-                :page-size="pagination.page_size"
-                :layout="pagination.layout"
-                :total="pagination.total"
-                :current-page='pagination.current_page'
-                @current-change='onChangeCurrentPage'
-                @size-change='onChangePageSize'>
-            </el-pagination>
-      </el-col>
-
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
-                <form-data1
-                 ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog>
-
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data1
-                 ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
-  </div>
+    <section class="chart">
+        <el-row class='header_row'><b>Total Qty:</b>{{total_qty}}</el-row>
+        <el-row class='header_row'>
+            <b>CURRENT:</b>
+            <span>{{current_std_symbol}}</span>
+            &nbsp;&nbsp;
+            <b>NEXT REFRESH:</b>
+             <span class='remain_sec' >{{remain_sec}}</span>
+            <b>STATUS:</b>
+            <span :style='{color:load_text_color}'>{{load_status}}</span>
+        </el-row>
+        <el-row>
+            <el-button  type="primary"  v-for =' (item,key) in std_symbols'  @click='select_std_symbol_chart(key)'>{{key}}</el-button>  
+        </el-row>
+        <el-row  style='width:60%; margin-top:20px;'>
+                <div class="pos_chart">
+                    <div class="symbol_chart " v-for='(item,key) in  current_lp_symbols'>
+                          <div class="lp_symbol_item">
+                              <div class="lp_weight" :style="{width: item.weight_width+'%'}">
+                                </div>
+                                <div class="lp_text">
+                                    <div>
+                                            <a href="javascript:void(0)">
+                                                <span class="lp_status"  :style="{'color': item.lp_symbol.trade_enable?'green' :'red'}">
+                                                    {{item.lp_symbol.trade_enable? 'Enabled' : 'Disabled' }}
+                                                </span>
+                                                S:
+                                                <span>
+                                                    {{item.lp_symbol.lp_symbol}}
+                                                </span>
+                                                W:
+                                                <span>
+                                                    {{item.lp_symbol.weight}}
+                                                </span>
+                                            </a>
+                                    </div>
+                                    </div>
+                                <div class="lp_position" :style="{width: item.position_width+'%', backgroundColor: item.position_bgcolor}">
+                              </div>
+                                <div class="lp_qty">
+                                        <div style="margin-left: 10px;">
+                                            <span>
+                                            {{key}}
+                                            </span>
+                                            <span style="font-size: 15px;">
+                                            {{item.quantity}}
+                                            </span>
+                                        </div>
+                                </div>
+                             </div>
+                            <div style="height:20px; width:100%;">
+                            </div>
+                    </div>
+                </div>
+        </el-row>    
+    </section>    
 </template>
-  
-<script >
-import StdSymbolPositionJs from './StdSymbolPosition.js';
-export default StdSymbolPositionJs;
+
+<script>
+    import StdSymbolPositionJs from './StdSymbolPosition.js';
+    export default StdSymbolPositionJs;
 </script>
 <style scoped lang='less'>
-    @import url(StdSymbolPosition.less);
+  .header_row{
+    margin-bottom:10px;
+  }    
+  .remain_sec{
+      display:inline-block;
+      vertical-align:middle;
+      width:20px;
+      height:20px;
+      text-align:center;
+      border:2px solid #ccc;
+    }
+  .el-button{
+    width:100px;
+}
+  .pos_chart {
+    margin: 5px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 100%;
+}
+.symbol_chart {
+    width: 100%;
+}
+div.lp_symbol_item {
+    position: relative;
+}
+div.lp_weight {
+    position: absolute;
+    top: -5px;
+    height: 50px;
+    width: 100%;
+    border-right: 3px solid #140099;
+}
+div.lp_text {
+    padding-top: 10px;
+    padding-left: 10px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    font-weight: bolder;
+}
+div.lp_position {
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 40px;
+    width: 0%;
+    padding-top: 8px;
+}
+div.lp_qty {
+    padding-top: 10px;
+    position: absolute;
+    top: 0px;
+    right: -100%;
+    width: 100%;
+    font-weight: bolder;
+}
+a {
+    color: #646464;
+}
 </style>

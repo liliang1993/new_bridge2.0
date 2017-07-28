@@ -3,7 +3,9 @@
  */
 import Vue from 'vue';
 import _ from 'underscore';
-import {string} from 'utils/';
+import {
+    string
+} from 'utils/';
 import libs from './lib.js';
 import cps from './component.js';
 import mixins from './mixin';
@@ -11,7 +13,7 @@ import plugins from './plugin';
 
 // console.log(plugins);
 // console.log(libs);
-// console.log(cps);
+console.log('cps', cps);
 console.log(mixins);
 
 /**
@@ -35,12 +37,9 @@ Vue.use({
 
 
 _.each(cps, (item, key) => {
-	var cp_name=key.replace(/([A-Z])/g,"-$1").toLowerCase();
-	if(cp_name && cp_name[0]==='-'){
-		cp_name=cp_name.replace('-','');
-	}
+    var cp_name = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+    if (cp_name && cp_name[0] === '-') {
+        cp_name = cp_name.replace('-', '');
+    }
     Vue.component(cp_name, item);
 });
-
-
-
