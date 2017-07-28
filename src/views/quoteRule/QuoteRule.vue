@@ -10,6 +10,7 @@
       :configs="tableConfig">
           <template slot="handler" scope="scope">
               <el-button
+                  v-if = '!scope.row.editFlag'
                   type="info"
                   icon='edit'
                   size="mini"
@@ -19,12 +20,12 @@
                   type="info"
                   icon='upload'
                   size="mini"
-                  @click='edit_lpsymbol_submit(scope.row)'></el-button>
+                  @click='edit_rule_submit(scope.row)'></el-button>
               <el-button
                   type="danger"
                   icon='delete'
                   size="mini"
-                 @click='onDeleteQutoeRule(scope.row)' ></el-button>
+                 @click='onDeleteQutoeRule(scope.row,scope.$index)' ></el-button>
           </template>
           <template slot="digits_attr" scope="scope">
               <span v-if='!scope.row.editFlag'>{{scope.row.attributes.digits}}</span>
@@ -88,11 +89,11 @@
                   value="spread">
                 </el-option>
               </el-select>  
-              <el-input class='db' v-if='scope.row.type== "delta" &&scope.row.editFlag' v-model='scope.row.bid_delta'></el-input> 
-              <el-input class='db' v-if='scope.row.type== "delta"&&scope.row.editFlag' v-model='scope.row.ofr_delta'></el-input> 
-              <el-input  class='db' v-if='scope.row.type== "asian"&&scope.row.editFlag' v-model='scope.row.asian_delta'></el-input> 
-              <el-input class='db' v-if='scope.row.type== "spread"&&scope.row.editFlag' v-model='scope.row.spread'></el-input> 
-              <el-input class='db' v-if='scope.row.type!== "raw"&&scope.row.editFlag' v-model='scope.row.random'></el-input> 
+              <el-input class='db' v-if='scope.row.type== "delta" &&scope.row.editFlag' v-model='scope.row.attributes.bid_delta'></el-input> 
+              <el-input class='db' v-if='scope.row.type== "delta"&&scope.row.editFlag' v-model='scope.row.attributes.ofr_delta'></el-input> 
+              <el-input  class='db' v-if='scope.row.type== "asian"&&scope.row.editFlag' v-model='scope.row.attributes.asian_delta'></el-input> 
+              <el-input class='db' v-if='scope.row.type== "spread"&&scope.row.editFlag' v-model='scope.row.attributes.spread'></el-input> 
+              <el-input class='db' v-if='scope.row.type!== "raw"&&scope.row.editFlag' v-model='scope.row.attributes.random'></el-input> 
           </template>
     </bel-table> 
   </div>

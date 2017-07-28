@@ -1,77 +1,64 @@
 <template>
-    <div class='clearfix'>
-<!--     <el-row>
-        <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
-        <el-col :span='24' >
-            <strong>Users - </strong>{{nowTime}}
-        </el-col>
-    </el-row>
-    <bel-table
-      ref="table"    
-      :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
-          </template>
-    </bel-table> 
-    <el-col :span="24" class='btm-action'>
-            <el-pagination
-                class='pagination'
-                :page-sizes="pagination.page_sizes"
-                :page-size="pagination.page_size"
-                :layout="pagination.layout"
-                :total="pagination.total"
-                :current-page='pagination.current_page'
-                @current-change='onChangeCurrentPage'
-                @size-change='onChangePageSize'>
-            </el-pagination>
-      </el-col>
+    <div class="list">
+        <div >
+                <span class=" green">green: position </span>
+                <span class="red">red: negative</span>
+                <strong style='margin-left:10px;'>NEXT REFRESH:</strong>
+                <span class='remain_sec' >{{remain_sec}}</span>
+                <span style='margin-left:10px;'>STATUS:</span>
+                <span :style="{color : load_text_color}">{{load_status}}</span>
+                <span></span>
 
-        <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
-                <form-data1
-                 ref='add_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='add_user_fieldlist'
-                  @onSubmit='add_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog>
-
-         <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data1
-                 ref='edit_user_form'
-                  style="padding:20px 40px 20px 20px"
-                  :FieldList='edit_user_fieldist'
-                  :DefaultValue='default_value'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data1>
-        </drag-dialog> -->
-  </div>
+        </div> 
+         <bel-table
+              ref="table"    
+              :configs="tableConfig">
+              <template v-for='item in  lp_names'  :slot="item" scope="scope">
+                    <span :style="{'color' : scope.row[item]< 0 ? 'red' : 'green' }">{{scope.row[item]!==undefined ? Math.abs(scope.row[item]): ''}}</span>
+              </template> 
+              <template slot="total" scope="scope">
+                    <span :style="{'color' : scope.row.total< 0 ? 'red' : 'green' }">{{Math.abs(scope.row.total)}}</span>
+              </template> 
+         </bel-table>
+    </div>
 </template>
-  
-<script >
-import LpPositionJs from './LpPosition.js';
-export default LpPositionJs;
+
+<script>
+    import LpPositionJs from './LpPosition.js';
+    export default LpPositionJs;
 </script>
 <style scoped lang='less'>
-    @import url(LpPosition.less);
+    .demo-form-inline{
+        display: inline-block;
+        float: right;
+    }
+    .btm-action{
+        margin-top: 20px;
+        text-align: center;
+    }
+    .actions-top{
+        height: 46px;
+    }
+    .pagination{
+        display: inline-block;
+    }
+    .green{
+        color: green;
+    }
+    .red{
+        color: red;
+    }
+    strong{
+         display:inline-block;
+         height:40px;
+         line-height:40px;
+      }
+    .remain_sec{
+      display:inline-block;
+      vertical-align:middle;
+      width:20px;
+      height:20px;
+      text-align:center;
+      border:2px solid #ccc;
+    }
 </style>

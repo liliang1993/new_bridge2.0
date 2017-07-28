@@ -247,10 +247,7 @@ export default {
     onAddRule() {
       this.ruleDialog.show = true;
     },
-    onEditRule(row) {
-      console.log('123555');
-      this.$set(row, 'editFlag', true);
-    },
+
     add_rule_submit(data) {
       // if (this.ruleDialog.title == this.$t('Add rule')) {
       //   var func_name = 'router_api.quote_add_rule';
@@ -276,11 +273,38 @@ export default {
         }
       });
     },
-    edit_rule_submit(row) {
-      row.editFlag = false;
-
+    onEditRule(row) {
+      this.$set(row, 'editFlag', true);
     },
-    onDeleteQutoeRule(row) {
+    edit_rule_submit(row) {
+      console.log('row',row);
+      var attributes = {
+        digits: parseInt(row.attributes.digits),
+        minimal_spread: parseInt(row.attributes.minimal_spread),
+        maximal_spread: parseInt(row.attributes.maximal_spread),
+        aggregator: row.attributes.aggregator,
+        adjust: parseInt(row.attributes.adjust)
+      }
+      console.log('attr',attributes);
+      if(row.type == 'delta'){
+          Object.assign(attributes,{bid_delta:row.attributes.bid_delta,ofr_delta:row.attributes.ofr_delta,random:row.attributes.random}); 
+      }else if(row.type == 'asian'){
+          Object.assign(attributes,{asian_delta:row.attributes.asian_delta,random:row.attributes.random}); 
+      }else if(row.type == 'spread'){
+        Object.assign(attributes,{spread_delta : row.attributes.spread_delta,random:row.attributes.random}); 
+      }
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.quote_update_rule',
+          args: [row.source, row.mt4_symbol, row.std_symbol, row.type, attributes],
+          kwargs: {}
+        },
+        fn: data => {
+          this.$set(row, 'editFlag', false);
+        }
+      });
+    },
+    onDeleteQutoeRule(row,index) {
       this.$confirm('Are you sure you want to detele this?', 'prompt', {
         type: 'warning'
       }).then(() => {
@@ -291,7 +315,8 @@ export default {
             kwargs: {}
           },
           fn: data => {
-            this.tableData = data;
+            console.log('index',index);
+            this.tableData.splice(index,1);
           }
         });
       })
