@@ -3,7 +3,7 @@
  */
 
 import Login from './login/';
-import Function from './function/';
+// import Function from './function/';
 import User from './user/';
 import AuditLog from './auditLog/';
 import Lp from './lp/';
@@ -20,7 +20,6 @@ import Diagnosis from './dialognosis/';
 
 export {
 	Login,
-	Function,
 	User,
 	AuditLog,
 	Lp,

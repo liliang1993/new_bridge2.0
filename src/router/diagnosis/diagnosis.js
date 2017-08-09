@@ -7,12 +7,13 @@
 // } from 'layout/';
 
 import {
-	Diagnosis
+  Diagnosis
 } from 'views/';
 
 export default {
-	path: 'diagnosis',
-	name: 'Diagnosis',
-	icon: 'inbox',
-	component: Diagnosis
+  path: 'diagnosis',
+  name: 'Diagnosis',
+  icon: 'diag',
+  direction: 'vertical',
+  component: Diagnosis
 };

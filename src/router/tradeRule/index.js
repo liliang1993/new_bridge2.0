@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import TradeRule from './tradeRule';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/trade_rule',
-	leaf: true,
-	children: [TradeRule]
+  path: '/home',
+  name: 'home',
+  icon: 'trade_rule',
+  component: Home,
+  redirect: '/home/trade_rule',
+  leaf: true,
+  direction: 'vertical',
+  children: [TradeRule]
 };

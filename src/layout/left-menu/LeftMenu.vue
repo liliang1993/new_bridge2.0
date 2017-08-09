@@ -1,10 +1,10 @@
 <template>
-    <div class="left" :style="{'height':win_size.height,'width':$store.state.leftmenu.width}" id='admin-left'>
+    <div class="left" :style="{'height':win_size.height,'width':$store.state.leftmenu.width+'px'}" id='admin-left'>
         <div id='left-menu'>
             <el-row class='tac'>
                 <el-col :span="24">
                     <div class="logo">
-                            
+                        
                     </div>
                     <el-menu
                             class="el-menu-vertical-demo"
@@ -14,7 +14,7 @@
                             router>
                         <!-- v-if="!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[route.path+'/'+item.path]) || $store.state.user.userinfo.access_status!==1)" -->
                         <template
-                                v-for="(item,index) in $router.options.routes"
+                                v-for="(item,index) in routesFilter"
                                 v-if="!item.hidden" >
                             <el-submenu
                                     :index="item.path"
@@ -27,7 +27,7 @@
                                             placement="right"
                                             :disabled="$store.state.leftmenu.menu_flag"
                                             :content="item.name">
-                                        <i :class="'fa fa-'+item.icon"></i>
+                                        <i :class="'icon icon_'+item.icon"></i>
                                     </el-tooltip>
                                     <span
 
@@ -63,20 +63,20 @@
                                             placement="right"
                                             :disabled="$store.state.leftmenu.menu_flag"
                                             :content="item.name">
-                                           <i :class="'fa fa-'+item.icon"></i>
+                                           <i :class="'mr10 icon icon_'+item.icon"></i>
                                         </el-tooltip>
                                         <span
-                                            class='menu-name'
+                                            class='menu-name vm'
                                             v-if="$store.state.leftmenu.menu_flag">{{item.children[0].name}}<!-- {{route.path+'/'+item.path}} --></span> </el-menu-item>
                         </template>
                     </el-menu>
                 </el-col>
             </el-row>
-            <div class="toggle-menu"
+            <!-- <div class="toggle-menu"
                  @click='toggleMenu'
                  :style='{left:$store.state.leftmenu.width}'>
                 <i :class='[{"el-icon-arrow-left":$store.state.leftmenu.menu_flag},{"el-icon-arrow-right":!$store.state.leftmenu.menu_flag}]'></i>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

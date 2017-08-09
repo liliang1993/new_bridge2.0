@@ -3,7 +3,7 @@
         <div class='left-fixed'>
              <left-menu></left-menu>
         </div>
-        <div class="right-auto" :style="{marginLeft:$store.state.leftmenu.width}">
+        <div class="right-auto" :style="{marginLeft:$store.state.leftmenu.width+'px'}">
               <head-nav></head-nav>
                 <div class="content">
                     <bread></bread>
@@ -26,7 +26,7 @@
 </script>
 <style scoped lang='less'>
     .content{
-        margin-top: 60px;
+        margin-top: 100px;
         /*background: #f1f2f7;*/
         background: #FFF;
         padding: 16px;

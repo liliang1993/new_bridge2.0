@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import Lp from './lp';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/lp',
-	leaf: true,
-	children: [Lp]
+  path: '/home',
+  name: 'home',
+  icon: 'lp',
+  component: Home,
+  redirect: '/home/lp',
+  leaf: true,
+  direction: 'vertical',
+  children: [Lp]
 };

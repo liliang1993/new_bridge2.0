@@ -7,12 +7,13 @@
 // } from 'layout/';
 
 import {
-	AuditLog
+  AuditLog
 } from 'views/';
 
 export default {
-	path: 'audit_log',
-	name: 'Audit Log',
-	icon: 'inbox',
-	component: AuditLog
+  path: 'audit_log',
+  name: 'Audit Log',
+  icon: 'audit_log',
+
+  component: AuditLog
 };

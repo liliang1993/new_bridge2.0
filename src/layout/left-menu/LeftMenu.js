@@ -46,6 +46,17 @@ export default {
     mounted() {
         // console.log(this.$store.state.user.userinfo.access);
     },
+    computed: {
+        routesFilter: function() {
+            var routesList = this.$router.options.routes;
+            console.log('router', this.$router.options.routes);
+            var routers = routesList.filter(item => {
+                return item.direction == 'vertical';
+            });
+            console.log('routers', routers);
+            return routers;
+        }
+    },
     watch: {
         $route(to, from) {
             this.updateCurMenu(to);

@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import User from './user';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/user',
-	leaf: true,
-	children: [User]
+  path: '/home',
+  name: 'home',
+  icon: 'user',
+  component: Home,
+  redirect: '/home/user',
+  leaf: true,
+  direction: 'vertical',
+  children: [User]
 };

@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import StdSymbolPosition from './stdSymbolPosition';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/stdsymbol_position',
-	leaf: true,
-	children: [StdSymbolPosition]
+  path: '/home',
+  name: 'home',
+  icon: 'std_sym_pos',
+  component: Home,
+  redirect: '/home/stdsymbol_position',
+  leaf: true,
+  direction: 'vertical',
+  children: [StdSymbolPosition]
 };

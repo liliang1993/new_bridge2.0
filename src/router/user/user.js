@@ -7,12 +7,12 @@
 // } from 'layout/';
 
 import {
-	User
+  User
 } from 'views/';
 
 export default {
-	path: 'user',
-	name: 'Users',
-	icon: 'inbox',
-	component: User
+  path: 'user',
+  name: 'Users',
+  icon: 'user',
+  component: User
 };

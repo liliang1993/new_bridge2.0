@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import LpPosition from './lpPosition';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/lp_position',
-	leaf: true,
-	children: [LpPosition]
+  path: '/home',
+  name: 'home',
+  icon: 'lp_pos',
+  component: Home,
+  redirect: '/home/lp_position',
+  leaf: true,
+  direction: 'vertical',
+  children: [LpPosition]
 };

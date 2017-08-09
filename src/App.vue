@@ -73,4 +73,15 @@
             transform: scale(0);
         }
     }
+    .vm{
+        vertical-align:middle;
+    }
+    .mr15{
+        margin-right:15px;
+    }
+    .icon{
+        display:inline-block;
+        vertical-align:middle;
+        background:url(./assets/icon.png) no-repeat center;
+    }
 </style>

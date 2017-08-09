@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import AuditLog from './aduitLog';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/audit_log',
-	leaf: true,
-	children: [AuditLog]
+  path: '/home',
+  name: 'home',
+  icon: 'audit_log',
+  component: Home,
+  redirect: '/home/audit_log',
+  direction: 'vertical',
+  leaf: true,
+  children: [AuditLog]
 };

@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import QuoteRule from './quoteRule';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/quote_rule',
-	leaf: true,
-	children: [QuoteRule]
+  path: '/home',
+  name: 'home',
+  icon: 'quote_rule',
+  component: Home,
+  redirect: '/home/quote_rule',
+  leaf: true,
+  direction: 'vertical',
+  children: [QuoteRule]
 };

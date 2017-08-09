@@ -7,12 +7,13 @@
 // } from 'layout/';
 
 import {
-	CurrentOrder
+  CurrentOrder
 } from 'views/';
 
 export default {
-	path: 'current_order',
-	name: 'Current Order',
-	icon: 'inbox',
-	component: CurrentOrder
+  path: 'current_order',
+  name: 'Current Order',
+  icon: 'current_order',
+
+  component: CurrentOrder
 };

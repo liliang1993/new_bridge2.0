@@ -5,12 +5,17 @@ import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
 
-import {Home, Content} from 'layout/';
-import {Login} from 'views/';
+import {
+	Home,
+	Content
+} from 'layout/';
+import {
+	Login
+} from 'views/';
 import User from './user/';
 import AuditLog from './aduitLog/';
 import Lp from './lp/';
-import LpSymbol from './lpSymbol/';
+import StdSymbol from './StdSymbol/';
 import TradeRule from './tradeRule/';
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
@@ -21,31 +26,30 @@ import StdSymbolPosition from './stdSymbolPosition/';
 import Diagnosis from './diagnosis/';
 
 export default new Router({
-	routes: [
-		{
-			path  : '/',
-			name  : 'Hello',
+	routes: [{
+			path: '/',
+			name: 'Hello',
 			hidden: true,
-			redirect(to){
+			redirect(to) {
 				return 'login';
 			}
 		}, {
-			path     : '/login',
-			name     : '登录',
-			hidden   : true,
+			path: '/login',
+			name: '登录',
+			hidden: true,
 			component: Login
 		},
 		User,
 		AuditLog,
 		Lp,
-		LpSymbol,
+		StdSymbol,
 		TradeRule,
 		QuoteRule,
-		CurrentOrder,
-		TradeLog,
-		LpPosition,
 		QuoteAdjust,
+		CurrentOrder,
+		LpPosition,
 		StdSymbolPosition,
+		TradeLog,
 		Diagnosis
 	]
 })

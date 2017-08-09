@@ -3,18 +3,19 @@
  */
 
 import {
-	Home,
-	Content
+  Home,
+  Content
 } from 'layout/';
 
 import QuoteAdjust from './quoteAdjust';
 
 export default {
-	path: '/home',
-	name: 'home',
-	icon: 'inbox',
-	component: Home,
-	redirect: '/home/quote_adjust',
-	leaf: true,
-	children: [QuoteAdjust]
+  path: '/home',
+  name: 'home',
+  icon: 'quote_adjust',
+  component: Home,
+  redirect: '/home/quote_adjust',
+  leaf: true,
+  direction: 'vertical',
+  children: [QuoteAdjust]
 };
