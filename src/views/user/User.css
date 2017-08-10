@@ -1,0 +1,41 @@
+.actions-top {
+  height: 70px;
+}
+.btm-action {
+  margin-top: 20px;
+  text-align: center;
+}
+.user-table-wrap {
+  padding: 0 20px;
+  background-color: #fff;
+}
+.pagination {
+  display: inline-block;
+}
+.el-button {
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  float: right;
+  background-color: #0287fe;
+  font-size: 14px;
+  margin: 15px 0;
+}
+.icon_edit {
+  background-position: -84px -122px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+.icon_back {
+  background-position: -84px -100px;
+  width: 20px;
+  height: 15px;
+  cursor: pointer;
+}
+.btn_submit {
+  width: 65px;
+  height: 21px;
+  border: 1px solid #2296fd;
+  border-radius: 5px;
+}

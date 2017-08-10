@@ -25,6 +25,9 @@ import QuoteAdjust from './quoteAdjust/';
 import StdSymbolPosition from './stdSymbolPosition/';
 import Diagnosis from './diagnosis/';
 
+import Mt4Positions from './mt4Positions/';
+import TopTraders from './topTraders/';
+
 export default new Router({
 	routes: [{
 			path: '/',
@@ -50,6 +53,9 @@ export default new Router({
 		LpPosition,
 		StdSymbolPosition,
 		TradeLog,
-		Diagnosis
+		Diagnosis,
+
+		Mt4Positions,
+		TopTraders
 	]
 })

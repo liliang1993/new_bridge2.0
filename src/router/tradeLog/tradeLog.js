@@ -7,12 +7,12 @@
 // } from 'layout/';
 
 import {
-	TradeLog
+  TradeLog
 } from 'views/';
 
 export default {
-	path: 'trade_log',
-	name: 'Trade Log',
-	icon: 'inbox',
-	component: TradeLog
+  path: 'trade_log',
+  name: 'Client Trade Log',
+  icon: 'inbox',
+  component: TradeLog
 };

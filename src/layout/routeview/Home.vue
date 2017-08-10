@@ -1,14 +1,11 @@
 <template v-loading.fullscreen.lock="$store.state.global.ajax_loading">
     <div class="home">
-        <div class='left-fixed'>
-             <left-menu></left-menu>
-        </div>
-        <div class="right-auto" :style="{marginLeft:$store.state.leftmenu.width+'px'}">
-              <head-nav></head-nav>
-                <div class="content">
-                    <bread></bread>
+       
+        <left-menu></left-menu>
+        <head-nav></head-nav>       
+        <div class="content" :style="{marginLeft:$store.state.leftmenu.width+'px',height:(win_size.height-100)+'px'}">
+                    <!-- <bread></bread> -->
                     <router-view></router-view>
-                </div>
         </div>
     </div>
 </template>
@@ -21,16 +18,37 @@
         name: 'home',
         components:{
             HeadNav,LeftMenu,Bread
+        },
+        data () {
+            return {
+                win_size: {
+                    height: '',
+                }
+            }
+        },
+        methods:{
+              setSize() {
+                this.win_size.height = this.$$lib_$(window).height();
+            },
+        },
+        created(){
+            this.setSize();
+            this.$$lib_$(window).resize(() => {
+                this.setSize();
+            });
+        },
+        mounted(){
+
         }
     }
 </script>
 <style scoped lang='less'>
     .content{
         margin-top: 100px;
-        /*background: #f1f2f7;*/
-        background: #FFF;
-        padding: 16px;
+        background-color: #f5f5f5;
+        padding: 0 16px;
     }
+    
     .right-content{
         margin-bottom: 60px;
     }

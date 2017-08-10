@@ -84,4 +84,28 @@
         vertical-align:middle;
         background:url(./assets/icon.png) no-repeat center;
     }
+
+    //table
+    .el-table td, .el-table th.is-leaf {
+    border-bottom: none;
+    }
+    .el-table{
+        border:0;
+    }
+    .el-table__header-wrapper thead div{
+        background-color: #fff;
+    }
+    .el-table th{
+        background-color: #fff;
+        height:50px;
+        line-height: 50px;
+        font-size:14px;
+        
+    }
+    .el-table .el-table__body tr:nth-child(2n+1){
+        background-color: #f5f5f5;
+    }
+    .el-table::after, .el-table::before{
+        width:0px;
+    }
 </style>

@@ -14,10 +14,13 @@
             }
         },
         methods:{
-            
+           
         },
         created(){
-            
+            this.setSize();
+            this.$$lib_$(window).resize(() => {
+                this.setSize();
+            });
         },
         mounted(){
 

@@ -13,7 +13,7 @@ import {
 export default {
   path: 'diagnosis',
   name: 'Diagnosis',
-  icon: 'diag',
+  icon: 'diagnosis',
   direction: 'vertical',
   component: Diagnosis
 };

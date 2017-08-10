@@ -7,7 +7,7 @@ import Login from './login/';
 import User from './user/';
 import AuditLog from './auditLog/';
 import Lp from './lp/';
-import LpSymbol from './lpSymbol/';
+import StdSymbol from './lpSymbol/';
 import TradeRule from './tradeRule/';
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
@@ -17,13 +17,16 @@ import QuoteAdjust from './quoteAdjust/';
 import StdSymbolPosition from './stdSymbolPosition/';
 import Diagnosis from './dialognosis/';
 
+import TopTraders from './topTraders/';
+import Mt4Positions from './mt4Positions/';
+
 
 export {
 	Login,
 	User,
 	AuditLog,
 	Lp,
-	LpSymbol,
+	StdSymbol,
 	TradeRule,
 	QuoteRule,
 	CurrentOrder,
@@ -31,5 +34,8 @@ export {
 	LpPosition,
 	QuoteAdjust,
 	StdSymbolPosition,
-	Diagnosis
+	Diagnosis,
+
+	TopTraders,
+	Mt4Positions
 };

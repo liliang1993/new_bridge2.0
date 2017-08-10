@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <header class="head-nav">
+        <header class="head-nav" >
             <el-row>
                 <el-col :span="10" class="logo">
                    <!--  <span class='username'>
@@ -21,8 +21,7 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </span> -->
-                    <i class='icon icon_logo'></i>
-                    <i class='icon icon_align_justify'></i>  
+                    
                 </el-col>
                 <div  class='nav_menu'>
                         <div class="role">
@@ -31,9 +30,9 @@
                             >
                                 <span class="el-dropdown-link">
                                     {{this.$store.state.user.userinfo.username}}
-                                    <i class='icon icon_dropDown'></i>
+                                    <i class='icon icon_drop_down'></i>
                                 </span>
-                                <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-menu class='role_drop_down' slot="dropdown">
                                     <el-dropdown-item
                                             command='pass'
                                             >修改密码</el-dropdown-item>
@@ -96,76 +95,5 @@
 </script>
 
 <style scoped lang='less'>
-    .head-nav {
-        width:100%;
-        height: 100px;
-        background: #2c3544;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        z-index: 99;
-        color: #FFF;
-         line-height: 100px;
-        .logo{
-            width:240px;
-            height:100px;
-            background-color: #1c202a;        
-            .icon_logo{
-                display:inline-block;
-                vertical-align: middle;
-                width: 165px;
-                height: 40px;
-                margin-left: 18px;
-                background-position:-11px -8px;
-            }
-            .icon_align_justify{
-                display:inline-block;
-                vertical-align: middle;
-                width: 29px;
-                height: 24px;
-                margin-left: 15px;
-                background-position:-79px -53px;
-            }
-        }
-        .nav_menu{
-            float:right;
-            margin-right:47px;
-            ul{  
-                float:right;
-                li{ 
-                    height:100px;
-                    line-height:100px;
-                }
-            }
-            .role{
-                height:100px;
-                line-height:100px;
-                float:right;
-            }
-            em{ 
-                font-style:normal;
-                float:right;
-                margin-right:34px;
-            }
-        }
-    }
-    .userinfo {
-        text-align: right;
-    }
-
-    .username {
-        height: 60px;
-        line-height: 60px;
-        cursor: pointer;
-
-        .el-dropdown {
-            color: #FFF;
-        }
-    }
-    .lang {
-          height: 60px;
-          line-height: 60px;
-          cursor: pointer;
-          color: #fff;
-        }
+@import url(./HeadNav.less);
 </style>

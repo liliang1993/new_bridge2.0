@@ -2,6 +2,6 @@
  * Created by sailengsi on 2017/5/10.
  */
 
-import LpSymbol from './LpSymbol.vue';
+import StdSymbol from './LpSymbol.vue';
 
-export default LpSymbol;
+export default StdSymbol;

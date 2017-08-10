@@ -1,24 +1,36 @@
 <template>
     <div class='clearfix'>
-    <el-row>
-        <el-col :span='24' class='actions-top'>
+          <div class='actions-top'>
             <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
-        </el-col> 
-    </el-row>
-    <bel-table
-      ref="table"    
-      :configs="tableConfig">
-          <template slot="status" scope="scope">
-              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-          </template>
-          <template slot="handler" scope="scope">
-              <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditUser(scope.row)'></el-button>
-          </template>
-    </bel-table> 
+          </div>
+    <el-col :span="24" class='user-table-wrap'>
+          <bel-table
+          ref="table"    
+          :configs="tableConfig"
+          class='user-table'
+          >   
+              <template slot="roles" scope="scope">
+                  <span v-if='!scope.row.eidtFlag'>{{scope.row.role}}</span>
+                  <el-select v-if='scope.row.eidtFlag' v-model="scope.row.role" placeholder="请选择">
+                      <el-option
+                        v-for="item in $store.state.global.roles"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                  </el-select>
+              </template>
+              <template slot="status" scope="scope">
+                  <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
+              </template>
+              <template slot="handler" scope="scope">
+                  <i class='icon icon_edit' click='onEditUser'></i>
+                  <i class='icon icon_back' v-if='scope.row.eidtFlag'></i>
+                  <span class='btn_submit' v-if='scope.row.eidtFlag'>Sumbit</span>
+                  </template>
+          </bel-table> 
+    </el-col>  
+    
     <el-col :span="24" class='btm-action'>
             <el-pagination
                 class='pagination'
