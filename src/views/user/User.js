@@ -152,7 +152,7 @@ export default {
               maxHeight: '100%',
               border: false,
               defaultSort: {
-                prop: 'std_symbol'
+                prop: 'user_id'
               }
             }
           },
@@ -176,7 +176,7 @@ export default {
               label: this.$t('ROLE'),
               minWidth: 100,
               align: 'center',
-              scopedSlot: 'role'
+              scopedSlot: 'roles'
             }
           }, {
             attr: {
@@ -212,11 +212,11 @@ export default {
             }
           }, {
             attr: {
-              prop: 'description',
+              prop: 'desc',
               label: this.$t('DESCRIPTION'),
               minWidth: 100,
               align: 'center',
-              scopedSlot: 'description'
+              scopedSlot: 'desc'
             }
           }, {
             attr: {
@@ -239,7 +239,7 @@ export default {
               label: this.$t(''),
               minWidth: 100,
               scopedSlot: 'handler',
-              align: 'center'
+              align: 'left'
             }
           }]
         }
@@ -255,13 +255,26 @@ export default {
       this.add_user_dialog.show = true;
     },
 
-    onEditUser(row) {
-      this.edit_user_dialog.show = true;
-      this.$nextTick(() => {
-        Object.assign(this.edit_user_dialog.default_value, row, {
-          password: ''
-        });
-      });
+    // onEditUser(row) {
+    //   this.edit_user_dialog.show = true;
+    //   this.$nextTick(() => {
+    //     Object.assign(this.edit_user_dialog.default_value, row, {
+    //       password: ''
+    //     });
+    //   });
+    // },
+    editUser(row){
+        this.$set(row,'editFlag',true);
+        for(var item of ['role','lps','groups','symbols','desc','status']){
+          row['origin-'+item] = row[item];
+        }
+        console.log('row',row);
+    },
+    backOrigin(row){
+      this.$set(row,'editFlag',false);
+      for(var item of ['role','lps','groups','symbols','desc','status']){
+          row[item] = row['origin-'+item]; 
+        }
     },
     add_user_submit(data) {
       this.$$api_common_ajax({
@@ -281,20 +294,20 @@ export default {
         errFn: (err) => {}
       });
     },
-    edit_user_submit(data) {
+    edit_user_submit(row) {
       this.$$api_common_ajax({
         data: {
           func_name: 'user.update_user',
-          args: [data.user_id, data.password, data.role, data.status, data.desc],
+          args: [row.user_id, row.password, row.role, row.status, row.desc],
           kwargs: {
-            groups: data.groups,
-            lps: data.lps,
-            symbols: data.symbols
+            groups: row.groups,
+            lps: row.lps,
+            symbols: row.symbols
           }
         },
         fn: data => {
-          this.find_page_user();
-          this.edit_user_dialog.show = false;
+           this.$set(row,'editFlag',false);
+
         },
         errFn: (err) => {
           this.$message({

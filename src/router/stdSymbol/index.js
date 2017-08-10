@@ -7,7 +7,7 @@ import {
   Content
 } from 'layout/';
 
-import StdSymbol from './StdSymbol';
+import StdSymbol from './stdSymbol';
 
 export default {
   path: '/home',

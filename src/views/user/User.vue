@@ -10,8 +10,8 @@
           class='user-table'
           >   
               <template slot="roles" scope="scope">
-                  <span v-if='!scope.row.eidtFlag'>{{scope.row.role}}</span>
-                  <el-select v-if='scope.row.eidtFlag' v-model="scope.row.role" placeholder="请选择">
+                  <span v-if='!scope.row.editFlag'>{{scope.row.role}}</span>
+                  <el-select v-if='scope.row.editFlag' v-model="scope.row.role" placeholder="请选择">
                       <el-option
                         v-for="item in $store.state.global.roles"
                         :key="item"
@@ -20,13 +20,51 @@
                       </el-option>
                   </el-select>
               </template>
-              <template slot="status" scope="scope">
-                  <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
+              <template slot="lps" scope="scope">
+                <span v-if='!scope.row.editFlag'>{{scope.row.lps}}</span>
+                <el-input v-if='scope.row.editFlag' v-model='scope.row.lps'>
+                </el-input> 
               </template>
+              <template slot="groups" scope="scope">
+                <span v-if='!scope.row.editFlag'>{{scope.row.groups}}</span>
+                <el-input v-if='scope.row.editFlag' v-model='scope.row.groups'>
+                </el-input> 
+              </template>
+              <template slot="symbols" scope="scope">
+                <span v-if='!scope.row.editFlag'>{{scope.row.symbols}}</span>
+                <el-input v-if='scope.row.editFlag' v-model='scope.row.symbols'>
+                </el-input> 
+              </template>
+              <template slot="expire" scope="scope">
+                <span v-if='!scope.row.editFlag'>{{scope.row.expire}}</span>
+                <el-input v-if='scope.row.editFlag' v-model='scope.row.expire'>
+                </el-input> 
+              </template>
+              <template slot="desc" scope="scope">
+                <span v-if='!scope.row.editFlag'>{{scope.row.desc}}</span>
+                <el-input v-if='scope.row.editFlag' v-model='scope.row.desc'>
+                </el-input> 
+              </template>
+              <template slot="status" scope="scope">
+                  <span v-if='!scope.row.editFlag'  :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
+                    <el-select v-if='scope.row.editFlag' v-model="scope.row.status" placeholder="请选择">
+                      <el-option
+                        key="Enabled"
+                        label="Enabled"
+                        :value='0'>
+                      </el-option>
+                      <el-option
+                        key="Disabled"
+                        label="Disabled"
+                        :value='1'>
+                      </el-option>
+                    </el-select>
+              </template>
+
               <template slot="handler" scope="scope">
-                  <i class='icon icon_edit' click='onEditUser'></i>
-                  <i class='icon icon_back' v-if='scope.row.eidtFlag'></i>
-                  <span class='btn_submit' v-if='scope.row.eidtFlag'>Sumbit</span>
+                  <i class='icon icon_edit' @click='editUser(scope.row)' v-if='!scope.row.editFlag'></i>
+                  <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
+                  <span class='btn_submit' v-if='scope.row.editFlag' @click='edit_user_submit(scope.row)'>Submit</span>
                   </template>
           </bel-table> 
     </el-col>  

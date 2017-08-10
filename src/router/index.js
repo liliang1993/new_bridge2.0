@@ -15,7 +15,7 @@ import {
 import User from './user/';
 import AuditLog from './aduitLog/';
 import Lp from './lp/';
-import StdSymbol from './StdSymbol/';
+import StdSymbol from './stdSymbol/';
 import TradeRule from './tradeRule/';
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
