@@ -1,9 +1,9 @@
 <template>
     <div class='clearfix'>
           <div class='actions-top'>
-            <el-button type='primary' @click='onAddUser()'>{{$t('Add user')}}</el-button>
+            <el-button type='primary' @click='dialogTableVisible = true'>{{$t('Add user')}}</el-button>
           </div>
-    <el-col :span="24" class='user-table-wrap'>
+    <el-col :span="24" class='table-wrap'>
           <bel-table
           ref="table"    
           :configs="tableConfig"
@@ -35,11 +35,6 @@
                 <el-input v-if='scope.row.editFlag' v-model='scope.row.symbols'>
                 </el-input> 
               </template>
-              <template slot="expire" scope="scope">
-                <span v-if='!scope.row.editFlag'>{{scope.row.expire}}</span>
-                <el-input v-if='scope.row.editFlag' v-model='scope.row.expire'>
-                </el-input> 
-              </template>
               <template slot="desc" scope="scope">
                 <span v-if='!scope.row.editFlag'>{{scope.row.desc}}</span>
                 <el-input v-if='scope.row.editFlag' v-model='scope.row.desc'>
@@ -60,7 +55,11 @@
                       </el-option>
                     </el-select>
               </template>
-
+              <template slot="password" scope="scope">
+                <span v-if='!scope.row.editFlag'></span>
+                <el-input v-if='scope.row.editFlag' type='password' placeholder='Input nothing means no change' v-model='scope.row.password'>
+                </el-input> 
+              </template>
               <template slot="handler" scope="scope">
                   <i class='icon icon_edit' @click='editUser(scope.row)' v-if='!scope.row.editFlag'></i>
                   <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
@@ -83,7 +82,52 @@
             </el-pagination>
       </el-col>
 
-        <drag-dialog
+      <el-dialog title="Add User" :visible.sync="dialogTableVisible" top='40%'>
+           <bel-table
+          ref="table"    
+          :configs="new_tableConfig"
+          class='user-table'
+          >   
+              <template slot="username" scope="scope">
+                <el-input v-model='scope.row.username'>
+                </el-input> 
+              </template>
+              <template slot="password" scope="scope">
+                <el-input v-model='scope.row.password'>
+                </el-input>
+              </template>
+              <template slot="roles" scope="scope">
+                  <el-select v-model="scope.row.role" placeholder="请选择">
+                      <el-option
+                        v-for="item in $store.state.global.roles"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                  </el-select>
+              </template>
+              <template slot="lps" scope="scope">
+                <el-input  v-model='scope.row.lps'>
+                </el-input> 
+              </template>
+              <template slot="groups" scope="scope">
+                <el-input  v-model='scope.row.groups'>
+                </el-input> 
+              </template>
+              <template slot="symbols" scope="scope">
+                <el-input v-model='scope.row.symbols'>
+                </el-input> 
+              </template>
+              <template slot="desc" scope="scope">
+                <el-input v-model='scope.row.desc'>
+                </el-input> 
+              </template>
+          </bel-table> 
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='add_user_submit(new_tableData[0])'>Confirm</el-button>
+          </el-col>    
+      </el-dialog>
+        <!-- <drag-dialog
                 v-if = 'add_user_dialog.show'
                 :title="add_user_dialog.title"
                 :isModal = 'add_user_dialog.isModal'
@@ -97,9 +141,9 @@
 
                   >
                   </form-data>
-        </drag-dialog>
+        </drag-dialog> -->
 
-         <drag-dialog
+         <!-- <drag-dialog
                 v-if='edit_user_dialog.show'
                 :title="edit_user_dialog.title"
                 :isModal = 'edit_user_dialog.isModal'
@@ -112,7 +156,7 @@
                   @onSubmit='edit_user_submit'
                   >
                   </form-data>
-        </drag-dialog>
+        </drag-dialog> -->
   </div>
 </template>
   

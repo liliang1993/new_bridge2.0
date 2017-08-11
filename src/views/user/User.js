@@ -5,134 +5,17 @@ export default {
   name: 'user_list',
   data() {
     return {
-      add_user_dialog: {
-        show: false,
-        isModal: true,
-        title: {
-          text: 'Add user'
-        },
-        fields: [{
-          type: 'input',
-          key: 'username',
-          label: 'User'
-        }, {
-          type: 'input',
-          key: 'password',
-          label: 'Password'
-        }, {
-          key: 'role',
-          type: 'select',
-          desc: '请选择',
-          label: 'Role',
-          list: (() => {
-            var i, len, roles, role, result;
-            result = [];
-            roles = this.$store.state.global.roles;
-            console.log('roles', roles);
-            for (i = 0, len = roles.length; i < len; i++) {
-              role = roles[i];
-              result.push({
-                value: role,
-                text: role
-              });
-            }
-            console.log('result', result);
-            return result;
-          })()
-
-        }, {
-          type: 'input',
-          key: 'lps',
-          label: 'LPs'
-        }, {
-          type: 'input',
-          key: 'groups',
-          label: 'Groups'
-        }, {
-          type: 'input',
-          key: 'symbols',
-          label: 'MT4 Symbols'
-        }, {
-          type: 'input',
-          key: 'desc',
-          label: 'Description'
-        }],
-        default_value: {
-          role: 'Admin'
-        }
-      },
-
-
-
-      edit_user_dialog: {
-        show: false,
-        isModal: true,
-        title: {
-          text: 'Edit User'
-        },
-        fields: [{
-          type: 'input',
-          key: 'username',
-          label: 'User',
-          disabled: true,
-        }, {
-          type: 'input',
-          key: 'password',
-          desc: 'Input nothing means no change',
-          label: 'Password'
-        }, {
-          key: 'role',
-          type: 'select',
-          desc: '请选择',
-          label: 'Role',
-          list: (() => {
-            var i, len, roles, role, result;
-            result = [];
-            roles = this.$store.state.global.roles;
-            for (i = 0, len = roles.length; i < len; i++) {
-              role = roles[i];
-              result.push({
-                value: role,
-                text: role
-              });
-            }
-            return result;
-          })()
-
-        }, {
-          type: 'input',
-          key: 'lps',
-          value: '',
-          label: 'LPs'
-        }, {
-          type: 'input',
-          key: 'groups',
-          label: 'Groups'
-        }, {
-          type: 'input',
-          key: 'symbols',
-          label: 'MT4 Symbols'
-        }, {
-          key: 'status',
-          type: 'select',
-          desc: '请选择',
-          label: 'status',
-          list: [{
-            value: 0,
-            text: 'Enabled'
-          }, {
-            value: 1,
-            text: 'Disabled'
-          }]
-
-        }, {
-          type: 'input',
-          key: 'desc',
-          label: 'Description'
-        }],
-        default_value: {}
-      },
+      dialogTableVisible: false,
       tableData: [],
+      new_tableData: [{
+        user: '',
+        password: '',
+        role: 'Admin',
+        lps: '',
+        groups: '',
+        symbol: '',
+        desc: ''
+      }],
       pagination: {
         current_page: 1,
         total: 0,
@@ -201,16 +84,8 @@ export default {
               minWidth: 100,
               align: 'center',
               scopedSlot: 'symbols'
-            }
-          }, {
-            attr: {
-              prop: 'expire',
-              label: this.$t('EXPIRE'),
-              minWidth: 100,
-              align: 'center',
-              scopedSlot: 'expire'
-            }
-          }, {
+            },
+            // }, {
             attr: {
               prop: 'desc',
               label: this.$t('DESCRIPTION'),
@@ -230,7 +105,7 @@ export default {
             attr: {
               prop: '',
               label: this.$t(''),
-              minWidth: 50,
+              minWidth: 130,
               align: 'center',
               scopedSlot: 'password'
             }
@@ -240,6 +115,79 @@ export default {
               minWidth: 100,
               scopedSlot: 'handler',
               align: 'left'
+            }
+          }]
+        }
+      }
+    },
+    new_tableConfig: {
+      get() {
+        return {
+          table: {
+            attr: {
+              data: this.new_tableData,
+              maxHeight: '100%',
+              border: false,
+              defaultSort: {
+                prop: 'user_id'
+              }
+            }
+          },
+          columns: [{
+            attr: {
+              prop: 'username',
+              label: this.$t('USERNAME'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'username'
+            }
+          }, {
+            attr: {
+              prop: 'username',
+              label: this.$t('PASSWORD'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'password'
+            }
+          }, {
+            attr: {
+              prop: 'role',
+              label: this.$t('ROLE'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'roles'
+            }
+          }, {
+            attr: {
+              prop: 'lps',
+              label: this.$t('LPS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'lps'
+            }
+          }, {
+            attr: {
+              prop: 'groups',
+              label: this.$t('GROUPS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'groups'
+            }
+          }, {
+            attr: {
+              prop: 'symbols',
+              label: this.$t('MT4 SYMBOLS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'symbols'
+            },
+            // }, {
+            attr: {
+              prop: 'desc',
+              label: this.$t('DESCRIPTION'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'desc'
             }
           }]
         }
@@ -263,18 +211,18 @@ export default {
     //     });
     //   });
     // },
-    editUser(row){
-        this.$set(row,'editFlag',true);
-        for(var item of ['role','lps','groups','symbols','desc','status']){
-          row['origin-'+item] = row[item];
-        }
-        console.log('row',row);
+    editUser(row) {
+      this.$set(row, 'editFlag', true);
+      for (var item of['role', 'lps', 'groups', 'symbols', 'desc', 'status']) {
+        row['origin-' + item] = row[item];
+      }
+      console.log('row', row);
     },
-    backOrigin(row){
-      this.$set(row,'editFlag',false);
-      for(var item of ['role','lps','groups','symbols','desc','status']){
-          row[item] = row['origin-'+item]; 
-        }
+    backOrigin(row) {
+      this.$set(row, 'editFlag', false);
+      for (var item of['role', 'lps', 'groups', 'symbols', 'desc', 'status']) {
+        row[item] = row['origin-' + item];
+      }
     },
     add_user_submit(data) {
       this.$$api_common_ajax({
@@ -289,7 +237,7 @@ export default {
         },
         fn: data => {
           this.find_page_user();
-          this.add_user_dialog.show = false;
+          this.dialogTableVisible = false;
         },
         errFn: (err) => {}
       });
@@ -306,7 +254,7 @@ export default {
           }
         },
         fn: data => {
-           this.$set(row,'editFlag',false);
+          this.$set(row, 'editFlag', false);
 
         },
         errFn: (err) => {
@@ -343,6 +291,7 @@ export default {
             item.lps = attrs.lps;
             item.groups = attrs.groups;
             item.symbols = attrs.symbols;
+            item.password = '';
             console.log('item', attrs, item);
           }
           this.tableData = data[0];

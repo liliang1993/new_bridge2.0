@@ -2,83 +2,7 @@ export default {
     name: 'lp_symbol',
     data() {
         return {
-            add_lpsymbol_dialog: {
-                show: false,
-                isModal: true,
-                title: {
-                    text: 'Add LP Symbol'
-                },
-                fields: [{
-                    type: 'input',
-                    key: 'std_symbol',
-                    label: 'STD symbol'
-                }, {
-                    key: 'lp',
-                    type: 'select',
-                    desc: '请选择',
-                    label: 'LP',
-                    list: (() => {
-                        var i, len, lps, lp, result;
-                        result = [];
-                        lps = this.$store.state.global.lps;
-                        for (i = 0, len = lps.length; i < len; i++) {
-                            lp = lps[i];
-                            result.push({
-                                value: lp,
-                                text: lp
-                            });
-                        }
-                        return result;
-                    })()
-                }, {
-                    type: 'input',
-                    key: 'lp_symbol',
-                    label: 'LP symbol'
-                }, {
-                    key: 'quote_enable',
-                    type: 'select',
-                    desc: '请选择',
-                    label: 'Quote Enable',
-                    list: [{
-                        value: 'true',
-                        text: 'true'
-                    }, {
-                        value: 'false',
-                        text: 'false'
-                    }]
-                }, {
-                    key: 'trade_enable',
-                    type: 'select',
-                    desc: '请选择',
-                    label: 'Trade Enable',
-                    list: [{
-                        value: 'true',
-                        text: 'true'
-                    }, {
-                        value: false,
-                        text: 'false'
-                    }]
-                }, {
-                    type: 'input',
-                    key: 'weight',
-                    label: 'Weight'
-                }, {
-                    type: 'input',
-                    key: 'min_qty',
-                    label: 'Min Qty'
-                }, {
-                    type: 'input',
-                    key: 'contract_size',
-                    label: 'Contract Size'
-                }],
-                default_value: {
-                    lp: this.$store.state.global.lps[0],
-                    quote_enable: 'true',
-                    trade_enable: 'true'
-                }
-            },
             tableData: [],
-
         }
     },
     computed: {
@@ -89,6 +13,7 @@ export default {
                         attr: {
                             data: this.tableData,
                             maxHeight: '100%',
+                            border: false,
                             defaultSort: {
                                 prop: 'std_symbol'
                             }
@@ -122,7 +47,7 @@ export default {
                         attr: {
                             prop: 'weight',
                             label: this.$t('Weight'),
-                            width: 100,
+                            width: 120,
                             sortable: true,
                             scopedSlot: 'weight_attr',
                             align: 'center'
@@ -131,7 +56,7 @@ export default {
                         attr: {
                             prop: 'min_qty',
                             label: this.$t('Min Qty'),
-                            width: 100,
+                            width: 120,
                             sortable: true,
                             scopedSlot: 'min_qty_attr',
                             align: 'center'

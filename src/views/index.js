@@ -7,7 +7,7 @@ import Login from './login/';
 import User from './user/';
 import AuditLog from './auditLog/';
 import Lp from './lp/';
-import StdSymbol from './lpSymbol/';
+import StdSymbol from './stdSymbol/';
 import TradeRule from './tradeRule/';
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';

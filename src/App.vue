@@ -39,6 +39,25 @@
         margin:0px;
         padding:0px;
     }
+    body{line-height:1.4;color:#666;font-family:"微软雅黑";font-size: 14px;}
+    input,textarea,select{font-family:inherit;font-size:100%;}
+    input{padding:0;border:0px;outline:0;}
+    body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dt,dd,li,form{ margin:0;}
+    h4,h5,h6{font-size:12px;}
+    ul,ol,dl,li{padding-left:0; list-style-type:none;}
+    /*image with no-border*/
+    img{border:0;display: block;}
+    table { 
+        border-collapse: collapse; 
+        border-spacing: 0; 
+    }
+    tr,td,th{
+      padding:0;
+    }
+    em,i{ font-style:normal;}
+    a{ text-decoration:none;color: #666}
+    a:hover{color: #fed735}
+    /*a:hover{ color:#eac171;}*/
 
     .bounce-enter-active {
         animation: bounce-in .5s;
@@ -86,6 +105,11 @@
     }
 
     //table
+     .table-wrap{
+        padding:20px;
+        padding-top:0px;
+        background-color: #fff;
+    }
     .el-table td, .el-table th.is-leaf {
     border-bottom: none;
     }
@@ -108,4 +132,14 @@
     .el-table::after, .el-table::before{
         width:0px;
     }
+    .auditLog_table{
+    .el-table__body{
+        tr{
+          height:120px;
+          td{
+            padding:0;
+          }
+        }
+    }
+}
 </style>
