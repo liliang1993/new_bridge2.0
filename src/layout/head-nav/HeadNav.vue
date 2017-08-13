@@ -21,7 +21,10 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </span> -->
-                    
+                    <div class="logo">
+                        <i class='icon icon_logo'></i>
+                        <i class='icon icon_align_justify'></i>  
+                    </div>
                 </el-col>
                 <div  class='nav_menu'>
                         <div class="role">

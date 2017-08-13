@@ -17,7 +17,7 @@
           <template slot="copygroup" scope="scope">
              <a
                   href="javascript:void(0);"
-                  @click = 'copy_to_new_group(scope.row)'
+                  @click = 'copy_new_group(scope.row)'
                   > Copy to new group</a>
           </template>
           <template slot="remark" scope="scope">
@@ -27,7 +27,7 @@
                   >{{scope.row.remark}}</a>
           </template>
     </bel-table> 
-    <drag-dialog
+    <!-- <drag-dialog
                 v-if = 'create_new_group_dialog.show'
                 :title="create_new_group_dialog.title"
                 :isModal = 'create_new_group_dialog.isModal'
@@ -41,7 +41,7 @@
                 @onSubmit= "create_new_group_submit"
                 >  
                 </form-data1>
-      </drag-dialog> 
+      </drag-dialog>  -->
       <!-- <traderule-dialog></traderule-dialog>  -->
      <!-- <drag-dialog
                 v-if = 'edit.show'
@@ -58,6 +58,18 @@
                 >  
                 </form-data1>
       </drag-dialog>  -->
+      <el-dialog  :visible.sync="dialogTableVisible" top='40%'>
+          <el-col :span='24' class='title'>
+              {{'Copy '+dialog.source+'-'+dialog.group+'to new group'}}
+          </el-col>    
+          <form-data
+                ref='form-data'
+                :FieldList='copy_to_new_group.fields'
+                :DefaultValue='copy_to_new_group.default_value'
+                @onSubmit= "copyGroupSumbit"
+                >  
+          </form-data>
+      </el-dialog>
   </div>
 </template>
 

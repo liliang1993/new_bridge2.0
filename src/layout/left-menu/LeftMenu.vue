@@ -3,10 +3,10 @@
         <div id='left-menu'>
             <el-row class='tac'>
                 <el-col :span="24">
-                    <div class="logo">
+                   <!--  <div class="logo">
                         <i class='icon icon_logo'></i>
                         <i class='icon icon_align_justify'></i>  
-                    </div>
+                    </div> -->
                     <el-menu
                             class="el-menu-vertical-demo"
                             theme="dark"

@@ -127,16 +127,27 @@ export default {
             attr: {
               data: this.tableData,
               maxHeight: '100%',
+              border:false,
+
               defaultSort: {
                 prop: 'std_symbol'
               }
             }
           },
           columns: [{
+                  attr: {
+                          prop: 'order_id',
+                          label: this.$t('OrdID'),
+                          width: 60,
+                          scopedSlot: 'expand_content',
+                          align: 'center',
+                          type:'expand'
+                  }
+          },{
             attr: {
               prop: 'source',
               label: this.$t('source'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -144,7 +155,7 @@ export default {
             attr: {
               prop: 'mt4_symbol',
               label: this.$t('MT4 symbol'),
-              minWidth: 180,
+              minWidth: 150,
               sortable: true,
               align: 'center'
             }
@@ -152,7 +163,7 @@ export default {
             attr: {
               prop: 'std_symbol',
               label: this.$t('STD symbol'),
-              minWidth: 180,
+              minWidth: 150,
               sortable: true,
               align: 'center'
             }
@@ -194,7 +205,7 @@ export default {
             attr: {
               prop: 'attributes.minimal_spread',
               label: this.$t('Min Spread'),
-              minWidth: 120,
+              minWidth: 130,
               sortable: true,
               scopedSlot: 'min_spread_attr',
               align: 'center'
@@ -203,7 +214,7 @@ export default {
             attr: {
               prop: 'attributes.maximal_spread',
               label: this.$t('Max Spread'),
-              minWidth: 120,
+              minWidth: 130,
               sortable: true,
               scopedSlot: 'max_spread_attr',
               align: 'center'
@@ -221,7 +232,7 @@ export default {
             attr: {
               prop: 'attributes.aggregator',
               label: this.$t('Aggregator'),
-              minWidth: 120,
+              minWidth: 130,
               sortable: true,
               scopedSlot: 'aggregator_attr',
               align: 'center'
@@ -230,7 +241,7 @@ export default {
             attr: {
               // prop: 'address',
               label: this.$t('Operation'),
-              minWidth: 120,
+              width: 120,
               scopedSlot: 'handler',
               align: 'center'
             }
@@ -269,6 +280,19 @@ export default {
     },
     onEditRule(row) {
       this.$set(row, 'editFlag', true);
+    },
+    edit_quote_rule(row){
+       this.$set(row, 'editFlag', true);
+       for(var item of ['type','digits','bid_delta','ofr_delta','minimal_spread','maximal_spread','adjust','aggregator']){
+          row.attributes['origin-'+item] = row.attributes[item];
+       }
+    },
+    backOrigin(row){
+      this.$set(row, 'editFlag', false);
+       for(var item of ['type','digits','bid_delta','ofr_delta','minimal_spread','maximal_spread','adjust','aggregator']){
+          row.attributes[item] = row.attributes['origin-'+item];
+          console.log('123',row.attributes);
+       }
     },
     edit_rule_submit(row) {
       console.log('row', row);

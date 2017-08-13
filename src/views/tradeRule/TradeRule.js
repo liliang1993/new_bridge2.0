@@ -6,12 +6,8 @@ export default {
             remarks: [],
             groups: [],
             rules: [],
+            dialogTableVisible:false,
             create_new_group_dialog: {
-                title: {
-                    text: 'Add trade rule'
-                },
-                isModal: true,
-                show: false,
                 fields: [{
                     key: 'source',
                     type: 'select',
@@ -181,6 +177,37 @@ export default {
                     }]
                 }],
                 default_value: {}
+            },
+            // copy new group
+            copy_to_new_group:{
+                fields: [{
+                    key: 'source',
+                    type: 'select',
+                    desc: '请选择',
+                    label: 'source',
+                    list: (() => {
+                        var i, len, sources, source, result;
+                        result = [];
+                        sources = this.$store.state.global.sources;
+                        for (i = 0, len = sources.length; i < len; i++) {
+                            source = sources[i];
+                            result.push({
+                                value: source,
+                                text: source
+                            });
+                        }
+                        return result;
+                    })()
+                }, {
+                    type: 'input',
+                    key: 'group',
+                    label: 'Group'
+                }],
+                default_value:{}
+            },
+            dialog:{
+                source:'',
+                group:''
             }
         }
     },
@@ -191,14 +218,15 @@ export default {
                     table: {
                         attr: {
                             data: this.tableData,
-                            maxHeight: '100%'
+                            maxHeight: '100%',
+                            border:false
                         }
                     },
                     columns: [{
                         attr: {
                             prop: 'source',
                             label: this.$t('source'),
-                            Width: 80,
+                            // width: 120,
                             sortable: true,
                             // scopedSlot: 'date',
                             align: 'center'
@@ -207,14 +235,14 @@ export default {
                         attr: {
                             prop: 'group',
                             label: this.$t('group'),
-                            Width: 80,
+                            // width: 120,
                             sortable: true,
                             align: 'center'
                         }
                     }, {
                         attr: {
                             label: this.$t('MT4 symbol'),
-                            Width: 40,
+                            // width: 150,
                             sortable: true,
                             formatter(item) {
                                 return item.mt4_symbols.length;
@@ -225,7 +253,7 @@ export default {
                         attr: {
                             // prop: 'weight',
                             label: this.$t('View rules'),
-                            width: 100,
+                            // width: 100,
                             sortable: true,
                             align: 'center',
                             scopedSlot: 'rulesdetail',
@@ -234,7 +262,7 @@ export default {
                         attr: {
                             // prop: 'weight',
                             label: this.$t('Create to new rules'),
-                            width: 180,
+                            // width: 180,
                             sortable: true,
                             align: 'center',
                             scopedSlot: 'copygroup',
@@ -243,7 +271,7 @@ export default {
                         attr: {
                             prop: 'remark',
                             label: this.$t('Remark'),
-                            width: 100,
+                            // width: 100,
                             sortable: true,
                             align: 'center',
                             scopedSlot: 'remark',
@@ -267,9 +295,6 @@ export default {
         }
     },
     methods: {
-        onCloseDialog(type) {
-            this[type].show = false;
-        },
         onEditRemark(row) {
             console.log('row', row);
             var title = {
@@ -297,23 +322,12 @@ export default {
         open_create_new_group_dialog() {
             this.create_new_group_dialog.show = true;
         },
-        copy_to_new_group(row) {
+        copy_new_group(row) {
             console.log('row', row);
-            var source = row.source;
-            var group = row.group;
-            var key = source + "_" + group;
-            var title = 'Copy  ' + source + ' - ' + group + ' to new group';
-            var config = Object.assign({}, {
-                source,
-                group,
-                title
-            });
-            if (!(key in this.$store.state.traderule.copy_to_new_group_dialogs)) {
-                this.$store.dispatch('update_copy_to_new_group_dialogs', {
-                    key,
-                    config
-                });
-            };
+            this.dialogTableVisible = true;      
+        },
+        copyGroupSumbit(data){
+
         },
         GroupTradeRulesTable(row) {
             var title = {
@@ -396,26 +410,60 @@ export default {
                 func_name: 'trade_rule_remark.get_all_remarks'
             }
             remark_dict = new Object;
-            CommonApi.postFormAjax.call(this, params, remarks => {
-                for (i = 0, len = remarks.length; i < len; i++) {
-                    remark = remarks[i];
-                    remark_dict[remark.group] = remark.remark;
-                };
-                console.log('remark_dict', remark_dict);
-                for (j = 0, len1 = this.tableData.length; j < len1; j++) {
-                    row = this.tableData[j];
-                    if (row.group in remark_dict) {
-                        remark = remark_dict[row.group];
-                        this.$set(row, 'remark', remark);
-                    } else {
-                        Object.assign(row, {
-                            remark: '______________'
-                        });
-                    }
-                };
-                console.log('remark', this.tableData);
-            }, {
-                errFn(err) {
+            // this.$$api_common_ajax(this, params, remarks => {
+            //     for (i = 0, len = remarks.length; i < len; i++) {
+            //         remark = remarks[i];
+            //         remark_dict[remark.group] = remark.remark;
+            //     };
+            //     console.log('remark_dict', remark_dict);
+            //     for (j = 0, len1 = this.tableData.length; j < len1; j++) {
+            //         row = this.tableData[j];
+            //         if (row.group in remark_dict) {
+            //             remark = remark_dict[row.group];
+            //             this.$set(row, 'remark', remark);
+            //         } else {
+            //             Object.assign(row, {
+            //                 remark: '----------------'
+            //             });
+            //         }
+            //     };
+            //     console.log('remark', this.tableData);
+            // }, {
+            //     errFn(err) {
+            //         for (j = 0, len1 = this.tableData.length; j < len1; j++) {
+            //             row = this.tableData[j];
+            //             Object.assign(row, {
+            //                 remark: 'Load remark error'
+            //             });
+            //         }
+            //     }
+            // });
+            this.$$api_common_ajax({
+                data: {
+                    func_name: 'trade_rule_remark.get_all_remarks',
+                    args: [],
+                    kwargs: {}
+                },
+                fn: remarks => {
+                    for (i = 0, len = remarks.length; i < len; i++) {
+                        remark = remarks[i];
+                        remark_dict[remark.group] = remark.remark;
+                    };
+                    console.log('remark_dict', remark_dict);
+                    for (j = 0, len1 = this.tableData.length; j < len1; j++) {
+                        row = this.tableData[j];
+                        if (row.group in remark_dict) {
+                            remark = remark_dict[row.group];
+                            this.$set(row, 'remark', remark);
+                        } else {
+                            Object.assign(row, {
+                                remark: '----------------'
+                            });
+                        }
+                    };
+                    console.log('remark', this.tableData);
+                },
+                errFn: err=>{
                     for (j = 0, len1 = this.tableData.length; j < len1; j++) {
                         row = this.tableData[j];
                         Object.assign(row, {

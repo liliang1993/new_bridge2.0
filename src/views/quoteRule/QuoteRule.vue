@@ -9,7 +9,7 @@
       ref="table"    
       :configs="tableConfig">
           <template slot="handler" scope="scope">
-              <el-button
+              <!-- <el-button
                   v-if = '!scope.row.editFlag'
                   type="info"
                   icon='edit'
@@ -25,7 +25,11 @@
                   type="danger"
                   icon='delete'
                   size="mini"
-                 @click='onDeleteQutoeRule(scope.row,scope.$index)' ></el-button>
+                 @click='onDeleteQutoeRule(scope.row,scope.$index)' ></el-button> -->
+                  <i class='icon icon_edit' @click='edit_quote_rule(scope.row)' v-if='!scope.row.editFlag'></i>
+                  <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
+                  <span class='btn_submit' v-if='scope.row.editFlag' @click=' edit_quoteRule_submit(scope.row)'>Submit</span>
+                  <i class='icon icon_delete'   v-if='!scope.row.editFlag' ></i>
           </template>
           <template slot="digits_attr" scope="scope">
               <span v-if='!scope.row.editFlag'>{{scope.row.attributes.digits}}</span>
@@ -96,7 +100,7 @@
               <el-input class='db' v-if='scope.row.type!== "raw"&&scope.row.editFlag' v-model='scope.row.attributes.random'></el-input> 
           </template>
     </bel-table> 
-    <drag-dialog
+   <!--  <drag-dialog
                 v-if="add_rule_dialog.show"
                 :title="add_rule_dialog.title"
                 :buttons="add_rule_dialog.buttons"
@@ -110,7 +114,7 @@
                   @onSubmit='add_rule_submit'
                   >
                   </form-data>
-      </drag-dialog>
+      </drag-dialog> -->
   </div>
 </template>
   

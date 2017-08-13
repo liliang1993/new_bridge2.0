@@ -3,6 +3,11 @@ export default {
     data() {
         return {
             tableData: [],
+            new_tableData:[{
+
+            }],
+            dialogTableVisible:false,
+            visible:false
         }
     },
     computed: {
@@ -94,6 +99,85 @@ export default {
                             label: this.$t('Operation'),
                             minWidth: 180,
                             scopedSlot: 'handler',
+                            align: 'left',
+                            headerAlign:'left'
+                        }
+                    }]
+                }
+            }
+        },
+        new_tableConfig: {
+            get() {
+                return {
+                    table: {
+                        attr: {
+                            data: this.new_tableData,
+                            maxHeight: '100%',
+                            border: false
+                        }
+                    },
+                    columns: [{
+                        attr: {
+                            prop: 'std_symbol',
+                            label: this.$t('Std symbol'),
+                            width: 80,
+                            scopedSlot: 'std_symbol',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'lp',
+                            label: this.$t('LP'),
+                            minWidth: 100,
+                            scopedSlot: 'lp',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'lp_symbol',
+                            label: this.$t('LP symbol'),
+                            minWidth: 80,
+                            scopedSlot: 'lp_symbol',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'weight',
+                            label: this.$t('Weight'),
+                            width: 80,
+                            scopedSlot: 'weight',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'min_qty',
+                            label: this.$t('Min Qty'),
+                            width: 80,
+                            scopedSlot: 'min_qty',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'contract_size',
+                            label: this.$t('Contract Size'),
+                            minWidth: 80,
+                            scopedSlot: 'contract_size',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'quote_enable',
+                            label: this.$t('Quote Enable'),
+                            minWidth: 120,
+                            scopedSlot: 'quote_enable',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'trade_enable',
+                            label: this.$t('Trade Enable'),
+                            minWidth: 120,
+                            scopedSlot: 'trade_enable',
                             align: 'center'
                         }
                     }]
@@ -102,12 +186,6 @@ export default {
         }
     },
     methods: {
-        open_dialog(type) {
-            this[type].show = true;
-        },
-        close_dialog(type) {
-            this[type].show = false;
-        },
         add_lpsymbol_submit(data) {
             var weight, min_qty, contract_size, quote_enable, trade_enable;
             weight = parseInt(data.weight);
@@ -136,7 +214,7 @@ export default {
                 }
             });
         },
-        edit_lpsymbol_submit(row) {
+        edit_symbol_submit(row) {
             row.weight = parseInt(row.weight);
             row.min_qty = parseInt(row.min_qty);
             row.contract_size = row.contract_size * 1;
@@ -145,7 +223,7 @@ export default {
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_add_symbol',
-                    args: [row.lp, row.std_symbol, row.lp_symbol, quote_enable, trade_enable, row.weight, row.min_qty, row.contract_size],
+                    args: [row.lp, row.lp_symbol, row.std_symbol, quote_enable, trade_enable, row.weight, row.min_qty, row.contract_size],
                     kwargs: {}
                 },
                 fn: data => {
@@ -160,11 +238,7 @@ export default {
                 }
             });
         },
-        onEditSymbol(row) {
-            this.$set(row, 'editFlag', true);
-            console.log('row', row.editFlag);
-        },
-        detele_lpsymbol_handle(row, index) {
+        deteleSymbol(row, index) {
             console.log('index', index);
             this.$$api_common_ajax({
                 data: {
@@ -184,6 +258,18 @@ export default {
             }).then(() => {
                 this.detele_lpsymbol_handle(row, index);
             });
+        },
+        editSymbol(row){
+            this.$set(row,'editFlag',true);
+            for(var item of ['weight','min_qty','contract_size','quote_enable','trade_enable']){
+                row['orign-'+item] = row[item];
+            }
+        },
+        backOrigin(row){
+            this.$set(row,'editFlag',false);
+            for(var item of ['weight','min_qty','contract_size','quote_enable','trade_enable']){
+                row[item] = row['orign-'+item];
+            }
         },
         load_data() {
             this.$$api_common_ajax({
