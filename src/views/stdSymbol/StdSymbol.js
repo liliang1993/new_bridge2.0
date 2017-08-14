@@ -3,11 +3,18 @@ export default {
     data() {
         return {
             tableData: [],
-            new_tableData:[{
-
+            new_tableData: [{
+                std_symbol: '',
+                lp: '',
+                lp_symbol: '',
+                weight: '',
+                min_qty: '',
+                contract_size: '',
+                quote_enable: 'true',
+                trade_enable: 'true'
             }],
-            dialogTableVisible:false,
-            visible:false
+            dialogTableVisible: false,
+            visible: false
         }
     },
     computed: {
@@ -100,7 +107,7 @@ export default {
                             minWidth: 180,
                             scopedSlot: 'handler',
                             align: 'left',
-                            headerAlign:'left'
+                            headerAlign: 'left'
                         }
                     }]
                 }
@@ -120,7 +127,7 @@ export default {
                         attr: {
                             prop: 'std_symbol',
                             label: this.$t('Std symbol'),
-                            width: 80,
+                            width: 90,
                             scopedSlot: 'std_symbol',
                             align: 'center'
                         }
@@ -128,7 +135,7 @@ export default {
                         attr: {
                             prop: 'lp',
                             label: this.$t('LP'),
-                            minWidth: 100,
+                            width: 100,
                             scopedSlot: 'lp',
                             align: 'center'
                         }
@@ -136,7 +143,7 @@ export default {
                         attr: {
                             prop: 'lp_symbol',
                             label: this.$t('LP symbol'),
-                            minWidth: 80,
+                            width: 90,
                             scopedSlot: 'lp_symbol',
                             align: 'center'
                         }
@@ -144,7 +151,7 @@ export default {
                         attr: {
                             prop: 'weight',
                             label: this.$t('Weight'),
-                            width: 80,
+                            width: 90,
                             scopedSlot: 'weight',
                             align: 'center'
                         }
@@ -152,7 +159,7 @@ export default {
                         attr: {
                             prop: 'min_qty',
                             label: this.$t('Min Qty'),
-                            width: 80,
+                            width: 90,
                             scopedSlot: 'min_qty',
                             align: 'center'
                         }
@@ -160,7 +167,7 @@ export default {
                         attr: {
                             prop: 'contract_size',
                             label: this.$t('Contract Size'),
-                            minWidth: 80,
+                            width: 110,
                             scopedSlot: 'contract_size',
                             align: 'center'
                         }
@@ -186,7 +193,7 @@ export default {
         }
     },
     methods: {
-        add_lpsymbol_submit(data) {
+        add_symbol_submit(data) {
             var weight, min_qty, contract_size, quote_enable, trade_enable;
             weight = parseInt(data.weight);
             min_qty = parseInt(data.min_qty);
@@ -196,16 +203,16 @@ export default {
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_add_symbol',
-                    args: [data.lp, data.std_symbol, data.lp_symbol, quote_enable, trade_enable, weight, min_qty, contract_size],
+                    args: [data.lp, data.lp_symbol, data.std_symbol, quote_enable, trade_enable, weight, min_qty, contract_size],
                     kwargs: {}
                 },
                 fn: data => {
                     this.load_data();
                     this.get_global_std_symbols();
-                    this.close_dialog('add_lpsymbol_dialog');
-
+                    this.dialogTableVisible = false;
                 },
                 errFn: (err) => {
+                    console.log('123', "错误了");
                     this.$message({
                         showClose: true,
                         message: err.response.data,
@@ -238,7 +245,7 @@ export default {
                 }
             });
         },
-        deteleSymbol(row, index) {
+        delete_symbol(row, index) {
             console.log('index', index);
             this.$$api_common_ajax({
                 data: {
@@ -249,26 +256,20 @@ export default {
                 fn: data => {
                     this.tableData.splice(index, 1);
                     this.get_global_std_symbols();
+                    row.visible = false;
                 }
             });
         },
-        onDeleteSymbol(row, index) {
-            this.$confirm('Are you sure you want to detele this?', 'prompt', {
-                type: 'warning'
-            }).then(() => {
-                this.detele_lpsymbol_handle(row, index);
-            });
-        },
-        editSymbol(row){
-            this.$set(row,'editFlag',true);
-            for(var item of ['weight','min_qty','contract_size','quote_enable','trade_enable']){
-                row['orign-'+item] = row[item];
+        editSymbol(row) {
+            this.$set(row, 'editFlag', true);
+            for (var item of['weight', 'min_qty', 'contract_size', 'quote_enable', 'trade_enable']) {
+                row['orign-' + item] = row[item];
             }
         },
-        backOrigin(row){
-            this.$set(row,'editFlag',false);
-            for(var item of ['weight','min_qty','contract_size','quote_enable','trade_enable']){
-                row[item] = row['orign-'+item];
+        backOrigin(row) {
+            this.$set(row, 'editFlag', false);
+            for (var item of['weight', 'min_qty', 'contract_size', 'quote_enable', 'trade_enable']) {
+                row[item] = row['orign-' + item];
             }
         },
         load_data() {
@@ -282,6 +283,7 @@ export default {
                     for (var item of data) {
                         item.trade_enable = this.boolean_to_string(item.trade_enable);
                         item.quote_enable = this.boolean_to_string(item.quote_enable);
+                        item.visible = false;
                     }
                     this.tableData = data;
                 }

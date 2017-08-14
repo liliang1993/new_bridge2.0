@@ -30,12 +30,20 @@ export default {
             attr: {
               data: this.tableData,
               maxHeight: '100%',
+              border: false,
               defaultSort: {
                 prop: 'mt4_symbol'
               }
             }
           },
           columns: [{
+            attr: {
+              minWidth: 80,
+              type: 'expand',
+              align: 'center',
+              scopedSlot: 'expand',
+            }
+          }, {
             attr: {
               prop: 'source',
               label: this.$t('Source'),
@@ -185,7 +193,7 @@ export default {
       })(this);
     },
     ws_handle_msg(data) {
-      this.on_quote_tick(this.source, data);
+      // this.on_quote_tick(this.source, data);
     },
     ws_on_open() {
       this.set_quote_status(true);
@@ -209,9 +217,14 @@ export default {
       this.ws_close();
     },
     //................................................
-
     interval_check() {
       this.current_time = new Date().toISOString();
+    },
+    enterEdit(row) {
+      this.$set(row, 'editFlag', true);
+    },
+    exitEdit(row) {
+      this.$set(row, 'editFlag', false);
     },
     load_quote_rules() {
       // var params = {
@@ -304,7 +317,9 @@ export default {
     on_quote_tick(source, data) {
       var ask, bid, digits, mt4_symbol, rule, time;
       mt4_symbol = data[0], bid = data[1], ask = data[2], time = data[3];
+
       rule = this.quote_rules[source][mt4_symbol];
+      // console.log('123', this.quote_rules, rule);
       if (!rule || this.current_source !== source) {
         return;
       }
@@ -341,10 +356,6 @@ export default {
     controlAdjust(type, row) {
       var adjust, adjust_pips;
       console.log('adjust_enabled', row.adjust_enabled);
-      if (row.adjust_enabled == false) {
-        this.$message.warning('Please enable adjust.');
-        return;
-      }
       if (isNaN(parseInt(row.adjust_step))) {
         this.$message.warning('please input right pips!');
         return;
@@ -377,12 +388,6 @@ export default {
       });
 
     },
-    changeSwitch(event, row) {
-
-    },
-    onCloseRowDialog(type, index) {
-      this[type].splice(index, 1);
-    },
     showLpQuotes(row) {
 
       this.$$api_common_ajax({
@@ -395,31 +400,11 @@ export default {
           var lp_quotes = data
           console.log('lp_quotes', data);
           var digits = row.attributes.digits;
-          var config = {
+          this.lp_quote.config = {
             lp_quotes,
             digits,
             std_symbol: row.std_symbol
           };
-          var id = row.mt4_symbol
-          var title = 'LP Qutoe -' + row.std_symbol;
-          var lp_quote = {
-            title,
-            config,
-            id
-          };
-          if (!this.isDialogExist(this.lp_quotes, lp_quote)) {
-            this.lp_quotes.push(lp_quote);
-          };
-          setTimeout(() => {
-            // CommonApi.postNormalAjax.call(this, params, data => {
-            //   var lp_quotes = data
-            //   var digits = row.attributes.digits;
-            //   var config = {
-            //     lp_quotes,
-            //     digits
-            //   };
-            // })
-          }, 3000);
         },
         errFn: (err) => {
           this.$message.error(err.msg);

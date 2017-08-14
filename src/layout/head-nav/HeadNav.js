@@ -109,7 +109,9 @@ export default {
                 }
             });
         },
-
+        toggleLeftMenu() {
+            this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open');
+        },
         /**
          * 更改系统默认语言
          * @Author Dannis

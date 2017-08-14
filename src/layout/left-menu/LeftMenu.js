@@ -12,9 +12,6 @@ export default {
         setSize() {
             this.win_size.height = this.$$lib_$(window).height() + "px";
         },
-        toggleMenu() {
-            this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open');
-        },
         updateCurMenu(route) {
             var route = route || this.$route;
             if (route.matched.length) {

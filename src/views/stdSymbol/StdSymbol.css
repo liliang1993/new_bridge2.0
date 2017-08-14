@@ -1,0 +1,21 @@
+.actions-top {
+  height: 70px;
+}
+.actions-top .el-button {
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  float: right;
+  background-color: #0287fe;
+  font-size: 14px;
+  margin: 15px 0;
+}
+.confirm_btn {
+  text-align: center;
+}
+.confirm_btn .el-button {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 300px;
+  height: 40px;
+}

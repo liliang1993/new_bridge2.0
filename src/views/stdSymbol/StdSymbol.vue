@@ -12,9 +12,20 @@
               <template slot="handler" scope="scope">
                   <i class='icon icon_edit' @click='editSymbol(scope.row)' v-if='!scope.row.editFlag'></i>
                   <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
-                  <span class='btn_submit' v-if='scope.row.editFlag' @click=' edit_symbol_submit(scope.row)'>Submit</span>
-                  <i class='icon icon_delete'   v-if='!scope.row.editFlag' ></i>
-       
+                  <span class='btn_submit' v-if='scope.row.editFlag' @click='edit_symbol_submit(scope.row)'>Submit</span>
+                  <el-popover
+                    ref="popover{{$index}}" 
+                    placement="top"
+                    width="160"
+                    v-model="scope.row.visible">
+                    <p>确定删除？</p>
+                    <div style="text-align: right; margin: 0">
+                      <el-button size="mini" type="text" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="primary" size="mini" @click="delete_symbol(scope.row,scope.$index)">确定</el-button>
+                    </div>
+                  </el-popover>   
+                  <i class="icon icon_delete" v-popover:popover{{$index}} v-if='!scope.row.editFlag' ></i>
+                  
               </template>
               <template slot="weight_attr" scope="scope">
                   <span v-if='!scope.row.editFlag' >{{scope.row.weight}}</span>
@@ -66,7 +77,7 @@
               <template slot="lp" scope="scope">
                 <el-select v-model="scope.row.lp" placeholder="请选择">
                       <el-option
-                        v-for="item in $store.state.global.lp"
+                        v-for="item in $store.state.global.lps"
                         :key="item"
                         :label="item"
                         :value="item">
@@ -109,7 +120,7 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_user_submit(new_tableData[0])'>Submit</el-button>
+              <el-button type="primary" @click='add_symbol_submit(new_tableData[0])'>Submit</el-button>
           </el-col>    
       </el-dialog>
   </div>

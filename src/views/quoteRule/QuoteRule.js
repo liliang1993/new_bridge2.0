@@ -127,7 +127,7 @@ export default {
             attr: {
               data: this.tableData,
               maxHeight: '100%',
-              border:false,
+              border: false,
 
               defaultSort: {
                 prop: 'std_symbol'
@@ -135,15 +135,6 @@ export default {
             }
           },
           columns: [{
-                  attr: {
-                          prop: 'order_id',
-                          label: this.$t('OrdID'),
-                          width: 60,
-                          scopedSlot: 'expand_content',
-                          align: 'center',
-                          type:'expand'
-                  }
-          },{
             attr: {
               prop: 'source',
               label: this.$t('source'),
@@ -251,13 +242,6 @@ export default {
     }
   },
   methods: {
-    onCloseRuleDialog() {
-      this.add_rule_dialog.show = false;
-    },
-    onAddRule() {
-      this.add_rule_dialog.show = true;
-    },
-
     add_rule_submit(data) {
       var attributes = {
         digits: parseInt(data.digits),
@@ -281,18 +265,18 @@ export default {
     onEditRule(row) {
       this.$set(row, 'editFlag', true);
     },
-    edit_quote_rule(row){
-       this.$set(row, 'editFlag', true);
-       for(var item of ['type','digits','bid_delta','ofr_delta','minimal_spread','maximal_spread','adjust','aggregator']){
-          row.attributes['origin-'+item] = row.attributes[item];
-       }
+    edit_quote_rule(row) {
+      this.$set(row, 'editFlag', true);
+      for (var item of['type', 'digits', 'bid_delta', 'ofr_delta', 'minimal_spread', 'maximal_spread', 'adjust', 'aggregator']) {
+        row.attributes['origin-' + item] = row.attributes[item];
+      }
     },
-    backOrigin(row){
+    backOrigin(row) {
       this.$set(row, 'editFlag', false);
-       for(var item of ['type','digits','bid_delta','ofr_delta','minimal_spread','maximal_spread','adjust','aggregator']){
-          row.attributes[item] = row.attributes['origin-'+item];
-          console.log('123',row.attributes);
-       }
+      for (var item of['type', 'digits', 'bid_delta', 'ofr_delta', 'minimal_spread', 'maximal_spread', 'adjust', 'aggregator']) {
+        row.attributes[item] = row.attributes['origin-' + item];
+        console.log('123', row.attributes);
+      }
     },
     edit_rule_submit(row) {
       console.log('row', row);
@@ -332,22 +316,22 @@ export default {
         }
       });
     },
-    onDeleteQutoeRule(row, index) {
-      this.$confirm('Are you sure you want to detele this?', 'prompt', {
-        type: 'warning'
-      }).then(() => {
-        this.$$api_common_ajax({
-          data: {
-            func_name: 'router_api.quote_del_rule',
-            args: [row.source, row.mt4_symbol],
-            kwargs: {}
-          },
-          fn: data => {
-            console.log('index', index);
-            this.tableData.splice(index, 1);
-          }
-        });
-      })
+    delete_quote_rule(row, index) {
+      console.log('index', index);
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.quote_del_rule',
+          args: [row.source, row.mt4_symbol],
+          kwargs: {}
+        },
+        fn: data => {
+          console.log('123');
+          row.visible = false;
+          console.log('table', this.tableData);
+          // this.tableData.splice(index, 1);
+          console.log('table1', this.tableData);
+        }
+      });
     },
     load_data() {
       this.$$api_common_ajax({
@@ -358,6 +342,9 @@ export default {
         },
         fn: data => {
           console.log('555', data);
+          for (var item of data) {
+            item.visible = false;
+          };
           this.tableData = data;
         }
       });

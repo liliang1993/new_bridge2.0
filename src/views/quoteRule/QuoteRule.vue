@@ -9,27 +9,21 @@
       ref="table"    
       :configs="tableConfig">
           <template slot="handler" scope="scope">
-              <!-- <el-button
-                  v-if = '!scope.row.editFlag'
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditRule(scope.row)'></el-button>
-              <el-button
-                  v-if = 'scope.row.editFlag'
-                  type="info"
-                  icon='upload'
-                  size="mini"
-                  @click='edit_rule_submit(scope.row)'></el-button>
-              <el-button
-                  type="danger"
-                  icon='delete'
-                  size="mini"
-                 @click='onDeleteQutoeRule(scope.row,scope.$index)' ></el-button> -->
                   <i class='icon icon_edit' @click='edit_quote_rule(scope.row)' v-if='!scope.row.editFlag'></i>
                   <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
                   <span class='btn_submit' v-if='scope.row.editFlag' @click=' edit_quoteRule_submit(scope.row)'>Submit</span>
-                  <i class='icon icon_delete'   v-if='!scope.row.editFlag' ></i>
+                   <el-popover
+                    ref="popover{{$index}}" 
+                    placement="top"
+                    width="160"
+                    v-model="scope.row.visible">
+                    <p>确定删除？</p>
+                    <div style="text-align: right; margin: 0">
+                      <el-button size="mini" type="text" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="primary" size="mini" @click="delete_quote_rule(scope.row,scope.$index)">确定</el-button>
+                    </div>
+                  </el-popover>  
+                  <i class='icon icon_delete' v-popover:popover{{$index}}  v-if='!scope.row.editFlag' ></i>
           </template>
           <template slot="digits_attr" scope="scope">
               <span v-if='!scope.row.editFlag'>{{scope.row.attributes.digits}}</span>
@@ -45,6 +39,7 @@
               </el-input>  
           </template>
           <template slot="aggregator_attr" scope="scope">
+             
               <span v-if='!scope.row.editFlag'>{{scope.row.attributes.aggregator}}</span>
               <el-select v-if='scope.row.editFlag' v-model='scope.row.attributes.aggregator'>
                 <el-option
@@ -69,8 +64,16 @@
               <el-input v-if='scope.row.editFlag' v-model='scope.row.attributes.adjust'></el-input>  
           </template>
           <template slot="type_attr" scope="scope">
-              <span v-if='!scope.row.editFlag'>{{scope.row.type}}</span>
-
+              <el-popover
+                    ref="popover{{$index}}" 
+                    placement="bottom-start"
+                    v-if='!scope.row.editFlag || scope.row.attributes.type =="raw"'
+                    width="160"
+                    trigger='hover'
+                    >
+                    <p>确定删除？</p>
+                  </el-popover> 
+              <span v-if='!scope.row.editFlag' v-popover:popover{{$index}}>{{scope.row.type}}</span>
               <el-select class='db' v-if='scope.row.editFlag' v-model='scope.row.type'>
                 <el-option 
                   key="raw"
@@ -100,21 +103,7 @@
               <el-input class='db' v-if='scope.row.type!== "raw"&&scope.row.editFlag' v-model='scope.row.attributes.random'></el-input> 
           </template>
     </bel-table> 
-   <!--  <drag-dialog
-                v-if="add_rule_dialog.show"
-                :title="add_rule_dialog.title"
-                :buttons="add_rule_dialog.buttons"
-                :isModal = "add_rule_dialog.isModal"
-                @close="onCloseRuleDialog"
-          >
-                <form-data
-                  ref='form-data'
-                  :FieldList='add_rule_dialog.fields'
-                  :DefaultValue='add_rule_dialog.default_value'
-                  @onSubmit='add_rule_submit'
-                  >
-                  </form-data>
-      </drag-dialog> -->
+    
   </div>
 </template>
   
@@ -123,10 +112,5 @@ import QuoteRuleJs from './QuoteRule.js';
 export default QuoteRuleJs;
 </script>
 <style scoped lang='less'>
-    .actions-top{
-        margin-bottom: 10px;
-    }
-    .db{
-      display:block;
-    }
+    @import url(QuoteRule.less);
 </style>

@@ -23,7 +23,7 @@
                     </span> -->
                     <div class="logo">
                         <i class='icon icon_logo'></i>
-                        <i class='icon icon_align_justify'></i>  
+                        <i class='icon icon_align_justify' @click='toggleLeftMenu'></i>  
                     </div>
                 </el-col>
                 <div  class='nav_menu'>
