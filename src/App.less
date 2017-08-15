@@ -26,7 +26,9 @@
     }
     a{ text-decoration:none;color:#000}
     /*a:hover{ color:#eac171;}*/
-
+    .l{
+        float:left;
+    }
     .bounce-enter-active {
         animation: bounce-in .5s;
         -webkit-animation:bounce-in .5s;
@@ -92,6 +94,7 @@
         height:50px;
         line-height: 50px;
         font-size:14px;
+        font-weight: bold;
         
     }
     .el-table .el-table__body tr:nth-child(2n+1){
@@ -100,7 +103,7 @@
     .el-table::after, .el-table::before{
         width:0px;
     }
-     .icon_edit{
+    .icon_edit{
         background-position: -84px -122px;
         height: 20px;
         width: 20px;
@@ -119,6 +122,16 @@
         width: 20px;
         cursor: pointer;
         margin-left: 10px;
+    }
+    .icon_refresh_enable{
+        background-position: -115px -100px;
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+        margin-top: -5px;
+        &.active{
+            background-position: -115px -80px;
+        }
     }
     .btn_submit{
         display:inline-block;
@@ -143,6 +156,20 @@
           td{
             padding:0;
           }
+        }
+    }
+}
+
+//current order css
+.add_position_dialog{
+    .el-dialog{
+        width: 1100px;
+        .el-dialog__title{
+            font-size:20px;
+            font-weight:bold;
+        }
+        .el-dialog__body{
+            padding-top:15px;
         }
     }
 }

@@ -1,26 +1,31 @@
 <template>
     <div class='clearfix'>
-    <el-row style='margin-bottom:10px;'>
+    <el-row>
         <div class='actions-top'>
-            <el-button type='primary' @click='onAddPosition()'>{{$t('Add Position')}}</el-button>
+            <el-button type='primary' @click='dialogTableVisible=true;'>{{$t('Add Position')}}</el-button>
             <el-button type='primary' @click='onDeletePosition()'>{{$t('Delete Position')}}</el-button>
         </div>
     </el-row>
-    <el-row class='prompt'>
-           <strong >Order Positions - </strong>
-           <span>{{nowTime}}</span>
-           <strong class='next_refresh'>NEXT REFRESH: </strong> 
-          <span class='remain_sec'>{{ remain_sec}}</span>
-           <strong class='desc'>Enable Auto Refresh:</strong>
-            <el-switch
-              v-model="refresh_enable"
-              on-color="#13ce66"
-              off-color="#ff4949"
-              on-value="true"
-              off-value="false"
-              @change ='changeSwitch'
-              >
-            </el-switch>
+    <el-row class='current_order_panel' style='height:30px;
+      line-height: 30px;'>
+<!--           <div class="l">
+              <em >ORDER POSITIONS - </em>
+              <span>{{nowTime}}</span>
+          </div>
+          <div class="l">
+              <em class='next_refresh'>NEXT REFRESH: </em> 
+              <span class='remain_sec'>{{ remain_sec}}</span>
+          </div>
+          <div class="l">
+            <em class='desc'>Enable Auto Refresh:</em>
+            <i></i>
+          </div> -->
+           <em style="color:#969696;font-weight:bold;">ORDER POSITIONS - </em>
+           <span class='table_update_at'>{{nowTime}}</span>
+           <em class='next_refresh'>NEXT REFRESH: </em> 
+            <span class='remain_sec'>{{remain_sec}}</span>
+           <strong class='desc'>ENABLE AUTO REFRESH:</strong>
+            <i class='icon icon_refresh_enable' :class="{active: isActive}" @click='auto_refresh_control()'></i>
     </el-row>
     <bel-table
       ref="table"
@@ -48,7 +53,10 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
-    <drag-dialog 
+      <el-dialog class='add_position_dialog' title="Add Position" :visible.sync="dialogTableVisible" top='10%'>
+           <add-position></add-position>   
+      </el-dialog>
+   <!--  <drag-dialog 
         v-for = "(lp_order,index) in lp_orders"
         class='drag_dialog'
         :key="lp_order"
@@ -83,7 +91,7 @@
         @close = "onCloseOnlyDialog('del_position')"
       >
       <del-position></del-position>
-    </drag-dialog>  
+    </drag-dialog>   -->
   </div>
 </template>
   
@@ -92,35 +100,5 @@ import  CurrentOrderJs from './CurrentOrder.js';
 export default CurrentOrderJs;
 </script>
 <style scoped lang='less'>
-    .btm-action{
-        margin-top: 20px;
-        text-align: center;
-    }
-     .pagination{
-        display: inline-block;
-    }
-  .prompt{
-    margin-bottom:10px;
-     strong{
-         display:inline-block;
-
-         line-height:16px;
-         font-size:16px;
-      }
-     .next_refresh{
-        margin-left:10px;
-     }
-     .remain_sec{
-      display:inline-block;
-      width:25px;
-      height:25px;
-      text-align:center;
-      border:2px solid #ccc;
-      line-height:21px;
-    }
-    .desc{
-      margin-left:10px;
-    }
-  }
-   
+@import url(./CurrentOrder.less);
 </style>

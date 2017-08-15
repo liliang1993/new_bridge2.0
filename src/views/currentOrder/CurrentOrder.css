@@ -1,0 +1,42 @@
+.btm-action {
+  margin-top: 20px;
+  text-align: center;
+}
+.pagination {
+  display: inline-block;
+}
+.actions-top {
+  padding-top: 35px;
+  padding-bottom: 10px;
+}
+.actions-top .el-button {
+  border-radius: 20px;
+  width: 140px;
+  height: 40px;
+  background-color: #0287fe;
+  font-size: 14px;
+}
+.current_order_panel {
+  margin-bottom: 10px;
+}
+.current_order_panel .table_update_at {
+  color: #323232;
+  font-weight: bold;
+}
+.current_order_panel .next_refresh {
+  color: #323232;
+  font-weight: bold;
+}
+.current_order_panel .remain_sec {
+  display: inline-block;
+  width: 29px;
+  height: 29px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 29px;
+  color: #0287f9;
+}
+.current_order_panel .desc {
+  color: #323232;
+  font-weight: bold;
+}

@@ -56,6 +56,6 @@
 import AuditLogJs from './AuditLog.js';
 export default AuditLogJs;
 </script>
-<style  lang='less'>
+<style  scoped lang='less'>
      @import url(AuditLog.less);
 </style>
