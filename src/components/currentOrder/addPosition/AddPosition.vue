@@ -27,7 +27,7 @@
       ref="table"
       :configs="tableConfig">
         <template v-for='(item,index) in tableConfig.columns'  :slot="item.attr.label" scope="scope">
-              <el-input  :placeholder='item.attr.label' v-model='scope.row[item.attr.prop].value'  :class='scope.row[item.attr.prop].class'></el-input>
+              <input  :placeholder='item.attr.label.toLowerCase()' v-model='scope.row[item.attr.prop].value' class='table_input_wrap' :class='scope.row[item.attr.prop].class'></input>
         </template>
         <template slot="delete" scope="scope">
               <el-button

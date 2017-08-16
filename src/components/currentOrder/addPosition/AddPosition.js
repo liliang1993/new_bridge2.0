@@ -29,6 +29,7 @@ export default {
             attr: {
               data: this.tableData,
               maxHeight: '100%',
+              border:false,
               defaultSort: {
                 prop: 'std_symbol'
               }
@@ -37,111 +38,111 @@ export default {
           columns: [{
             attr: {
               prop: 'LOGIN',
-              label: this.$t('login'),
-              minWidth: 80,
-              scopedSlot: this.$t('login'),
+              label: this.$t('LOGIN'),
+              width: 60,
+              scopedSlot: this.$t('LOGIN'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'group',
-              label: this.$t('group'),
-              minWidth: 120,
-              scopedSlot: this.$t('group'),
+              label: this.$t('GROUP'),
+              width: 65,
+              scopedSlot: this.$t('GROUP'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'city',
-              label: this.$t('city'),
-              minWidth: 120,
-              scopedSlot: this.$t('city'),
+              label: this.$t('CITY'),
+              width: 50,
+              scopedSlot: this.$t('CITY'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'TICKET',
-              label: this.$t('order_id'),
-              width: 120,
-              scopedSlot: this.$t('order_id'),
+              label: this.$t('ORD_ID'),
+              width: 65,
+              scopedSlot: this.$t('ORD_ID'),
               align: 'center',
             }
           }, {
             attr: {
               prop: 'SYMBOL',
-              label: this.$t('symbol'),
-              width: 100,
+              label: this.$t('SYMBOL'),
+              width: 75,
               align: 'center',
-              scopedSlot: this.$t('order_id')
+              scopedSlot: this.$t('SYMBOL')
             }
           }, {
             attr: {
               prop: 'CMD',
-              label: this.$t('cmd'),
-              minWidth: 100,
-              scopedSlot: this.$t('cmd'),
+              label: this.$t('CMD'),
+              width: 50,
+              scopedSlot: this.$t('CMD'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'OPEN_PRICE',
-              label: this.$t('price'),
-              minWidth: 100,
-              scopedSlot: this.$t('price'),
+              label: this.$t('PRICE'),
+              width: 55,
+              scopedSlot: this.$t('PRICE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'VOLUME',
-              label: this.$t('size'),
-              minWidth: 100,
-              scopedSlot: this.$t('size'),
+              label: this.$t('SIZE'),
+              width: 50,
+              scopedSlot: this.$t('SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'DIGITS',
-              label: this.$t('dights'),
-              minWidth: 100,
-              scopedSlot: this.$t('dights'),
+              label: this.$t('DIGHTS'),
+              width: 65,
+              scopedSlot: this.$t('DIGHTS'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'CONTRACT_SIZE',
-              label: this.$t('contract_size'),
-              minWidth: 100,
-              scopedSlot: this.$t('contract_size'),
+              label: this.$t('CON_SIZE'),
+              width: 90,
+              scopedSlot: this.$t('CON_SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'min_size',
-              label: this.$t('min_size'),
-              minWidth: 120,
-              scopedSlot: this.$t('min_size'),
+              label: this.$t('MIN_SIZE'),
+              width: 80,
+              scopedSlot: this.$t('MIN_SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'step_size',
-              label: this.$t('step_size'),
-              minWidth: 120,
-              scopedSlot: this.$t('step_size'),
+              label: this.$t('STEP_SIZE'),
+              width: 90,
+              scopedSlot: this.$t('STEP_SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'COMMENT',
-              label: this.$t('comment'),
-              minWidth: 120,
-              scopedSlot: this.$t('comment'),
+              label: this.$t('COMMENT'),
+              width: 90,
+              scopedSlot: this.$t('COMMENT'),
               align: 'center'
             }
           }, {
             attr: {
-              label: this.$t('Delete'),
-              minWidth: 120,
+              label: this.$t('DELETE'),
+              width: 80,
               scopedSlot: 'delete',
               align: 'center'
             }
