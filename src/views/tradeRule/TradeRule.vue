@@ -58,10 +58,8 @@
                 >  
                 </form-data1>
       </drag-dialog>  -->
-      <el-dialog  :visible.sync="dialogTableVisible" top='40%'>
-          <el-col :span='24' class='title'>
-              {{'Copy '+dialog.source+'-'+dialog.group+'to new group'}}
-          </el-col>    
+      <el-dialog :visible.sync="dialogTableVisible" top='40%' class='copy_group_dialog'>   
+          <h2>{{'Copy '+copy_group_dialog.source+'-'+copy_group_dialog.group+' to new group'}}</h2> 
           <form-data
                 ref='form-data'
                 :FieldList='copy_to_new_group.fields'

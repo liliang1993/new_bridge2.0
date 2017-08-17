@@ -8,17 +8,18 @@ import {
   DialogInfo,
   Echarts,
   DragDialog,
-  AddPosition,
+  CurrentOrder,
 } from 'cps/';
 
-// console.log(Echarts);
+console.log('CurrentOrder', CurrentOrder);
 
 export default {
   ListData,
   FormData,
   DialogInfo,
   DragDialog,
-  AddPosition,
+  AddPosition: CurrentOrder.AddPosition,
+  DeletePosition: CurrentOrder.DeletePosition,
   EchartsBarDefault: Echarts.Bar.Default,
   EchartsBarHorizontal: Echarts.Bar.Horizontal,
   EchartsLineDefault: Echarts.Line.Default,

@@ -9,7 +9,8 @@ export default {
       remain_sec: 0,
       refresh_seconds: 5,
       isActive: false,
-      dialogTableVisible: false,
+      deletePositionDialogVisible: false,
+      addPositionDialogVisible: false,
       lp_orders: [],
       trade_logs: [],
       add_position: {

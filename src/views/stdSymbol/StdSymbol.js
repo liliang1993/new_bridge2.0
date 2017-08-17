@@ -246,7 +246,7 @@ export default {
             });
         },
         delete_symbol(row, index) {
-            console.log('index', index);
+            // console.log('index', index, row, scope);
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_del_symbol',
@@ -254,7 +254,8 @@ export default {
                     kwargs: {}
                 },
                 fn: data => {
-                    this.tableData.splice(index, 1);
+                    // for ()
+                    this.init();
                     this.get_global_std_symbols();
                     row.visible = false;
                 }

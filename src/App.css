@@ -169,6 +169,12 @@ a {
   cursor: pointer;
   margin-left: 10px;
 }
+.icon_add {
+  background-position: -80px -235px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
 .icon_refresh_enable {
   background-position: -115px -100px;
   height: 15px;
@@ -195,6 +201,31 @@ a {
 .el-table th > div {
   padding: 0 5px;
 }
+.el-form .el-select {
+  width: 100%;
+}
+.copy_group_dialog .el-dialog {
+  width: auto;
+}
+.copy_group_dialog .el-dialog .el-dialog__header {
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.copy_group_dialog .el-dialog .el-dialog__header .el-dialog__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.copy_group_dialog .el-dialog .el-dialog__body {
+  padding-top: 15px;
+}
+.dialog_table {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.dialog_table .el-table__header-wrapper th {
+  font-weight: normal;
+  color: #fff;
+}
 .auditLog_table .el-table__body tr {
   height: 120px;
 }
@@ -209,5 +240,25 @@ a {
   font-weight: bold;
 }
 .add_position_dialog .el-dialog .el-dialog__body {
+  padding-top: 15px;
+}
+.add_position_dialog .el-dialog__header {
+  padding-left: 60px;
+}
+.add_position_dialog .el-dialog__body {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.delete_position_dialog .el-dialog {
+  width: 935px;
+}
+.delete_position_dialog .el-dialog .el-dialog__header {
+  padding-left: 20px;
+}
+.delete_position_dialog .el-dialog .el-dialog__header .el-dialog__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.delete_position_dialog .el-dialog .el-dialog__body {
   padding-top: 15px;
 }

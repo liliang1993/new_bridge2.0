@@ -4,6 +4,7 @@
              ref='form-data'
              :inline="setting.inline"
              :rules='rules'
+             label-position='top'
              :model='submit_data'>
         <el-form-item
                 class='edit-form'
@@ -22,7 +23,7 @@
         </el-form-item>
 
         <el-form-item>
-            <el-button type="primary" @click='onSubmit("form-data")'>提交</el-button>
+            <el-button  class='form_sumbit' type="primary" @click='onSubmit("form-data")'>Sumbit</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -36,4 +37,8 @@
         display: inline-block;
         float: right;
     }
+    .form_sumbit{
+        width:100%;
+    }   
+    
 </style>

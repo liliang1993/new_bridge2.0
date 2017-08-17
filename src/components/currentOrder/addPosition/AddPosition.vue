@@ -25,24 +25,30 @@
       </el-row>
       <bel-table
       ref="table"
+      class='dialog_table'
       :configs="tableConfig">
         <template v-for='(item,index) in tableConfig.columns'  :slot="item.attr.label" scope="scope">
               <input  :placeholder='item.attr.label.toLowerCase()' v-model='scope.row[item.attr.prop].value' class='table_input_wrap' :class='scope.row[item.attr.prop].class'></input>
         </template>
         <template slot="delete" scope="scope">
-              <el-button
+              <!-- <el-button
                   type="danger"
                   icon='delete'
                   size="mini"
-                  @click='onDeleteRow(scope.row)'></el-button>
+                  @click='onDeleteRow(scope.row)'></el-button> -->
+                  <i class='icon icon_delete'  @click='onDeleteRow(scope.row)'></i>
           </template>
     </bel-table>
     <el-row>
         <el-col :span='24' class='btm-action'>
-              <el-button  class='icon'  icon="plus" @click='addNewRow()' ></el-button>
+             <!--  <el-button  class='icon'  icon="plus" @click='addNewRow()' ></el-button> -->
+             <i class='icon icon_add' @click='addNewRow()'></i>
         </el-col>
-         <el-col :span='2' >
+         <!-- <el-col :span='2' >
                   <el-button  type='primary' @click='onSubmit' >Submit</el-button>
+          </el-col>  -->
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click=''>Sumbit</el-button>
           </el-col> 
     </el-row>
    

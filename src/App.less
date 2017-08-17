@@ -75,7 +75,7 @@
     }
 
     //public css
-     .table-wrap{
+    .table-wrap{
         padding:20px;
         padding-top:0px;
         background-color: #fff;
@@ -123,6 +123,12 @@
         cursor: pointer;
         margin-left: 10px;
     }
+    .icon_add{
+        background-position: -80px -235px;
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+    }
     .icon_refresh_enable{
         background-position: -115px -100px;
         height: 15px;
@@ -148,28 +154,88 @@
     .el-table .cell, .el-table th>div {
         padding:0 5px;
     }
-//auditLog css
-.auditLog_table{
-    .el-table__body{
-        tr{
-          height:120px;
-          td{
-            padding:0;
-          }
+    .el-form{
+        .el-select{
+            width:100%;
         }
     }
-}
+    //trade rule css
+    .copy_group_dialog{
+        .el-dialog{
+            width:auto;
+            .el-dialog__header{
+                padding-left:20px;
+                padding-top: 10px;
+                .el-dialog__title{
+                    font-size:20px;
+                    font-weight:bold;
+                }
+            }
+            .el-dialog__body{
+                padding-top:15px;
+            }
+        }
+    }
+    //dialog table css
+    .dialog_table{
+        border:1px solid #ccc;
+        border-radius: 5px;
+        .el-table__header-wrapper{
+                th{
+                    font-weight: normal;
+                    color:#fff;
+                }
+        }
+    }
+    //auditLog css
+    .auditLog_table{
+        .el-table__body{
+            tr{
+              height:120px;
+              td{
+                padding:0;
+              }
+            }
+        }
+    }
 
-//current order css
-.add_position_dialog{
-    .el-dialog{
-        width: 1100px;
-        .el-dialog__title{
-            font-size:20px;
-            font-weight:bold;
+    //current order css
+    .add_position_dialog{
+        .el-dialog{
+            width: 1100px;
+            .el-dialog__title{
+                font-size:20px;
+                font-weight:bold;
+            }
+            .el-dialog__body{
+                padding-top:15px;
+            }
+        }
+    }
+    //add positon css
+    .add_position_dialog{
+        .el-dialog__header{
+            padding-left:60px;
         }
         .el-dialog__body{
-            padding-top:15px;
-        }
+                padding-left:60px;
+                padding-right:60px;
+            }
     }
-}
+    //delete position css
+    .delete_position_dialog{
+        .el-dialog{
+            width: 935px;
+            .el-dialog__header{
+                padding-left:20px;
+                .el-dialog__title{
+                    font-size:20px;
+                    font-weight:bold;
+                }
+            }
+            .el-dialog__body{
+                padding-top:15px;
+            }
+        }
+        
+    }

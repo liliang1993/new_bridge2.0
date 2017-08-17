@@ -6,7 +6,7 @@ export default {
             remarks: [],
             groups: [],
             rules: [],
-            dialogTableVisible:false,
+            dialogTableVisible: false,
             create_new_group_dialog: {
                 fields: [{
                     key: 'source',
@@ -179,7 +179,7 @@ export default {
                 default_value: {}
             },
             // copy new group
-            copy_to_new_group:{
+            copy_to_new_group: {
                 fields: [{
                     key: 'source',
                     type: 'select',
@@ -203,11 +203,11 @@ export default {
                     key: 'group',
                     label: 'Group'
                 }],
-                default_value:{}
+                default_value: {}
             },
-            dialog:{
-                source:'',
-                group:''
+            copy_group_dialog: {
+                source: '',
+                group: ''
             }
         }
     },
@@ -219,7 +219,7 @@ export default {
                         attr: {
                             data: this.tableData,
                             maxHeight: '100%',
-                            border:false
+                            border: false
                         }
                     },
                     columns: [{
@@ -324,9 +324,11 @@ export default {
         },
         copy_new_group(row) {
             console.log('row', row);
-            this.dialogTableVisible = true;      
+            this.dialogTableVisible = true;
+            this.copy_group_dialog.source = row.source;
+            this.copy_group_dialog.group = row.group;
         },
-        copyGroupSumbit(data){
+        copyGroupSumbit(data) {
 
         },
         GroupTradeRulesTable(row) {
@@ -457,13 +459,13 @@ export default {
                             this.$set(row, 'remark', remark);
                         } else {
                             Object.assign(row, {
-                                remark: '----------------'
+                                remark: '-------------------'
                             });
                         }
                     };
                     console.log('remark', this.tableData);
                 },
-                errFn: err=>{
+                errFn: err => {
                     for (j = 0, len1 = this.tableData.length; j < len1; j++) {
                         row = this.tableData[j];
                         Object.assign(row, {

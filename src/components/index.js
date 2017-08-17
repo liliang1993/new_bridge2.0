@@ -6,8 +6,8 @@ import DragDialog from './drag-dialog/';
 import TraderuleDialog from './traderule-dialog/';
 import LPQuote from './LPQuote/';
 import lang from './lang/';
-import AddPosition from './currentOrder/';
-console.log('trader', AddPosition);
+import CurrentOrder from './currentOrder/';
+// console.log('add', AddPosition);
 export {
   Echarts,
   ListData,
@@ -17,6 +17,6 @@ export {
   AddPosition,
   DragDialog,
   LPQuote,
-
+  CurrentOrder
   // DeletePosition
 };

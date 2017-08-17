@@ -2,8 +2,8 @@
     <div class='clearfix'>
     <el-row>
         <div class='actions-top'>
-            <el-button type='primary' @click='dialogTableVisible=true;'>{{$t('Add Position')}}</el-button>
-            <el-button type='primary' @click='onDeletePosition()'>{{$t('Delete Position')}}</el-button>
+            <el-button type='primary' @click='addPositionDialogVisible=true;'>{{$t('Add Position')}}</el-button>
+            <el-button type='primary' @click='deletePositionDialogVisible=true;'>{{$t('Delete Position')}}</el-button>
         </div>
     </el-row>
     <el-row class='current_order_panel' style='height:30px;
@@ -53,9 +53,13 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
-      <el-dialog class='add_position_dialog' title="Add Position" :visible.sync="dialogTableVisible" top='10%'>
+      <el-dialog class='add_position_dialog' title="Add Position" :visible.sync="addPositionDialogVisible" top='10%'>
            <add-position></add-position>   
       </el-dialog>
+      <el-dialog class='delete_position_dialog' title="Delete Position" :visible.sync="deletePositionDialogVisible" top='10%'>
+           <delete-position></delete-position>   
+      </el-dialog>
+      
    <!--  <drag-dialog 
         v-for = "(lp_order,index) in lp_orders"
         class='drag_dialog'

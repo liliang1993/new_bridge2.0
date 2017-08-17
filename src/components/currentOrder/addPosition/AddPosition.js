@@ -29,7 +29,7 @@ export default {
             attr: {
               data: this.tableData,
               maxHeight: '100%',
-              border:false,
+              border: false,
               defaultSort: {
                 prop: 'std_symbol'
               }
@@ -103,7 +103,7 @@ export default {
             attr: {
               prop: 'DIGITS',
               label: this.$t('DIGHTS'),
-              width: 65,
+              width: 70,
               scopedSlot: this.$t('DIGHTS'),
               align: 'center'
             }
@@ -142,7 +142,7 @@ export default {
           }, {
             attr: {
               label: this.$t('DELETE'),
-              width: 80,
+              minWidth: 80,
               scopedSlot: 'delete',
               align: 'center'
             }
