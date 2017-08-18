@@ -6,7 +6,7 @@ export default {
       tableData: [],
       lp_names: [],
       next_fresh_time: 0,
-      remain_sec: '',
+      remain_sec: 0,
       load_status: 'loading...',
       load_text_color: 'black',
       api_requested: true,

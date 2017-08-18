@@ -9,6 +9,7 @@ import {
   Echarts,
   DragDialog,
   CurrentOrder,
+  TradeRule
 } from 'cps/';
 
 console.log('CurrentOrder', CurrentOrder);
@@ -20,6 +21,7 @@ export default {
   DragDialog,
   AddPosition: CurrentOrder.AddPosition,
   DeletePosition: CurrentOrder.DeletePosition,
+  AddTraderule: TradeRule.AddTradeRule,
   EchartsBarDefault: Echarts.Bar.Default,
   EchartsBarHorizontal: Echarts.Bar.Horizontal,
   EchartsLineDefault: Echarts.Line.Default,

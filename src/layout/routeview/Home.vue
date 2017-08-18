@@ -7,8 +7,8 @@
                     <!-- <bread></bread> -->
                     <router-view></router-view>
         </div>
-        <drag-dialog>
-            <!-- <add-tradeRule></add-tradeRule> -->
+        <drag-dialog class='add_traderule_dialog'>
+            <add-traderule></add-traderule>
         </drag-dialog>
     </div>
 </template>

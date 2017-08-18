@@ -7,6 +7,7 @@ import TraderuleDialog from './traderule-dialog/';
 import LPQuote from './LPQuote/';
 import lang from './lang/';
 import CurrentOrder from './currentOrder/';
+import TradeRule from './trade-rule'
 // console.log('add', AddPosition);
 export {
   Echarts,
@@ -17,6 +18,7 @@ export {
   AddPosition,
   DragDialog,
   LPQuote,
-  CurrentOrder
+  CurrentOrder,
+  TradeRule
   // DeletePosition
 };

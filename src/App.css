@@ -80,6 +80,15 @@ a {
 .l {
   float: left;
 }
+.w100 {
+  width: 100%;
+}
+.w70 {
+  width: 70%;
+}
+.w80 {
+  width: 85%;
+}
 .bounce-enter-active {
   animation: bounce-in 0.5s;
   -webkit-animation: bounce-in 0.5s;
@@ -120,6 +129,12 @@ a {
   display: inline-block;
   vertical-align: middle;
   background: url(assets/icon.png) no-repeat center;
+}
+.dib {
+  display: inline-block;
+}
+.lh35 {
+  line-height: 35px;
 }
 .table-wrap {
   padding: 20px;
@@ -217,6 +232,9 @@ a {
 }
 .copy_group_dialog .el-dialog .el-dialog__body {
   padding-top: 15px;
+}
+.add_traderule_dialog .popup {
+  max-width: 650px;
 }
 .dialog_table {
   border: 1px solid #ccc;
