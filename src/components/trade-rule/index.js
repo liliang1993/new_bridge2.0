@@ -1,4 +1,4 @@
-import TradeRuleDia from './TradeRuleDia/';
+import TradeRuleDia from './tradeRuleDia/';
 export default {
   TradeRuleDia
 };

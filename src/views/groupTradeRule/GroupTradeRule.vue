@@ -7,7 +7,7 @@
                       <el-button type='primary' @click='onSubmitChanges()'>{{$t('Submit Changes')}}</el-button>
                       <el-button type='primary' @click='onInvertSelect()'>{{$t('Invert select')}}</el-button>
                       <el-button type='danger'   @click='onBatchDelete()'>{{$t('Delete selected rules')}}</el-button>
-                      <el-button type='primary' @click='onAddRule()'>{{$t('Add rule')}}</el-button>
+                      <el-button type='primary' @click='addTradeRule()'>{{$t('Add rule')}}</el-button>
                       </el-col>
           </el-row>
     <bel-table

@@ -14,10 +14,17 @@
             <traderule-dia></traderule-dia>
         </drag-dialog>
 
-        <drag-dialog class='edit_traderule_dialog' 
-        v-if='$store.state.traderule.edit_trade_group'
-        :title = 'item.title'
+        <drag-dialog class='add_traderule_dialog' 
+        v-if='$store.state.traderule.edit_trade_rule'
+        
         @close = 'close_edit_trade_rule'
+        >
+            <traderule-dia></traderule-dia>
+        </drag-dialog>
+        <drag-dialog class='add_traderule_dialog' 
+        v-if='$store.state.traderule.add_trade_rule'
+        
+        @close = 'close_add_trade_rule'
         >
             <traderule-dia></traderule-dia>
         </drag-dialog>
@@ -53,6 +60,12 @@
             },
             close_add_trade_group(){
                 this.$store.dispatch('hide_trade_group');
+            },
+            close_edit_trade_rule(){
+                this.$store.dispatch('hide_edit_trade_rule');
+            },
+            close_add_trade_rule(){
+                this.$store.dispatch('hide_trade_rule');
             }
         },
         created(){

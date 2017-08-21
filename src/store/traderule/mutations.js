@@ -51,9 +51,9 @@ export default {
     state.add_trade_group = true;
   }, [types.HIDE_TRADAE_GROUP](state) {
     state.add_trade_group = false;
-  }, [types.SHOW_TRADAE_RULE](state) {
+  }, [types.SHOW_TRADE_RULE](state) {
     state.add_trade_rule = true;
-  }, [types.HIDE_TRADAE_RULE](state) {
+  }, [types.HIDE_TRADE_RULE](state) {
     state.add_trade_rule = false;
   }, [types.UPDATE_TRADE_RULES](state, trade_rules) {
     console.log('remark_dialog', trade_rules);

@@ -96,7 +96,7 @@ export default {
 		commit
 	}) => {
 		return new Promise((resolve, reject) => {
-			commit(types.SHOW_TRADAE_RULE);
+			commit(types.SHOW_TRADE_RULE);
 			resolve();
 		});
 	},
@@ -104,7 +104,7 @@ export default {
 		commit
 	}) => {
 		return new Promise((resolve, reject) => {
-			commit(types.HIDE_TRADAE_RULE);
+			commit(types.HIDE_TRADE_RULE);
 			resolve();
 		});
 	},
@@ -112,7 +112,7 @@ export default {
 		commit
 	}) => {
 		return new Promise((resolve, reject) => {
-			commit(types.SHOW_EDIT_TRADAE_RULE);
+			commit(types.SHOW_EDIT_TRADE_RULE);
 			resolve();
 		});
 	},
@@ -120,7 +120,7 @@ export default {
 		commit
 	}) => {
 		return new Promise((resolve, reject) => {
-			commit(types.HIDE_EDIT_TRADAE_RULE);
+			commit(types.HIDE_EDIT_TRADE_RULE);
 			resolve();
 		});
 	},

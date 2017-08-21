@@ -34,7 +34,7 @@ export default {
         attr: {
           prop: 'route',
           label: this.$t('ROUTE'),
-          minWidth: 180,
+          minWidth: 100,
           sortable: true,
           align: 'center',
           scopedSlot: 'route_type',
@@ -97,7 +97,20 @@ export default {
       }, {
         attr: {
           label: this.$t('OPEN PARTIAL'),
-          minWidth: 120,
+          renderHeader(createElement, {
+            column
+          }) {
+            if (this.$store.state.global.locale == 'en-US') {
+              return createElement('span', ['OPEN',
+                createElement('br'), 'PARTIAL'
+              ]);
+            } else {
+              return createElement('span', ['请求差价',
+                createElement('br'), '(pips)'
+              ]);
+            }
+          },
+          minWidth: 100,
           sortable: true,
           align: 'center',
           scopedSlot: 'open_partial'
@@ -141,7 +154,7 @@ export default {
               ]);
             }
           },
-          minWidth: 180,
+          minWidth: 90,
           sortable: true,
           align: 'center',
           scopedSlot: 'bbook_exec_type'
@@ -191,6 +204,9 @@ export default {
     editTradeRule(row) {
       this.$store.dispatch('show_edit_trade_rule');
       // row.attributes
+    },
+    addTradeRule(){
+      this.$store.dispatch('show_trade_rule');
     },
     onInvertSelect() {
       this.toggleSelection(this.tableData);

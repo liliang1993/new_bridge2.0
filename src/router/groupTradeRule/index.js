@@ -7,7 +7,7 @@ import {
   Content
 } from 'layout/';
 
-import GroupTradeRule from './GroupTradeRule';
+import GroupTradeRule from './groupTradeRule';
 
 export default {
   path: '/home',

@@ -2,25 +2,25 @@ export default {
   name: 'tradeRule-dia',
   data() {
     return {
-      source: 'risehills',
-      group: '',
-      mt4_symbol: '',
-      std_symbol: this.$store.state.global.std_symbols[0],
-      route_type: {
+      source: this.Source || this.$store.state.global.sources[0],
+      group: this.Group || '',
+      mt4_symbol: this.Mt4Symbol || '',
+      std_symbol: this.StdSymbol || this.$store.state.global.std_symbols[0],
+      route_type: this.Attributes.route_type  || {
         threshold: '0',
         left: 'ratio',
         right: 'bestright',
       },
-      coverage: '',
-      better_fill: '',
-      open_threshold: '',
-      open_probe: '',
-      close_probe: '',
-      close_threshold: '',
-      markup: '',
-      open_partial: 'true',
-      open_lp_rejected_retry: 'true',
-      bbook_exec_type: 'worst',
+      coverage: this.Attributes.coverage || '',
+      better_fill: this.Attributes.better_fill || '',
+      open_threshold:this.Attributes.open_threshold || '',
+      open_probe: this.Attributes.open_probe || '',
+      close_probe: this.Attributes.close_probe || '',
+      close_threshold: this.Attributes.close_threshold || '',
+      markup: this.Attributes.markup || '',
+      open_partial: this.Attributes.open_partial ||'true',
+      open_lp_rejected_retry: this.Attributes.open_lp_rejected_retry || 'true',
+      bbook_exec_type: this.Attributes.bbook_exec_type ||'worst',
       limit_order_types_options: [{
         label: 'Instant',
         isChecked: false,
@@ -95,6 +95,15 @@ export default {
       return result;
     }
   },
+  props: {
+      Attrubutes: {
+      type: Object,
+      default(){
+        return {};
+      }
+    },
+  },
+
   methods: {
     addNewRow() {
       this.slippages_options.push([{

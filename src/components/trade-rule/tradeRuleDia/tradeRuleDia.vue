@@ -175,7 +175,7 @@
 </template>
   
 <script >
-import TradeRuleDiaJs from './TradeRuleDia.js';
+import TradeRuleDiaJs from './tradeRuleDia.js';
 export default TradeRuleDiaJs;
 </script>
 <style scoped lang='less'>
