@@ -21,7 +21,7 @@ export default {
   DragDialog,
   AddPosition: CurrentOrder.AddPosition,
   DeletePosition: CurrentOrder.DeletePosition,
-  AddTraderule: TradeRule.AddTradeRule,
+  TraderuleDia: TradeRule.TradeRuleDia,
   EchartsBarDefault: Echarts.Bar.Default,
   EchartsBarHorizontal: Echarts.Bar.Horizontal,
   EchartsLineDefault: Echarts.Line.Default,

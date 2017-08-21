@@ -3,16 +3,18 @@
  */
 
 // import {
-// 	Content
+//  Content
 // } from 'layout/';
 
 import {
-	TradeRule
+  TradeRule
 } from 'views/';
-
+import GroupTradeRule from './groupTradeRule';
 export default {
-	path: 'trade_rule',
-	name: 'Trade Rule',
-	icon: 'inbox',
-	component: TradeRule
+  path: 'trade_rule',
+  name: 'Trade Rule',
+  icon: 'inbox',
+  component: TradeRule
+    // children: [GroupTradeRule]
+
 }

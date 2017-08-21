@@ -320,7 +320,7 @@ export default {
             };
         },
         open_create_new_group_dialog() {
-            this.create_new_group_dialog.show = true;
+            this.$store.dispatch('show_trade_group');
         },
         copy_new_group(row) {
             console.log('row', row);
@@ -332,39 +332,41 @@ export default {
 
         },
         GroupTradeRulesTable(row) {
-            var title = {
-                text: 'Trade Rules - Source:' + row.source + " Group: " + row.group
-            }
-            var source = row.source;
-            var group = row.group;
-            var key = source + "_" + group;;
-            var title = 'Trade Rules - Source:' + source + ' Group: ' + group;
-            var tableData = [];
-            for (var k in this.$store.state.traderule.trade_rules) {
-                var rule = this.$store.state.traderule.trade_rules[k];
-                if (rule.source === source && rule.group === group) {
-                    var new_rule = this.deepCopy(rule);
-                    new_rule.source = source;
-                    new_rule.group = group;
-                    tableData.push(new_rule);
-                }
-            }
-            var config = Object.assign({}, {
-                source,
-                group,
-                title,
-                tableData
-            });
-            if (!(key in this.$store.state.traderule.view_rules_dialogs)) {
-                this.$store.dispatch('update_view_rules_dialogs', {
-                    key,
-                    config
-                });
-            };
+            // var title = {
+            //     text: 'Trade Rules - Source:' + row.source + " Group: " + row.group
+            // }
+            // var source = row.source;
+            // var group = row.group;
+            // var key = source + "_" + group;;
+            // var title = 'Trade Rules - Source:' + source + ' Group: ' + group;
+            // var tableData = [];
+            // for (var k in this.$store.state.traderule.trade_rules) {
+            //     var rule = this.$store.state.traderule.trade_rules[k];
+            //     if (rule.source === source && rule.group === group) {
+            //         var new_rule = this.deepCopy(rule);
+            //         new_rule.source = source;
+            //         new_rule.group = group;
+            //         tableData.push(new_rule);
+            //     }
+            // }
+            // var config = Object.assign({}, {
+            //     source,
+            //     group,
+            //     title,
+            //     tableData
+            // });
+            // if (!(key in this.$store.state.traderule.view_rules_dialogs)) {
+            //     this.$store.dispatch('update_view_rules_dialogs', {
+            //         key,
+            //         config
+            //     });
+            // };
+
         },
         render_groups(rules) {
             var i, j, key, len, len1, rule, rule_key, source_group, source_groups, source_groups_dict;
             source_groups = [];
+            console.log('trade_rules', rules);
             this.$store.dispatch('update_trade_rules', rules);
             source_groups_dict = new Object;
             for (i = 0, len = rules.length; i < len; i++) {

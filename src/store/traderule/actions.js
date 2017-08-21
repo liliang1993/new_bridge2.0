@@ -60,27 +60,19 @@ export default {
 	// 		resolve();
 	// 	});
 	// },
-	// update_view_rules_dialogs:({
-	// 	commit
-	// },view_rules_dialog) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.UPDATE_VIEW_RULES_DIALOGS,view_rules_dialog);
-	// 		resolve();
-	// 	});
-	// },
-	// delete_view_rules_dialogs:({
-	// 	commit
-	// },view_rules_dialog_id) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.DELETE_VIEW_RULES_DIALOGS,view_rules_dialog_id);
-	// 		resolve();
-	// 	});
-	// },
-	show_trade_group: ({
+	update_edit_rules_dicts: ({
 		commit
-	}) => {
+	}, edit_rules_config) => {
 		return new Promise((resolve, reject) => {
-			commit(types.SHOW_TRADAE_GROUP);
+			commit(types.UPDATE_EDIT_RULES_DICTS, edit_rules_config);
+			resolve();
+		});
+	},
+	delete_edit_rules_dicts: ({
+		commit
+	}, edit_rules_id) => {
+		return new Promise((resolve, reject) => {
+			commit(types.DELETE_EDIT_RULES_DICTS, edit_rules_id);
 			resolve();
 		});
 	},
@@ -92,4 +84,53 @@ export default {
 			resolve();
 		});
 	},
+	hide_trade_group: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.HIDE_TRADAE_GROUP);
+			resolve();
+		});
+	},
+	show_trade_rule: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.SHOW_TRADAE_RULE);
+			resolve();
+		});
+	},
+	hide_trade_rule: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.HIDE_TRADAE_RULE);
+			resolve();
+		});
+	},
+	show_edit_trade_rule: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.SHOW_EDIT_TRADAE_RULE);
+			resolve();
+		});
+	},
+	hide_edit_trade_rule: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.HIDE_EDIT_TRADAE_RULE);
+			resolve();
+		});
+	},
+	update_trade_rules: ({
+		commit
+	}, trade_rules) => {
+		return new Promise((resolve, reject) => {
+			commit(types.UPDATE_TRADE_RULES, trade_rules);
+			resolve();
+		});
+	},
+
 };

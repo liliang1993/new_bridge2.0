@@ -9,6 +9,8 @@ import AuditLog from './auditLog/';
 import Lp from './lp/';
 import StdSymbol from './stdSymbol/';
 import TradeRule from './tradeRule/';
+import GroupTradeRule from './groupTradeRule/';
+
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
 import TradeLog from './tradeLog/';
@@ -28,6 +30,7 @@ export {
 	Lp,
 	StdSymbol,
 	TradeRule,
+	GroupTradeRule,
 	QuoteRule,
 	CurrentOrder,
 	TradeLog,

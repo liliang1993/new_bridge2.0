@@ -7,9 +7,27 @@
                     <!-- <bread></bread> -->
                     <router-view></router-view>
         </div>
-        <drag-dialog class='add_traderule_dialog'>
-            <add-traderule></add-traderule>
+        <drag-dialog class='add_traderule_dialog' 
+        v-if='$store.state.traderule.add_trade_group'
+        @close = 'close_add_trade_group'
+        >
+            <traderule-dia></traderule-dia>
         </drag-dialog>
+
+        <drag-dialog class='edit_traderule_dialog' 
+        v-if='$store.state.traderule.edit_trade_group'
+        :title = 'item.title'
+        @close = 'close_edit_trade_rule'
+        >
+            <traderule-dia></traderule-dia>
+        </drag-dialog>
+
+        <!-- <drag-dialog class='add_traderule_dialog' 
+        v-if='$store.state.traderule.add_trade_group'
+        @close = 'close_add_trade_rule'
+        >
+            <traderule-dia></traderule-dia>
+        </drag-dialog> -->
     </div>
 </template>
 <script>
@@ -33,6 +51,9 @@
               setSize() {
                 this.win_size.height = this.$$lib_$(window).height();
             },
+            close_add_trade_group(){
+                this.$store.dispatch('hide_trade_group');
+            }
         },
         created(){
             this.setSize();

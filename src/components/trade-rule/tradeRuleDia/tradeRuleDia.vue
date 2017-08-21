@@ -175,8 +175,8 @@
 </template>
   
 <script >
-import AddTradeRuleJs from './AddTradeRule.js';
-export default AddTradeRuleJs;
+import TradeRuleDiaJs from './TradeRuleDia.js';
+export default TradeRuleDiaJs;
 </script>
 <style scoped lang='less'>
     label{

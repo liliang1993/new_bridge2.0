@@ -17,6 +17,8 @@ import AuditLog from './aduitLog/';
 import Lp from './lp/';
 import StdSymbol from './stdSymbol/';
 import TradeRule from './tradeRule/';
+import GroupTradeRule from './groupTradeRule/';
+
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
 import TradeLog from './tradeLog/';
@@ -47,6 +49,7 @@ export default new Router({
 		Lp,
 		StdSymbol,
 		TradeRule,
+		GroupTradeRule,
 		QuoteRule,
 		QuoteAdjust,
 		CurrentOrder,

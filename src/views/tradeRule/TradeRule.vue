@@ -9,10 +9,11 @@
       ref="table"    
       :configs="tableConfig">
           <template slot="rulesdetail" scope="scope">
+               <router-link :to="{ path:'/home/trade_rule/group_trade_rule', query: {source: scope.row.source,group: scope.row.group} }">  
               <a
                   href="javascript:void(0);"
-                  @click = "GroupTradeRulesTable(scope.row)"
                   > View rules</a>
+              </router-link>
           </template>
           <template slot="copygroup" scope="scope">
              <a
