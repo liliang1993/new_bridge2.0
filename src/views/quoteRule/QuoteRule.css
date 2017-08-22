@@ -10,3 +10,13 @@
   font-size: 14px;
   margin: 15px 0;
 }
+.type_formore {
+  color: #3a8dff;
+  text-decoration: underline;
+}
+.type_label {
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+}

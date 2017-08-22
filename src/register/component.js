@@ -9,7 +9,8 @@ import {
   Echarts,
   DragDialog,
   CurrentOrder,
-  TradeRule
+  TradeRule,
+  LpQuote
 } from 'cps/';
 
 console.log('CurrentOrder', CurrentOrder);
@@ -19,6 +20,7 @@ export default {
   FormData,
   DialogInfo,
   DragDialog,
+  LpQuote,
   AddPosition: CurrentOrder.AddPosition,
   DeletePosition: CurrentOrder.DeletePosition,
   TraderuleDia: TradeRule.TradeRuleDia,

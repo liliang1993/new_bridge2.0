@@ -16,10 +16,11 @@ export default {
       current_time: '',
       mt4_panel_show: false,
       tableData: [],
-
-      lp_quotes: [],
-
-      rule_tables: []
+      dialogTableVisible: false,
+      lp_quote_dialog: {
+        digits: undefined,
+        stdSymbol: ''
+      }
     }
   },
   computed: {
@@ -37,124 +38,170 @@ export default {
             }
           },
           columns: [{
-            attr: {
-              minWidth: 80,
-              type: 'expand',
-              align: 'center',
-              scopedSlot: 'expand',
+              attr: {
+                width: 20,
+                type: 'expand',
+                sortable: true,
+                align: 'center',
+                scopedSlot: 'expand',
+              }
+            }, {
+              attr: {
+                prop: 'source',
+                label: this.$t('SOURCE'),
+                minWidth: 80,
+                sortable: true,
+                align: 'center'
+              }
+            }, {
+              attr: {
+                prop: 'std_symbol',
+                label: this.$t('STD SYMBOL'),
+                minWidth: 120,
+                sortable: true,
+                scopedSlot: 'std_symbol',
+                align: 'center'
+              }
+            }, {
+              attr: {
+                prop: 'mt4_symbol',
+                label: this.$t('MT4 SYMBOL'),
+                minWidth: 120,
+                sortable: true,
+                align: 'center'
+              }
+            }, {
+              attr: {
+                prop: 'bid_change',
+                label: '',
+                width: 20,
+                align: 'center',
+                scopedSlot: 'bid_change'
+              }
+            }, {
+              attr: {
+                prop: 'bid',
+                label: this.$t('BID'),
+                minWidth: 80,
+                sortable: true,
+                align: 'center',
+                className: 'positive'
+              }
+            }, {
+              attr: {
+                prop: 'ask',
+                label: this.$t('ASK'),
+                minWidth: 80,
+                sortable: true,
+                align: 'center',
+                className: 'negative'
+              }
+            }, {
+              attr: {
+                // prop: 'ask_change',
+                label: '',
+                width: 20,
+                align: 'center',
+                scopedSlot: 'ask_change'
+              }
+            }, {
+              attr: {
+                prop: 'spread',
+                label: this.$t('SREPAD'),
+                minWidth: 100,
+                sortable: true,
+                align: 'center'
+              }
+            }, {
+              attr: {
+                prop: 'attributes.adjust',
+                label: this.$t('ADJUST'),
+                minWidth: 100,
+                sortable: true,
+                scopedSlot: 'adjust',
+                align: 'center'
+              }
+            }, {
+              attr: {
+                prop: 'edit_adjust',
+                label: this.$t('EDIT ADJUST'),
+                minWidth: 130,
+                sortable: true,
+                align: 'center',
+                scopedSlot: 'edit_adjust'
+              }
+            }, {
+              attr: {
+                prop: 'rule',
+                label: this.$t('RULE'),
+                minWidth: 100,
+                sortable: true,
+                align: 'center',
+                scopedSlot: 'rule_type'
+              }
+            },
+            //  {
+            //   attr: {
+            //     prop: 'attributes.digits',
+            //     label: this.$t('DIGIHTS'),
+            //     minWidth: 80,
+            //     sortable: true,
+            //     align: 'center',
+            //   }
+            // }, 
+            {
+              attr: {
+                prop: 'attributes.maximal_spread',
+                label: this.$t('MAX SPREAD'),
+                minWidth: 125,
+                sortable: true,
+                align: 'center',
+              }
+            }, {
+              attr: {
+                prop: 'attributes.minimal_spread',
+                label: this.$t('MIN SPREAD'),
+                minWidth: 120,
+                sortable: true,
+                align: 'center',
+              }
+            },
+            // {
+            //   attr: {
+            //     prop: 'attributes.aggregator',
+            //     label: this.$t('AGGREGATOR'),
+            //     minWidth: 80,
+            //     sortable: true,
+            //     align: 'center',
+            //   }
+            // }, {
+            //   attr: {
+            //     prop: 'attributes.markup',
+            //     label: this.$t('MARKUP'),
+            //     minWidth: 80,
+            //     sortable: true,
+            //     align: 'center',
+            //   }
+            // },
+            {
+              attr: {
+                prop: 'update_at',
+                label: this.$t('Update At'),
+                minWidth: 120,
+                sortable: true,
+                align: 'center',
+              }
+            }, {
+              attr: {
+                prop: 'adjust_enabled',
+                label: this.$t('Adjust Enabled'),
+                minWidth: 130,
+                sortable: true,
+                align: 'center',
+                scopedSlot: 'adjust_enabled'
+              }
             }
-          }, {
-            attr: {
-              prop: 'source',
-              label: this.$t('Source'),
-              minWidth: 80,
-              sortable: true,
-              align: 'center'
-            }
-          }, {
-            attr: {
-              prop: 'std_symbol',
-              label: this.$t('STD symbol'),
-              minWidth: 120,
-              sortable: true,
-              scopedSlot: 'std_symbol',
-              align: 'center'
-            }
-          }, {
-            attr: {
-              prop: 'mt4_symbol',
-              label: this.$t('MT4 symbol'),
-              minWidth: 100,
-              sortable: true,
-              align: 'center'
-            }
-          }, {
-            attr: {
-              prop: 'bid_change',
-              label: '',
-              width: 50,
-              align: 'center',
-              scopedSlot: 'bid_change'
-            }
-          }, {
-            attr: {
-              prop: 'bid',
-              label: this.$t('Bid'),
-              width: 120,
-              sortable: true,
-              align: 'center',
-              className: 'positive'
-            }
-          }, {
-            attr: {
-              prop: 'ask',
-              label: this.$t('Ask'),
-              width: 120,
-              sortable: true,
-              align: 'center',
-              className: 'negative'
-            }
-          }, {
-            attr: {
-              // prop: 'ask_change',
-              label: '',
-              width: 50,
-              align: 'center',
-              scopedSlot: 'ask_change'
-            }
-          }, {
-            attr: {
-              prop: 'spread',
-              label: this.$t('sreapd'),
-              minWidth: 80,
-              sortable: true,
-              align: 'center'
-            }
-          }, {
-            attr: {
-              prop: 'attributes.adjust',
-              label: this.$t('Adjust'),
-              minWidth: 80,
-              sortable: true,
-              scopedSlot: 'adjust',
-              align: 'center'
-            }
-          }, {
-            attr: {
-              prop: 'edit_adjust',
-              label: this.$t('Edit Adjust'),
-              minWidth: 250,
-              sortable: true,
-              align: 'center',
-              scopedSlot: 'edit_adjust'
-            }
-          }, {
-            attr: {
-              prop: 'rule',
-              label: this.$t('Rule'),
-              minWidth: 180,
-              sortable: true,
-              align: 'center',
-              scopedSlot: 'rule_type'
-            }
-          }, {
-            attr: {
-              prop: 'update_at',
-              label: this.$t('Update At'),
-              minWidth: 180,
-              sortable: true,
-              align: 'center',
-            }
-          }, {
-            attr: {
-              prop: 'adjust_enabled',
-              label: this.$t('Adjust Enabled'),
-              minWidth: 180,
-              sortable: true,
-              align: 'center',
-              scopedSlot: 'adjust_enabled'
-            }
-          }],
+          ],
         }
       }
     }
@@ -193,7 +240,7 @@ export default {
       })(this);
     },
     ws_handle_msg(data) {
-      // this.on_quote_tick(this.source, data);
+      this.on_quote_tick(this.source, data);
     },
     ws_on_open() {
       this.set_quote_status(true);
@@ -388,45 +435,27 @@ export default {
       });
 
     },
-    showLpQuotes(row) {
-
-      this.$$api_common_ajax({
-        data: {
-          func_name: 'router_api.lp_get_quote',
-          args: [row.std_symbol],
-          kwargs: {}
-        },
-        fn: data => {
-          var lp_quotes = data
-          console.log('lp_quotes', data);
-          var digits = row.attributes.digits;
-          this.lp_quote.config = {
-            lp_quotes,
-            digits,
-            std_symbol: row.std_symbol
-          };
-        },
-        errFn: (err) => {
-          this.$message.error(err.msg);
-        }
-      });
+    showLpQuoteTable(row) {
+      this.dialogTableVisible = true;
+      this.lp_quote_dialog.digits = row.attributes.digits;
+      this.lp_quote_dialog.stdSymbol = row.std_symbol;
     },
-    show_json_table(row) {
-      var title = {
-        text: row.mt4_symbol
-      }
-      console.log('attributes', row.attributes);
-      var id = row.mt4_symbol;
-      var config = row.attributes;
-      var rule = {
-        title,
-        config,
-        id
-      };
-      if (!this.isDialogExist(this.rule_tables, rule)) {
-        this.rule_tables.push(rule);
-      };
-    },
+    // show_json_table(row) {
+    //   var title = {
+    //     text: row.mt4_symbol
+    //   }
+    //   console.log('attributes', row.attributes);
+    //   var id = row.mt4_symbol;
+    //   var config = row.attributes;
+    //   var rule = {
+    //     title,
+    //     config,
+    //     id
+    //   };
+    //   if (!this.isDialogExist(this.rule_tables, rule)) {
+    //     this.rule_tables.push(rule);
+    //   };
+    // },
     init() {
       this.set_description("loading quote rules ...");
       this.set_quote_status(void 0);

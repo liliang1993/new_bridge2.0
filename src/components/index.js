@@ -4,7 +4,7 @@ import FormData from './form-data/';
 import DialogInfo from './dialog-info/';
 import DragDialog from './drag-dialog/';
 import TraderuleDialog from './traderule-dialog/';
-import LPQuote from './LPQuote/';
+import LpQuote from './LPQuote/';
 import lang from './lang/';
 import CurrentOrder from './currentOrder/';
 import TradeRule from './trade-rule'
@@ -17,7 +17,7 @@ export {
   TraderuleDialog,
   AddPosition,
   DragDialog,
-  LPQuote,
+  LpQuote,
   CurrentOrder,
   TradeRule
   // DeletePosition

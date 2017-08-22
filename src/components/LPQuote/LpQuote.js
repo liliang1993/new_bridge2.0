@@ -2,7 +2,6 @@ module.exports = {
   name: 'lp_quote_panel',
   data() {
     return {
-      config: this.Config,
       tableData: [],
       container_height: 400,
       padding: 40,
@@ -11,15 +10,17 @@ module.exports = {
     }
   },
   props: {
-    Config: {
-      type: Object,
+    stdSymbol: {
+      type: String,
+      required: true
+    },
+    digits: {
+      type: Number,
       required: true
     }
   },
   watch: {
-    Config(v) {
-      if (v) {}
-    }
+
   },
   computed: {
     tableConfig: {
@@ -28,8 +29,8 @@ module.exports = {
           table: {
             attr: {
               data: this.tableData,
+              border: false,
               maxHeight: '100%',
-              // defaultSort:{prop: 'quote_rule_key'}
             }
           },
           columns: [{
@@ -207,17 +208,33 @@ module.exports = {
       console.log('quote_lines', min_quote, max_quote, quote.bid_price, quote.ofr_price, px_per_pip, spread_pips, multiple, this.quote_lines);
     },
     update_lp_quotes() {
-      var params = {
-        func_name: 'router_api.lp_get_quote',
-        args: [this.config.std_symbol]
-      }
-      CommonApi.postNormalAjax.call(this, params, data => {
-        this.render_lp_quotes(data, this.config.digits);
-        this.settimeout_id = setTimeout(this.update_lp_quotes, 3000);
+      // var params = {
+      //   func_name: 'router_api.lp_get_quote',
+      //   args: [this.stdSymbol]
+      // }
+      // CommonApi.postNormalAjax.call(this, params, data => {
+      //   this.render_lp_quotes(data, this.digits);
+      //   this.settimeout_id = setTimeout(this.update_lp_quotes, 3000);
+      // });
+      // 
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.lp_get_quote',
+          args: [this.stdSymbol],
+          kwargs: {}
+        },
+        fn: data => {
+          this.render_lp_quotes(data, this.digits);
+          this.settimeout_id = setTimeout(this.update_lp_quotes, 3000);
+        },
+        errFn: (err) => {
+          this.$message.error(err.msg);
+        }
       });
     },
     init() {
-      this.render_lp_quotes(this.config.lp_quotes, this.config.digits);
+      // this.render_lp_quotes(this.config.lp_quotes, this.digits);
+      this.update_lp_quotes();
       setTimeout(this.update_lp_quotes, 3000);
     }
   },
