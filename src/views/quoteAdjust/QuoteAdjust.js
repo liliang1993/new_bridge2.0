@@ -213,7 +213,7 @@ export default {
       this.ws_close();
       console.log('source', this.source);
       req_params = "source=" + this.source;
-      uri = "192.168.78.132:9988"; //location.port
+      uri = "localhost:9988"; //location.port
       this.ws = new WebSocket("ws://" + uri + "/ws/bang_quote?" + req_params);
       this.ws.onopen = (function(_this) {
         return function() {
@@ -240,6 +240,7 @@ export default {
       })(this);
     },
     ws_handle_msg(data) {
+      console.log('ws123',data);
       this.on_quote_tick(this.source, data);
     },
     ws_on_open() {

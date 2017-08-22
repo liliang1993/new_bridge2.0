@@ -33,12 +33,12 @@
            <template slot="lp_exec_orders" scope="scope">
               <a
                   href = "JavaScript:void(0)" 
-                 @click='onLPOrdersDetail(scope.row)' >LP Order</a>
+                 @click='showLpOrdersTable(scope.row)' >LP Order</a>
           </template>
           <template slot="detail" scope="scope">
               <a
                   href = "JavaScript:void(0)" 
-                 @click='onDetail(scope.row)' >{{$t('Detail')}}</a>
+                 @click='showTradeLog(scope.row)' >{{$t('Detail')}}</a>
           </template>
     </bel-table>
     <el-col :span="24" class='btm-action'>
@@ -59,7 +59,19 @@
       <el-dialog class='delete_position_dialog' title="Delete Position" :visible.sync="deletePositionDialogVisible" top='10%'>
            <delete-position></delete-position>   
       </el-dialog>
-      
+
+
+      <el-dialog class='trade_log_dialog' title="Trade Log" :visible.sync="tradeLogDialogVisible" top='10%'>
+          <div class="log_wrap">
+              <ul>
+                <li v-for='(item,key) in log_dicts'>
+                    <p>{{key.toUpperCase()}}</p>
+                    <pre>{{item}}</pre>
+                </li>
+              </ul>
+          </div>   
+      </el-dialog>
+
    <!--  <drag-dialog 
         v-for = "(lp_order,index) in lp_orders"
         class='drag_dialog'

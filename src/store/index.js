@@ -7,7 +7,7 @@ import leftmenu from './leftmenu/';
 import user from './userinfo/';
 import global from './global/';
 import traderule from './traderule/';
-
+import currentorder from './currentorder/';
 
 export default new Vuex.Store({
     modules: {
@@ -15,6 +15,7 @@ export default new Vuex.Store({
         router,
         leftmenu,
         user,
-        traderule
+        traderule,
+        currentorder
     }
 });

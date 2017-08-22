@@ -32,7 +32,7 @@
         <span><i>USERNAME:</i>{{dialog.username}}</span>
         <span><i>API:</i>{{dialog.api}}</span>
       </div>
-      <div class="content">
+      <div class="log_wrap">
         <ul>
           <li>
             <p>REQUEST</p>

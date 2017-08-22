@@ -29,12 +29,15 @@
             <traderule-dia></traderule-dia>
         </drag-dialog>
 
-        <!-- <drag-dialog class='add_traderule_dialog' 
-        v-if='$store.state.traderule.add_trade_group'
-        @close = 'close_add_trade_rule'
+        <drag-dialog  
+        v-for='(item,key) in $store.state.currentorder.lp_order_dicts'
+        @close = 'close_lp_order_table(key)'
         >
-            <traderule-dia></traderule-dia>
-        </drag-dialog> -->
+            <lp-quote 
+            :LPOrder ='item.config'
+            >  
+            </lp-quote>
+        </drag-dialog>
     </div>
 </template>
 <script>
@@ -66,6 +69,9 @@
             },
             close_add_trade_rule(){
                 this.$store.dispatch('hide_trade_rule');
+            },
+            close_lp_order_table(key){
+                this.$store.dispatch('delete_lp_order_dicts',key);
             }
         },
         created(){

@@ -8,11 +8,12 @@ export default {
       data_loaded: true,
       remain_sec: 0,
       refresh_seconds: 5,
-      isActive: false,
+      isActive: true,
       deletePositionDialogVisible: false,
       addPositionDialogVisible: false,
+      tradeLogDialogVisible: false,
       lp_orders: [],
-      trade_logs: [],
+      log_dicts:{},
       add_position: {
         show: false,
         title: {
@@ -66,7 +67,7 @@ export default {
             attr: {
               prop: 'order_id',
               label: this.$t('ORD ID'),
-              minWidth: 80,
+              minWidth: 60,
               align: 'center'
             }
           }, {
@@ -94,7 +95,7 @@ export default {
             attr: {
               prop: 'status',
               label: this.$t('STATUS'),
-              minWidth: 60,
+              minWidth: 70,
               align: 'center'
             }
           }, {
@@ -125,6 +126,23 @@ export default {
               label: this.$t('ORDER SIZE'),
               minWidth: 80,
               align: 'center',
+              renderHeader(createElement, {
+                column
+              }) {
+                if (this.$store.state.global.locale == 'en-US') {
+                  return createElement('div', [
+                    'ORDER',
+                    createElement('br'),
+                    'SIZE'
+                  ]);
+                } else {
+                  return createElement('div', [
+                    '请求量/',
+                    createElement('br'),
+                    '执行量'
+                  ]);
+                }
+              },
               formatter(item) {
                 return item.quantity / item.trade_log.request.contract_size;
               }
@@ -133,7 +151,7 @@ export default {
             attr: {
               prop: 'bbook_size',
               label: this.$t('B BOOK SIZE'),
-              minWidth: 90,
+              minWidth: 100,
               align: 'center',
               formatter(item) {
                 return item.bbook_quantity / item.trade_log.request.contract_size;
@@ -167,7 +185,7 @@ export default {
                   ]);
                 }
               },
-              minWidth: 80,
+              minWidth: 90,
               align: 'center',
               formatter(item) {
                 return item.trade_log.request.size + '/' + item.trade_log.confirm.size;
@@ -246,12 +264,14 @@ export default {
 
     interval_check() {
       var remain_mil_sec;
-      if (this.refresh_enable === 'false') {
+      if (this.isActive === false) {
         this.remain_sec = "-";
         return;
       };
+      console.log('5555',this.next_fresh_time,this.data_loaded);
       if (this.next_fresh_time && !this.data_loaded) {
         remain_mil_sec = this.next_fresh_time - (new Date()).getTime();
+
         if (remain_mil_sec <= 0) {
           this.remain_sec = '0';
           this.load_data();
@@ -264,6 +284,7 @@ export default {
     schedule_next_request() {
       this.next_fresh_time = (new Date()).getTime() + this.refresh_seconds * 1000;
       this.data_loaded = false;
+      console.log('444',this.next_fresh_time,this.data_loaded);
     },
     changeSwitch(val) {
       if (val === 'true') {
@@ -275,20 +296,12 @@ export default {
     },
     auto_refresh_control() {
       this.isActive = !this.isActive;
+      // if(this.isActive = false){}
     },
     //
-
-    onAddPosition() {
-      this.add_position.show = true;
-    },
-    onDeletePosition() {
-      this.del_position.show = true;
-    },
-    onCloseOnlyDialog(type) {
-      this[type].show = false;
-    },
-    onCloseTradeLog(index) {
-      this.trade_logs.splice(index, 1);
+    showLpOrdersTable(row){
+        var param ={id:row.order_id,value:row.trade_log};
+        this.$store.dispatch('update_lp_order_dicts',param);
     },
 
     onDetail(row) {
@@ -306,22 +319,10 @@ export default {
         this.trade_logs.push(trade_log);
       };
     },
-    onLPOrdersDetail(row) {
-      var title = {
-        text: '#' + row.order_id + ' LP Orders Settle:' + row.trade_log.request.settle
-      };
-      var id = row.order_id;
-      var config = row.trade_log;
-      var lp_order = {
-        title,
-        config,
-        id
-      };
-      if (this.isDialogExist(this.lp_orders, lp_order) == false) {
-        this.lp_orders.push(lp_order);
-      }
+    showTradeLog(row){
+        this.tradeLogDialogVisible = true;
+        this.log_dicts = row;
     },
-
     onCloseLpOrder(index) {
       this.lp_orders.splice(index, 1);
     },
@@ -343,16 +344,16 @@ export default {
         fn: data => {
           this.tableData = data[0];
           this.pagination.total = data[1];
-          this.data_loaded = true;
+          this.schedule_next_request();
         },
         errFn: (err) => {
           // this.$message.error(err.msg);
+
         }
       });
     },
     load_data() {
       this.getCurrentPageTable();
-      this.schedule_next_request();
     },
     init() {
       this.timer_interval_id = setInterval(() => {
