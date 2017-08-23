@@ -469,5 +469,9 @@ export default {
     this.timer_interval_id = setInterval(() => {
       this.interval_check();
     }, 100);
+  },
+  beforeRouteLeave(to,from,next){
+      this.ws_close();
+      next();
   }
 }

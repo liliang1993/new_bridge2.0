@@ -100,5 +100,20 @@ export default{
 			commit(types.UPDATE_GLOBAL_LOCALE,locale);
 			resolve()
 		}); 
+	},
+	update_global_ajax_source: ({
+		commit
+	},source) => {
+		return new Promise((resolve, reject) => {
+			commit(types.UPDATE_GLOBAL_AJAX_SOURCE,source);
+			resolve()
+		});
+	},
+	cancel_global_ajax_source: ({commit
+	})=>{
+		return new Promise((resolve, reject) => {
+			commit(types.CANCEL_GLOBAL_AJAX_SOURCE);
+			resolve()
+		}); 
 	}
 };

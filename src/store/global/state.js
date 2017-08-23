@@ -28,5 +28,6 @@ export default {
 	                10: "no_position_existed",
 	                11: "mt4 direct"
               	},
-    limit_order_types: ['Instant','Market','Pending','Stopout','StopLoss','TakePro']
+    limit_order_types: ['Instant','Market','Pending','Stopout','StopLoss','TakePro'],
+    ajax_source: {}
 };

@@ -6,9 +6,9 @@ export default {
                         next_fresh_time: void 0,
                         refresh_enable: 'true',
                         data_loaded: true,
-                        remain_sec: void 0,
+                        remain_sec: 0,
                         refresh_seconds: 5,
-
+                        isActive: true,
                         keywords: {
                                 client: {
                                         value: '',
@@ -178,13 +178,19 @@ export default {
                                                         label: '%',
                                                         minWidth: 50,
                                                         formatter: (item) => {
+                                                                try{
                                                                 if (item.request.settle === 1 && item.open_log) {
+                                                                         if(!item.open_log.trade_rule.attributes){
+                                                                                return 'view_consolelog';
+                                                                         }
                                                                         return item.open_log.trade_rule.attributes.coverage;
                                                                 } else if (item.request.settle === 0) {
-                                                                        return item.trade_rule.attributes.coverage;
+                                                                        console.log('attributes',item.trade_rule.attributes);
+                                                                         return item.trade_rule.attributes.coverage;
                                                                 } else {
                                                                         return 0;
                                                                 }
+                                                                }catch(error){return 'view_consolelog'};
                                                         },
                                                         align: 'center'
                                                 }
@@ -464,16 +470,7 @@ export default {
                 onSearchKeyWord() {
                         this.load_data();
                 },
-                changeSwitch(val) {
-                        console.log('switch', val, this.refresh_enable);
-                        clearInterval(this.timer);
-                        if (val === 'false') {
-                                this.refresh_time = '-';
-                        } else {
-                                this.refresh_time = 4;
-                                this.refreshTable();
-                        }
-                },
+                
                 refreshTable() {
                         console.log('refresh_enable', this.refresh_enable);
                         if (this.refresh_enable === "false") {
@@ -584,11 +581,10 @@ export default {
 
                 interval_check() {
                         var remain_mil_sec;
-                        if (this.refresh_enable === 'false') {
+                        if (this.isActive === false) {
                                 this.remain_sec = "-";
                                 return;
                         };
-                        console.log('888', this.next_fresh_time, this.data_loaded);
                         if (this.next_fresh_time && !this.data_loaded) {
                                 remain_mil_sec = this.next_fresh_time - (new Date()).getTime();
                                 if (remain_mil_sec <= 0) {
@@ -604,12 +600,10 @@ export default {
                         this.next_fresh_time = (new Date()).getTime() + this.refresh_seconds * 1000;
                         this.data_loaded = false;
                 },
-                changeSwitch(val) {
-                        if (val === 'true') {
-                                this.remain_sec = "0";
-                        }
-                        if (val === 'false') {
-                                this.remain_sec = "-";
+                auto_refresh_control(){
+                        this.isActive =!this.isActive;
+                        if(this.isActive == false){
+                                this.$store.dispatch('cancel_global_ajax_source');
                         }
                 },
                 onChangeCurrentPage(page) {
@@ -631,7 +625,7 @@ export default {
                                 fn: data => {
                                         this.tableData = data[0];
                                         this.pagination.total = data[1];
-                                        this.data_loaded = true;
+                                        this.schedule_next_request();
                                 },
                                 errFn: (err) => {
                                         this.$message.error(err.msg);
@@ -640,7 +634,6 @@ export default {
                 },
                 load_data() {
                         this.getCurrentPageTable();
-                        this.schedule_next_request();
                 },
                 init() {
                         this.timer_interval_id = setInterval(() => {

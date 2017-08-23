@@ -51,4 +51,12 @@ export default {
         state.locale = locale;
         store.set('locale', state.locale);
     },
+
+    [types.UPDATE_GLOBAL_AJAX_SOURCE](state,source) {
+        state.ajax_source = source;
+        // store.set('context', state.context);
+    },
+    [types.CANCEL_GLOBAL_AJAX_SOURCE](state) {
+       state.ajax_source.cancel();
+    },
 };

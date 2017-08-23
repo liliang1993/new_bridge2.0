@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
 Vue.use(VueAxios, axios);
 
 // 导入封装的回调函数
@@ -31,11 +30,11 @@ export default function ({
 							 headers,
 							 opts
 						 } = {}) {
-
 	var options = {
 		method : type,
 		url    : path,
-		headers: headers && typeof headers === 'object' ? headers : {}
+		headers: headers && typeof headers === 'object' ? headers : {},
+		cancelToken: this.$store.state.global.ajax_source.token
 	};
 
 	//检测接口权限
@@ -94,14 +93,14 @@ export default function ({
 				}
 			}
 		}).catch((err) => {
-			console.dir(err);
+			console.dir('err',err);
 			this.$store.dispatch('hide_loading');
-			if(errFn){	
-				console.log('this',this);
-						errFn.call(this,err);
-					}else{
-						cbs.requestError.call(this, err);
-					}
+			// if(errFn){	
+			// 	console.log('this',this);
+			// 			errFn.call(this,err);
+			// 		}else{
+			// 			cbs.requestError.call(this, err);
+			// 		}
 			// cbs.requestError.call(this, err);
 		});
 	} else {

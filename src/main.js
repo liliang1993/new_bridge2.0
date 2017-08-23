@@ -17,8 +17,8 @@ import store from 'store/';
 import BelTable from 'vue-bel-table'
 Vue.use(BelTable);
 
-import App from './App';
 
+import App from './App';
 new Vue({
     el: '#app',
     router,

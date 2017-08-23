@@ -1,32 +1,32 @@
 <template>
     <div class='clearfix'>
     <el-row class='actions-top'>
-            <el-input class='search_input' v-model='keywords.client.value' placeholder='Client'></el-input>  
-            <el-input class='search_input' v-model='keywords.ord_id.value' placeholder='OrdID'></el-input>   
-            <el-input class='search_input' v-model='keywords.group.value' placeholder='Group'></el-input>  
-            <el-input class='search_input' v-model='keywords.symbol.value' placeholder='Symbol'></el-input>  
-            <el-input class='search_input' v-model='keywords.size.value' placeholder='Size'></el-input> 
-            <el-input class='search_input' v-model='keywords.status.value' placeholder='Status'></el-input> 
+            <label>CLIENT</label>
+            <el-input class='search_input' v-model='keywords.client.value'></el-input>
+            <label>ORD ID</label>  
+            <el-input class='search_input' v-model='keywords.ord_id.value'></el-input> 
+            <label>GROUP</label>  
+            <el-input class='search_input' v-model='keywords.group.value'></el-input>  
+            <label>SYMBOL</label>
+            <el-input class='search_input' v-model='keywords.symbol.value'></el-input>
+            <label>SIZE</label>  
+            <!-- <el-input class='search_input' v-model='keywords.size.value'></el-input><label>STATUS</label> -->
+
+            <el-input class='search_input' v-model='keywords.status.value'></el-input> 
+            <label>TIME</label>
             <el-date-picker v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围" picker-options="pickerOptions" format="yyyy/MM//dd"></el-date-picker>
             <el-button type='primary' @click='onSearchKeyWord'>Search</el-button>
             <el-button type='primary' @click='onDownLoad'>Download Detailed Execel</el-button>
              <el-button type='primary' @click='onShowProfit'>Show Profit</el-button>
     </el-row>
-    <el-row class='prompt'>
-        <strong >Trade Log - </strong>
-           <span>{{nowTime}}</span>
-           <strong class='next_refresh'>Next refresh seconds: </strong> 
-          <span class='remain_sec'>{{remain_sec}}</span>
-           <strong class='desc'>Enable Auto Refresh:</strong>
-            <el-switch
-              v-model="refresh_enable"
-              on-color="#13ce66"
-              off-color="#ff4949"
-              on-value="true"
-              off-value="false"
-              @change ='changeSwitch'
-              >
-            </el-switch>   
+    <el-row class='current_order_panel' style='height:30px;
+      line-height: 30px;'>
+           <em style="color:#969696;font-weight:bold;">TRADE LOG - </em>
+           <span class='table_update_at'>{{nowTime}}</span>
+           <em class='next_refresh'>NEXT REFRESH: </em> 
+            <span class='remain_sec'>{{remain_sec}}</span>
+           <strong class='desc'>ENABLE AUTO REFRESH:</strong>
+            <i class='icon icon_refresh_enable' :class="{active: isActive}" @click='auto_refresh_control()'></i>
     </el-row>
     <bel-table
       ref="table"    
@@ -128,28 +128,30 @@ export default TradeLogJs;
      .pagination{
         display: inline-block;
     }
-    .prompt{
-      min-width:950px;
-     strong{
-         display:inline-block;
-         height:40px;
-         line-height:40px;
-      }
-      .next_refresh{
-        margin-left:10px;
-      }
-      .desc{
-        margin-left:10px;
-      }
-     .remain_sec{
-      display:inline-block;
-      width:25px;
-      height:25px;
-      text-align:center;
-      border:2px solid #ccc;
-      line-height:21px;
+  .current_order_panel{    
+      margin-bottom:10px;
+        .table_update_at{
+          color:rgb(50,50,50);
+          font-weight:bold;
+        }
+        .next_refresh{
+          color:rgb(50,50,50);
+          font-weight:bold;
+        }
+        .remain_sec{
+          display:inline-block;
+          width: 29px;
+          height: 29px;
+          border:1px solid #ccc;
+          text-align:center;
+          line-height: 29px;
+          color:#0287f9;
+        }
+        .desc{
+          color:rgb(50,50,50);
+          font-weight:bold;
+        }
     }
-  }
   .success{
       color:green;
   }

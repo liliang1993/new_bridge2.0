@@ -286,14 +286,6 @@ export default {
       this.data_loaded = false;
       console.log('444',this.next_fresh_time,this.data_loaded);
     },
-    changeSwitch(val) {
-      if (val === 'true') {
-        this.remain_sec = "0";
-      }
-      if (val === 'false') {
-        this.remain_sec = "-";
-      }
-    },
     auto_refresh_control() {
       this.isActive = !this.isActive;
       // if(this.isActive = false){}

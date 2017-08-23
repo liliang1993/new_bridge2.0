@@ -8,8 +8,8 @@
 </template>
   
 <script >
-import LPOrderJs from './LPOrder.js';
-export default LPOrderJs;
+import LpOrderJs from './LpOrder.js';
+export default LpOrderJs;
 </script>
 <style scoped lang='less'>
 </style>

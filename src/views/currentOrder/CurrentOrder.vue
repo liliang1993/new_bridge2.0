@@ -8,18 +8,6 @@
     </el-row>
     <el-row class='current_order_panel' style='height:30px;
       line-height: 30px;'>
-<!--           <div class="l">
-              <em >ORDER POSITIONS - </em>
-              <span>{{nowTime}}</span>
-          </div>
-          <div class="l">
-              <em class='next_refresh'>NEXT REFRESH: </em> 
-              <span class='remain_sec'>{{ remain_sec}}</span>
-          </div>
-          <div class="l">
-            <em class='desc'>Enable Auto Refresh:</em>
-            <i></i>
-          </div> -->
            <em style="color:#969696;font-weight:bold;">ORDER POSITIONS - </em>
            <span class='table_update_at'>{{nowTime}}</span>
            <em class='next_refresh'>NEXT REFRESH: </em> 

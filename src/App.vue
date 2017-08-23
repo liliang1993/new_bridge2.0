@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 	export default {
 		name      : 'app',
 		components: {},
@@ -18,6 +19,10 @@
         methods:{
 			init(){
 
+                var CancelToken = Vue.axios.CancelToken;
+                var source = CancelToken.source();
+                console.log('thisll',this);
+                this.$store.dispatch('update_global_ajax_source',source);
             },
         },
         mounted(){
