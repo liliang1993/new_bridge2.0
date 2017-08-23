@@ -7,11 +7,17 @@ module.exports = {
       load_status: 'loading...',
       current_std_symbol: 'NotSelected',
       current_lp_symbols: {},
+      show_lp_symbols: false,
       total_qty: 0,
+      total_qty_color: '',
       next_fresh_time: 0,
-      remain_sec: '',
+      remain_sec: '-',
       api_requested: true,
-      timer_interval_id: 0
+      timer_interval_id: 0,
+      editLpSymbolDialogTableVisible: false,
+      dialog: {
+
+      }
     }
   },
   methods: {
@@ -172,6 +178,7 @@ module.exports = {
         },
         fn: data => {
           this.render_symbol_positions(data);
+          this.show_lp_symbols = true;
           this.load_status = "Reqested position OK!";
           this.load_text_color = 'green';
           this.next_fresh_time = (new Date()).getTime() + 2000;
@@ -210,11 +217,19 @@ module.exports = {
         lp_symbol = this.current_lp_symbols[lp];
         if (lp_symbol) {
           position_width = parseInt(Math.abs(quantity) / (max_quantity || 1) * 100);
-          position_bgcolor = quantity > 0 ? "#b3ff99" : "#ff8080";
+          position_bgcolor = quantity > 0 ? "#5dcd0b" : "#ff0000";
+          if (quantity > 0) {
+            quantity_color = "#5dcd0b"
+          } else if (quantity < 0) {
+            quantity_color = "#ff0000"
+          } else {
+            quantity_color = "#ccc"
+          }
           Object.assign(lp_symbol, {
             position_width,
             quantity,
-            position_bgcolor
+            position_bgcolor,
+            quantity_color
           });
 
         }
@@ -231,6 +246,20 @@ module.exports = {
       })()).reduce((function(a, b) {
         return a + b;
       }), 0);
+      if (this.total_qty > 0) {
+        this.total_qty_color = "#5dcd0b"
+      } else if (this.total_qty < 0) {
+        this.total_qty_color = "#ff0000"
+      } else {
+        this.total_qty_color = "#ccc"
+      }
+    },
+    showEditLpSymbol(item) {
+      console.log('item', item);
+      if (!(item.lp_symbol.lp_symbol == '-')) {
+        this.editLpSymbolDialogTableVisible = true;
+        Object.assign(this.dialog, item.lp_symbol);
+      }
     },
     init() {
       this.load_std_symbols();

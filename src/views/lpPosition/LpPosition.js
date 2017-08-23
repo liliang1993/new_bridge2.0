@@ -226,6 +226,7 @@ export default {
           prop: 'std_symbol',
           label: 'STD SYMBOL',
           sortable: true,
+          fixed: 'left',
           minwidth: '220',
           align: 'center'
         }
@@ -248,6 +249,7 @@ export default {
           sortable: true,
           scopedSlot: 'total',
           minwidth: '220',
+          fixed: 'right',
           align: 'center'
         }
       });

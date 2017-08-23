@@ -80,6 +80,7 @@ export default {
                                                 attr: {
                                                         data: this.tableData,
                                                         maxHeight: '100%',
+                                                        border: false,
                                                         defaultSort: {
                                                                 prop: 'time',
                                                                 order: "descending"
@@ -90,16 +91,7 @@ export default {
                                         columns: [{
                                                 attr: {
                                                         prop: 'order_id',
-                                                        label: this.$t('OrdID'),
-                                                        minWidth: 60,
-                                                        scopedSlot: 'expand_content',
-                                                        align: 'center',
-                                                        type:'expand'
-                                                }
-                                        },{
-                                                attr: {
-                                                        prop: 'order_id',
-                                                        label: this.$t('OrdID'),
+                                                        label: this.$t('ORDID'),
                                                         minWidth: 60,
                                                         scopedSlot: 'ord_id',
                                                         align: 'center',
@@ -107,28 +99,27 @@ export default {
                                         }, {
                                                 attr: {
                                                         prop: 'request.group',
-                                                        label: this.$t('Group'),
+                                                        label: this.$t('GROUP'),
                                                         minWidth: 60,
                                                         align: 'center'
                                                 }
                                         }, {
                                                 attr: {
                                                         prop: 'request.login',
-                                                        label: this.$t('Client'),
+                                                        label: this.$t('CLIENT'),
                                                         minWidth: 60,
                                                         align: 'center'
                                                 }
                                         }, {
                                                 attr: {
                                                         prop: 'request.symbol',
-                                                        label: this.$t('Symbol'),
-                                                        width: 60,
+                                                        label: this.$t('SYMBOL'),
+                                                        width: 70,
                                                         align: 'center',
                                                 }
                                         }, {
                                                 attr: {
-                                                        // prop: 'side',
-                                                        label: this.$t('Side'),
+                                                        label: this.$t('SIDE'),
                                                         width: 80,
                                                         formatter: (item) => {
                                                                 if (item.request.settle === 0) {
@@ -142,21 +133,20 @@ export default {
                                         }, {
                                                 attr: {
                                                         prop: 'request.size',
-                                                        label: this.$t('Order Size'),
+                                                        label: this.$t('ORDER SIZE'),
                                                         minWidth: 80,
                                                         align: 'center'
                                                 }
                                         }, {
                                                 attr: {
                                                         prop: 'confirm.size',
-                                                        label: this.$t('Exec Size'),
+                                                        label: this.$t('EXEC SIZE'),
                                                         minWidth: 80,
                                                         align: 'center'
                                                 }
                                         }, {
                                                 attr: {
-                                                        // prop: '',
-                                                        label: this.$t('B Book  Size'),
+                                                        label: this.$t('B BOOK SIZE'),
                                                         minWidth: 80,
                                                         formatter: (item) => {
                                                                 var l, order, qty;
@@ -201,7 +191,7 @@ export default {
                                         }, {
                                                 attr: {
                                                         prop: 'confirm.price',
-                                                        label: this.$t('Exec Price'),
+                                                        label: this.$t('EXEC PRICE'),
                                                         minWidth: 80,
                                                         align: 'center'
                                                 }
@@ -213,9 +203,9 @@ export default {
                                                                 column
                                                         }) {
                                                                 if (this.$store.state.global.locale == 'en-US') {
-                                                                        return createElement('div', ['Req',
-                                                                                createElement('br'), 'Price',
-                                                                                createElement('br'), 'Spread',
+                                                                        return createElement('div', ['REQ',
+                                                                                createElement('br'), 'PRICE',
+                                                                                createElement('br'), 'SPREAD',
                                                                                 createElement('br'), '(pips)'
                                                                         ]);
                                                                 } else {
@@ -230,20 +220,20 @@ export default {
                                                                 digits = item.request.digits;
                                                                 return "" + (this.get_pips(Math.abs(req.quote_bid - req.quote_ask), digits));
                                                         },
-                                                        minWidth: 80,
+                                                        minWidth: 60,
                                                         align: 'center'
                                                 }
                                         }, {
                                                 attr: {
                                                         // prop: 'exec_price',
                                                         label: 'Company Spread(pips)',
-                                                        minWidth: 40,
+                                                        minWidth: 65,
                                                         renderHeader(createElement, {
                                                                 column
                                                         }) {
                                                                 if (this.$store.state.global.locale == 'en-US') {
-                                                                        return createElement('div', ['Company',
-                                                                                createElement('br'), 'Spread',
+                                                                        return createElement('div', ['COMPANY',
+                                                                                createElement('br'), 'SPREAD',
                                                                                 createElement('br'), '(pips)'
                                                                         ]);
                                                                 } else {
@@ -267,13 +257,13 @@ export default {
                                                 attr: {
                                                         // prop: '',
                                                         label: 'Client Slippage(pips)',
-                                                        minWidth: 40,
+                                                        minWidth: 60,
                                                         renderHeader(createElement, {
                                                                 column
                                                         }) {
                                                                 if (this.$store.state.global.locale == 'en-US') {
-                                                                        return createElement('div', ['Client',
-                                                                                createElement('br'), 'Slippage',
+                                                                        return createElement('div', ['CLIENT',
+                                                                                createElement('br'), 'SLIPPAGE',
                                                                                 createElement('br'), '(pips)'
                                                                         ]);
                                                                 } else {
@@ -297,7 +287,7 @@ export default {
                                                 attr: {
                                                         // prop: 'exec_price',
                                                         label: 'Price Adjust(pips)',
-                                                        minWidth: 40,
+                                                        minWidth: 45,
                                                         renderHeader(createElement, {
                                                                 column
                                                         }) {
@@ -327,7 +317,7 @@ export default {
                                                 attr: {
                                                         // prop: 'exec_price',
                                                         label: 'Avg LP Slippage(pips)',
-                                                        minWidth: 40,
+                                                        minWidth: 55,
                                                         renderHeader(createElement, {
                                                                 column
                                                         }) {
@@ -381,7 +371,7 @@ export default {
                                                 attr: {
                                                         // prop: 'exec_price',
                                                         label: 'LP Exec Orders',
-                                                        minWidth: 40,
+                                                        minWidth: 45,
                                                         renderHeader(createElement, {
                                                                 column
                                                         }) {
@@ -415,7 +405,7 @@ export default {
                                                                         ]);
                                                                 }
                                                         },
-                                                        minWidth: 60,
+                                                        minWidth: 40,
                                                         formatter: (r) => {
                                                                 return parseInt((r.end_time - r.start_time) * 1000);
                                                         },
@@ -472,7 +462,7 @@ export default {
                         }
                 },
                 onSearchKeyWord() {
-                         this.load_data();
+                        this.load_data();
                 },
                 changeSwitch(val) {
                         console.log('switch', val, this.refresh_enable);
@@ -622,31 +612,31 @@ export default {
                                 this.remain_sec = "-";
                         }
                 },
-                 onChangeCurrentPage(page){
-                    this.pagination.current_page = page;
-                    this.getCurrentPageTable();
+                onChangeCurrentPage(page) {
+                        this.pagination.current_page = page;
+                        this.getCurrentPageTable();
                 },
-                onChangePageSize(page_size){
-                    this.pagination.page_size = page_size;
-                    this.getCurrentPageTable();
+                onChangePageSize(page_size) {
+                        this.pagination.page_size = page_size;
+                        this.getCurrentPageTable();
                 },
-                getCurrentPageTable(){
-                    // this.getKwargs();
-                    this.$$api_common_ajax({
-                    data: {
-                      func_name:'trade_log.page_trade_log',
-                      args:[this.pagination.current_page,this.pagination.page_size],
-                      kwargs:{}
-                    },
-                    fn: data => {
-                        this.tableData = data[0];
-                        this.pagination.total = data[1];
-                        this.data_loaded = true;
-                    },
-                    errFn: (err) => {
-                      this.$message.error(err.msg);
-                    }
-                  });
+                getCurrentPageTable() {
+                        // this.getKwargs();
+                        this.$$api_common_ajax({
+                                data: {
+                                        func_name: 'trade_log.page_trade_log',
+                                        args: [this.pagination.current_page, this.pagination.page_size],
+                                        kwargs: {}
+                                },
+                                fn: data => {
+                                        this.tableData = data[0];
+                                        this.pagination.total = data[1];
+                                        this.data_loaded = true;
+                                },
+                                errFn: (err) => {
+                                        this.$message.error(err.msg);
+                                }
+                        });
                 },
                 load_data() {
                         this.getCurrentPageTable();
@@ -664,8 +654,8 @@ export default {
                 this.init();
         },
         beforeRouteLeave(to, from, next) {
-                if(this.timer_interval_id ){
-                        clearInterval(this.timer_interval_id );
+                if (this.timer_interval_id) {
+                        clearInterval(this.timer_interval_id);
                 }
                 next();
         }

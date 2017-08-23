@@ -32,11 +32,12 @@
         <drag-dialog  
         v-for='(item,key) in $store.state.currentorder.lp_order_dicts'
         @close = 'close_lp_order_table(key)'
+        :key = key
         >
-            <lp-quote 
-            :LPOrder ='item.config'
+            <lp-order
+            :LPOrder ='item'
             >  
-            </lp-quote>
+            </lp-order>
         </drag-dialog>
     </div>
 </template>

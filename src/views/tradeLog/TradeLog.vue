@@ -11,7 +11,6 @@
             <el-button type='primary' @click='onSearchKeyWord'>Search</el-button>
             <el-button type='primary' @click='onDownLoad'>Download Detailed Execel</el-button>
              <el-button type='primary' @click='onShowProfit'>Show Profit</el-button>
-        </el-col> 
     </el-row>
     <el-row class='prompt'>
         <strong >Trade Log - </strong>

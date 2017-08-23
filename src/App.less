@@ -5,7 +5,7 @@
         margin:0px;
         padding:0px;
     }
-    body{line-height:1.4;color:#666;font-family:"微软雅黑";font-size: 14px;}
+    body{line-height:1.4;font-family:"微软雅黑";font-size: 14px;}
     input,textarea,select{font-family:inherit;font-size:100%;}
     input{padding:0;border:0px;outline:0;}
     body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dt,dd,li,form{ margin:0;}
@@ -29,6 +29,11 @@
     .l{
         float:left;
     }
+    .r{
+        float:right;
+    }
+    /* 清除浮动*/
+    .fix{*zoom:1;}.fix:after{display:table; content:''; clear:both;}
     .w100{
         width: 100%;
     }
@@ -151,6 +156,9 @@
     }
     .el-table::after, .el-table::before{
         width:0px;
+    }
+    .el-table__fixed-header-wrapper thead div{
+        background-color: #fff;
     }
     //dialog table css(has lay_out border)
     .dialog_table{

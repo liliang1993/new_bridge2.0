@@ -8,6 +8,7 @@ import LpQuote from './LPQuote/';
 import lang from './lang/';
 import CurrentOrder from './currentOrder/';
 import TradeRule from './trade-rule'
+import LpOrder from './lp-order/';
 // console.log('add', AddPosition);
 export {
   Echarts,
@@ -19,6 +20,7 @@ export {
   DragDialog,
   LpQuote,
   CurrentOrder,
-  TradeRule
+  TradeRule,
+  LpOrder
   // DeletePosition
 };

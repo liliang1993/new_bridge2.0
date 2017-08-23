@@ -1,59 +1,124 @@
 <template>
     <section class="chart">
-        <el-row class='header_row'><b>Total Qty:</b>{{total_qty}}</el-row>
-        <el-row class='header_row'>
+        <div class='auto_refresh_panel'>
             <b>CURRENT:</b>
-            <span>{{current_std_symbol}}</span>
-            &nbsp;&nbsp;
+            <span class='current_symbol'>{{current_std_symbol}}</span>
             <b>NEXT REFRESH:</b>
              <span class='remain_sec' >{{remain_sec}}</span>
             <b>STATUS:</b>
             <span :style='{color:load_text_color}'>{{load_status}}</span>
-        </el-row>
-        <el-row>
-            <el-button  type="primary"  v-for =' (item,key) in std_symbols'  @click='select_std_symbol_chart(key)'>{{key}}</el-button>  
-        </el-row>
-        <el-row  style='width:60%; margin-top:20px;'>
-                <div class="pos_chart">
-                    <div class="symbol_chart " v-for='(item,key) in  current_lp_symbols'>
-                          <div class="lp_symbol_item">
-                              <div class="lp_weight" :style="{width: item.weight_width+'%'}">
-                                </div>
-                                <div class="lp_text">
-                                    <div>
-                                            <a href="javascript:void(0)">
-                                                <span class="lp_status"  :style="{'color': item.lp_symbol.trade_enable?'green' :'red'}">
-                                                    {{item.lp_symbol.trade_enable? 'Enabled' : 'Disabled' }}
-                                                </span>
-                                                S:
+        </div>
+        <div class="wrap">
+                <div class="select_panel">
+                    <a  v-for=' (item,key) in std_symbols' class='select_btn' href='javascript:void(0);' @click='select_std_symbol_chart(key)'>
+                    {{key}}
+                    </a>
+                </div>
+            <div class='chart_show_panel' v-if='show_lp_symbols'>
+                    <div class='tip_bar fix'>
+                        <div class="total_div">
+                             Total Qty:
+                            <span :style="{color:total_qty_color}">
+                            {{total_qty}}</span>
+                        </div>  
+                    </div>
+                    <div class="pos_chart">
+                        <div class="symbol_chart " v-for='(item,key) in  current_lp_symbols'>
+                              <div class="lp_symbol_item">
+                                  <div class="lp_weight" :style="{width: item.weight_width+'%'}">
+                                    </div>
+                                    <div class="lp_text">
+                                        <div>
+                                                <a href="javascript:void(0)" @click='showEditLpSymbol(item)'>
+                                                    <span class="lp_status"  :style="{'color': item.lp_symbol.trade_enable?'green' :'red'}">
+                                                        {{item.lp_symbol.trade_enable? 'Enabled' : 'Disabled' }}
+                                                    </span>
+                                                    S:
+                                                    <span>
+                                                        {{item.lp_symbol.lp_symbol}}
+                                                    </span>
+                                                    
+                                                </a>
+                                        </div>
+                                        </div>
+                                    <div class="lp_position" :style="{width: item.position_width+'%', backgroundColor: item.position_bgcolor}">
+                                  </div>
+                                    <div class="lp_qty">
+                                            <div style="margin-left: 10px;">
                                                 <span>
-                                                    {{item.lp_symbol.lp_symbol}}
+                                                {{key.toUpperCase()+' Q:'}}
                                                 </span>
+                                                <span :style="{color: item.quantity_color}">
+                                                {{item.quantity}}
+                                                </span>
+                                                &nbsp;&nbsp;
                                                 W:
                                                 <span>
                                                     {{item.lp_symbol.weight}}
                                                 </span>
-                                            </a>
+                                            </div>
                                     </div>
-                                    </div>
-                                <div class="lp_position" :style="{width: item.position_width+'%', backgroundColor: item.position_bgcolor}">
-                              </div>
-                                <div class="lp_qty">
-                                        <div style="margin-left: 10px;">
-                                            <span>
-                                            {{key}}
-                                            </span>
-                                            <span style="font-size: 15px;">
-                                            {{item.quantity}}
-                                            </span>
-                                        </div>
+                                 </div>
+                                <div style="height:20px; width:100%;">
                                 </div>
-                             </div>
-                            <div style="height:20px; width:100%;">
-                            </div>
+                        </div>
                     </div>
-                </div>
-        </el-row>    
+            </div>  
+       </div>
+        <el-dialog title="Edit LP symbol" :visible.sync="editLpSymbolDialogTableVisible" top='30%'>
+            <el-row :gutter='20'>
+                <el-col :span='12'>
+                    <p>STD Symbol:</p>
+                    <el-input v-model='dialog.std_symbol'></el-input>  
+                </el-col>
+                <el-col :span='12'>
+                    <p>Quote Enable:</p>
+                     <el-select class='w100' v-model="dialog.quote_enable" placeholder="请选择">
+                        <el-option
+                          key="true"
+                          label="true"
+                          value="true">
+                        </el-option>
+                        <el-option
+                          key="false"
+                          label="false"
+                          value="false">
+                        </el-option>
+                      </el-select>  
+                </el-col>
+                <el-col :span='12'>
+                    <label>LP:</label>
+                    <el-input v-model='dialog.lp'></el-input>  
+                </el-col>
+                <el-col :span='12'>
+                    <label>Trade Enable:</label>
+                    <el-select class='w100' v-model="dialog.trade_enable" placeholder="请选择">
+                        <el-option
+                          key="true"
+                          label="true"
+                          value="true">
+                        </el-option>
+                        <el-option
+                          key="false"
+                          label="false"
+                          value="false">
+                        </el-option>
+                    </el-select>  
+                </el-col>
+                <el-col :span='12'>
+                    <label>LP Symbol:</label>
+                    <el-input v-model='dialog.lp_symbol'></el-input>  
+                </el-col>
+                <el-col :span='12'>
+                    <label>Weight:</label>
+                    <el-input v-model='dialog.weight'></el-input>  
+                </el-col> 
+                <el-col :span='24' class='confirm_btn'>
+                    <el-button type="primary" >Confirm</el-button>
+                </el-col>  
+            </el-row>
+        </el-table>
+</el-dialog>
     </section>    
 </template>
 
@@ -62,64 +127,5 @@
     export default StdSymbolPositionJs;
 </script>
 <style scoped lang='less'>
-  .header_row{
-    margin-bottom:10px;
-  }    
-  .remain_sec{
-      display:inline-block;
-      vertical-align:middle;
-      width:20px;
-      height:20px;
-      text-align:center;
-      border:2px solid #ccc;
-    }
-  .el-button{
-    width:100px;
-}
-  .pos_chart {
-    margin: 5px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    width: 100%;
-}
-.symbol_chart {
-    width: 100%;
-}
-div.lp_symbol_item {
-    position: relative;
-}
-div.lp_weight {
-    position: absolute;
-    top: -5px;
-    height: 50px;
-    width: 100%;
-    border-right: 3px solid #140099;
-}
-div.lp_text {
-    padding-top: 10px;
-    padding-left: 10px;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    font-weight: bolder;
-}
-div.lp_position {
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    height: 40px;
-    width: 0%;
-    padding-top: 8px;
-}
-div.lp_qty {
-    padding-top: 10px;
-    position: absolute;
-    top: 0px;
-    right: -100%;
-    width: 100%;
-    font-weight: bolder;
-}
-a {
-    color: #646464;
-}
+  @import url(./StdSymbolPosition.less);
 </style>

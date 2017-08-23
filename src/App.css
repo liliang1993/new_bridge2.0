@@ -7,7 +7,6 @@
 }
 body {
   line-height: 1.4;
-  color: #666;
   font-family: "微软雅黑";
   font-size: 14px;
 }
@@ -79,6 +78,18 @@ a {
 /*a:hover{ color:#eac171;}*/
 .l {
   float: left;
+}
+.r {
+  float: right;
+}
+/* 清除浮动*/
+.fix {
+  *zoom: 1;
+}
+.fix:after {
+  display: table;
+  content: '';
+  clear: both;
 }
 .w100 {
   width: 100%;
@@ -189,6 +200,9 @@ a {
 .el-table::before {
   width: 0px;
 }
+.el-table__fixed-header-wrapper thead div {
+  background-color: #fff;
+}
 .dialog_table {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -196,6 +210,30 @@ a {
 .dialog_table .el-table__header-wrapper th {
   font-weight: normal;
   color: #fff;
+}
+.log_wrap ul li {
+  margin-top: 20px;
+}
+.log_wrap ul li p {
+  color: #323232;
+  font-weight: bold;
+}
+.log_wrap ul li pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: pre-wrap;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 .icon_edit {
   background-position: -84px -122px;
@@ -315,4 +353,10 @@ a {
 }
 .delete_position_dialog .el-dialog .el-dialog__body {
   padding-top: 15px;
+}
+.trade_log_dialog .el-dialog .el-dialog__body {
+  margin-top: 10px;
+  padding: 0px 30px;
+  max-height: 700px;
+  overflow: auto;
 }

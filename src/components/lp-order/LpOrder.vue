@@ -9,7 +9,7 @@
   
 <script >
 import LPOrderJs from './LPOrder.js';
-module.exports=LPOrderJs;
+export default LPOrderJs;
 </script>
 <style scoped lang='less'>
 </style>

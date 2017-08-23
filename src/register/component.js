@@ -10,7 +10,8 @@ import {
   DragDialog,
   CurrentOrder,
   TradeRule,
-  LpQuote
+  LpQuote,
+  LpOrder
 } from 'cps/';
 
 console.log('CurrentOrder', CurrentOrder);
@@ -21,6 +22,7 @@ export default {
   DialogInfo,
   DragDialog,
   LpQuote,
+  LpOrder,
   AddPosition: CurrentOrder.AddPosition,
   DeletePosition: CurrentOrder.DeletePosition,
   TraderuleDia: TradeRule.TradeRuleDia,
