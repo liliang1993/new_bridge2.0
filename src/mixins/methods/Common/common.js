@@ -200,13 +200,13 @@ module.exports = {
         case 'int':
           var value = parseInt(keyword.value);
           if (value || value === 0) {
-            val[keyword.name] = keyword.value;
+            val[keyword.name] = value;
           };
           break;
         case 'float':
           var value = parseFloat(keyword.value);
           if (value || value === 0) {
-            val[keyword.name] = keyword.value;
+            val[keyword.name] = value;
           };
           break;
         case 'datetime':

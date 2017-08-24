@@ -95,13 +95,13 @@ export default function({
 		}).catch((err) => {
 			console.dir('err', err);
 			this.$store.dispatch('hide_loading');
-			// if(errFn){	
-			// 	console.log('this',this);
-			// 			errFn.call(this,err);
-			// 		}else{
-			// 			cbs.requestError.call(this, err);
-			// 		}
-			// cbs.requestError.call(this, err);
+			if(errFn){	
+				console.log('this',this);
+						errFn.call(this,err);
+					}else{
+						cbs.requestError.call(this, err);
+					}
+			cbs.requestError.call(this, err);
 		});
 	} else {
 		this.$alert('您没用权限请求该接口！', '请求错误', {
