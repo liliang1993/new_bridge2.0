@@ -1,23 +1,47 @@
 <template>
-    <div class='clearfix'>
-    <el-row class='actions-top'>
-            <label>CLIENT</label>
-            <el-input class='search_input' v-model='keywords.client.value'></el-input>
-            <label>ORD ID</label>  
+    <div class='clearfix tradelog_container'>
+    <el-row class='actions-top fix'>
+            <div class="search_item">
+              <label>CLIENT</label>
+              <el-input class='search_input' v-model='keywords.client.value'></el-input>
+            </div>
+            <div class="search_item">
+              <label>ORD ID</label>  
             <el-input class='search_input' v-model='keywords.ord_id.value'></el-input> 
-            <label>GROUP</label>  
+            </div>
+            <div class="search_item">
+             <label>GROUP</label>  
             <el-input class='search_input' v-model='keywords.group.value'></el-input>  
-            <label>SYMBOL</label>
+            </div>
+            <div class="search_item">
+              <label>SYMBOL</label>
             <el-input class='search_input' v-model='keywords.symbol.value'></el-input>
-            <label>SIZE</label>  
-            <!-- <el-input class='search_input' v-model='keywords.size.value'></el-input><label>STATUS</label> -->
-
-            <el-input class='search_input' v-model='keywords.status.value'></el-input> 
-            <label>TIME</label>
-            <el-date-picker v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围" picker-options="pickerOptions" format="yyyy/MM//dd"></el-date-picker>
-            <el-button type='primary' @click='onSearchKeyWord'>Search</el-button>
-            <el-button type='primary' @click='onDownLoad'>Download Detailed Execel</el-button>
-             <el-button type='primary' @click='onShowProfit'>Show Profit</el-button>
+            </div>
+            <div class="search_item">
+              <label>SIZE</label>  
+              <el-input class='search_input' v-model='keywords.size.value'></el-input>
+            </div>
+            <div class="search_item">
+              <label>STATUS</label>
+              <el-select class='search_select' v-model="keywords.status.value" placeholder="请选择">
+                  <el-option
+                    v-for="item in $store.state.global.ord_status"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+              </el-select>
+            </div>
+            <div class="search_item">
+              <label>TIME</label>
+            <el-date-picker class='search_date_picker' v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围" picker-options="pickerOptions" format="yyyy/MM//dd"></el-date-picker>
+            </div>
+            <div class="button_bar">
+              <el-button  type='primary' @click='onSearchKeyWord'>Search</el-button>
+              <el-button  type='primary' @click='onDownLoad'>Download Detailed Execel</el-button>   
+              <el-button type='primary' @click='onShowProfit'>Show Profit</el-button>
+            </div>
+            
     </el-row>
     <el-row class='current_order_panel' style='height:30px;
       line-height: 30px;'>
@@ -71,27 +95,7 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
-      
-     <!--  <drag-dialog
-          :title='trade_profit.title'
-          class='drag_dialog'
-          v-if = 'trade_profit.show'
-          @close='onCloseProfit'
-      >
-            <trade-profit :ProfitConfig = 'trade_profit.config'></trade-profit>
-      </drag-dialog>
-      
-
-      <drag-dialog
-        v-for = "(trade_log,index) in trade_logs"
-        :key="trade_log"
-        class='drag_dialog'
-        :title="trade_log.title"
-        @close = "onCloseTradeLog(index)"
-      >
-      <trade-log :TradeLog='trade_log.config'> </trade-log>
-    </drag-dialog>
-
+<!--       
       <drag-dialog 
         v-for = "(lp_order,index) in lp_orders"
         class='drag_dialog'
@@ -101,6 +105,20 @@
       >
       <lp-order :LPOrder ='lp_order.config'></lp-order>
     </drag-dialog> -->
+  <el-dialog
+      title="TradeLog"
+      class='trade_log_dialog'
+      :visible.sync="tradeLog_dialogVisible"
+      top='10%'>
+        <div class="log_wrap">
+              <ul>
+                <li v-for='(item,key) in log_dicts'>
+                    <p>{{key.toUpperCase()}}</p>
+                    <pre>{{item}}</pre>
+                </li>
+              </ul>
+          </div>   
+    </el-dialog>
       <form ref = 'download_file'  action='/ajax/api?post_type=form' method='post' > <input class='value' name='json' type='hidden'  v-model='download_file_body'  /> </form>
   </div>
 </template>
@@ -109,53 +127,6 @@
 import TradeLogJs from './TradeLog.js';
 export default TradeLogJs;
 </script>
-<style scoped lang='less'>
-    .actions-top{
-        min-width:1300px;
-        margin-bottom: 10px;
-        .search_input{
-          display:inline-block;
-          width:70px;
-        }
-    }
-    .button-list{
-      margin-left: -20px;
-    }
-    .btm-action{
-        margin-top: 20px;
-        text-align: center;
-    }
-     .pagination{
-        display: inline-block;
-    }
-  .current_order_panel{    
-      margin-bottom:10px;
-        .table_update_at{
-          color:rgb(50,50,50);
-          font-weight:bold;
-        }
-        .next_refresh{
-          color:rgb(50,50,50);
-          font-weight:bold;
-        }
-        .remain_sec{
-          display:inline-block;
-          width: 29px;
-          height: 29px;
-          border:1px solid #ccc;
-          text-align:center;
-          line-height: 29px;
-          color:#0287f9;
-        }
-        .desc{
-          color:rgb(50,50,50);
-          font-weight:bold;
-        }
-    }
-  .success{
-      color:green;
-  }
-  .error{
-    color: red;
-  }
+<style lang='less'>
+    @import url(./TradeLog.less);
 </style>

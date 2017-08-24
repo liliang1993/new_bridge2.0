@@ -18,6 +18,7 @@ import LpPosition from './lpPosition/';
 import QuoteAdjust from './quoteAdjust/';
 import StdSymbolPosition from './stdSymbolPosition/';
 import Diagnosis from './dialognosis/';
+import ProfitLog from './profitLog/';
 
 import TopTraders from './topTraders/';
 import Mt4Positions from './mt4Positions/';
@@ -38,6 +39,7 @@ export {
 	QuoteAdjust,
 	StdSymbolPosition,
 	Diagnosis,
+	ProfitLog,
 
 	TopTraders,
 	Mt4Positions

@@ -20,21 +20,21 @@ Vue.axios.defaults.baseURL = gbs.host;
  * @param  {Function} fn        回调函数
  * @param  {boolean}   tokenFlag 是否需要携带token参数，为true，不需要；false，需要。一般除了登录，都需要
  */
-export default function ({
-							 type,
-							 path,
-							 data,
-							 fn,
-							 errFn,
-							 tokenFlag,
-							 headers,
-							 opts
-						 } = {}) {
+export default function({
+	type,
+	path,
+	data,
+	fn,
+	errFn,
+	tokenFlag,
+	headers,
+	opts
+} = {}) {
 	var options = {
-		method : type,
-		url    : path,
-		headers: headers && typeof headers === 'object' ? headers : {},
-		cancelToken: this.$store.state.global.ajax_source.token
+		method: type,
+		url: path,
+		headers: headers && typeof headers === 'object' ? headers : {}
+			// cancelToken: this.$store.state.global.ajax_source.token
 	};
 
 	//检测接口权限
@@ -72,28 +72,28 @@ export default function ({
 		//发送请求
 		Vue.axios(options).then((res) => {
 			this.$store.dispatch('hide_loading');
-			console.log('res',res);
-			if(res[gbs.api_status_key_field]===gbs.api_status_value_field){
-				if(gbs.api_data_field){
+			console.log('res', res);
+			if (res[gbs.api_status_key_field] === gbs.api_status_value_field) {
+				if (gbs.api_data_field) {
 					fn(res[gbs.api_data_field]);
-				}else{
+				} else {
 					fn(res.data);
 				}
-			}else{
-				if(gbs.api_custom[res.data[gbs.api_status_key_field]]){
-					gbs.api_custom[res.data[gbs.api_status_key_field]].call(this,res.data);
-				}else{
-					console.log('res1',res);
-					if(errFn){
-						console.log('res2',res);
-						errFn.call(this,res.data);
-					}else{
+			} else {
+				if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
+					gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data);
+				} else {
+					console.log('res1', res);
+					if (errFn) {
+						console.log('res2', res);
+						errFn.call(this, res.data);
+					} else {
 						cbs.statusError.call(this, res.data);
 					}
 				}
 			}
 		}).catch((err) => {
-			console.dir('err',err);
+			console.dir('err', err);
 			this.$store.dispatch('hide_loading');
 			// if(errFn){	
 			// 	console.log('this',this);
@@ -106,7 +106,7 @@ export default function ({
 	} else {
 		this.$alert('您没用权限请求该接口！', '请求错误', {
 			confirmButtonText: '确定',
-			type             : 'warning'
+			type: 'warning'
 		});
 	}
 };

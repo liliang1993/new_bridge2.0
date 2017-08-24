@@ -1,0 +1,74 @@
+.tradelog_container .actions-top {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.tradelog_container .actions-top .search_item {
+  float: left;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+.tradelog_container .actions-top .search_item .search_input {
+  display: inline-block;
+  width: 155px;
+  height: 40px;
+}
+.tradelog_container .actions-top .search_item .search_select {
+  width: 155px;
+  height: 40px;
+}
+.tradelog_container .actions-top .search_item .search_date_picker {
+  width: 225px;
+  height: 40px;
+}
+.tradelog_container .actions-top .search_item .el-input__inner {
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.tradelog_container .actions-top .button_bar {
+  float: left;
+  margin-top: 10px;
+}
+.tradelog_container .actions-top .button_bar .el-button {
+  border-radius: 20px;
+}
+.tradelog_container .button-list {
+  margin-left: -20px;
+}
+.tradelog_container .btm-action {
+  margin-top: 20px;
+  text-align: center;
+}
+.tradelog_container .pagination {
+  display: inline-block;
+}
+.tradelog_container .current_order_panel {
+  margin-bottom: 10px;
+}
+.tradelog_container .current_order_panel .table_update_at {
+  color: #323232;
+  font-weight: bold;
+}
+.tradelog_container .current_order_panel .next_refresh {
+  color: #323232;
+  font-weight: bold;
+}
+.tradelog_container .current_order_panel .remain_sec {
+  display: inline-block;
+  width: 29px;
+  height: 29px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 29px;
+  color: #0287f9;
+}
+.tradelog_container .current_order_panel .desc {
+  color: #323232;
+  font-weight: bold;
+}
+.tradelog_container .success {
+  color: green;
+}
+.tradelog_container .error {
+  color: red;
+}

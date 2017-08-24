@@ -8,14 +8,16 @@ import user from './userinfo/';
 import global from './global/';
 import traderule from './traderule/';
 import currentorder from './currentorder/';
+import profitlog from './profitlog/';
 
 export default new Vuex.Store({
-    modules: {
-        global,
-        router,
-        leftmenu,
-        user,
-        traderule,
-        currentorder
-    }
+  modules: {
+    global,
+    router,
+    leftmenu,
+    user,
+    traderule,
+    currentorder,
+    profitlog
+  }
 });

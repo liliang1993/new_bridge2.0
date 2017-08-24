@@ -47,8 +47,8 @@
       <el-dialog class='delete_position_dialog' title="Delete Position" :visible.sync="deletePositionDialogVisible" top='10%'>
            <delete-position></delete-position>   
       </el-dialog>
-
-
+            
+  
       <el-dialog class='trade_log_dialog' title="Trade Log" :visible.sync="tradeLogDialogVisible" top='10%'>
           <div class="log_wrap">
               <ul>

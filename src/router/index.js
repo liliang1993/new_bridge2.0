@@ -22,6 +22,8 @@ import GroupTradeRule from './groupTradeRule/';
 import QuoteRule from './quoteRule/';
 import CurrentOrder from './currentOrder/';
 import TradeLog from './tradeLog/';
+import ProfitLog from './profitLog/';
+
 import LpPosition from './lpPosition/';
 import QuoteAdjust from './quoteAdjust/';
 import StdSymbolPosition from './stdSymbolPosition/';
@@ -29,7 +31,7 @@ import Diagnosis from './diagnosis/';
 
 import Mt4Positions from './mt4Positions/';
 import TopTraders from './topTraders/';
-
+console.log('PROFITLOG', ProfitLog);
 export default new Router({
 	routes: [{
 			path: '/',
@@ -56,8 +58,9 @@ export default new Router({
 		LpPosition,
 		StdSymbolPosition,
 		TradeLog,
-		Diagnosis,
+		ProfitLog,
 
+		Diagnosis,
 		Mt4Positions,
 		TopTraders
 	]

@@ -2,6 +2,8 @@ export default {
         name: 'trade_log',
         data() {
                 return {
+                        tradeLog_dialogVisible: false,
+                        log_dicts: {},
                         timer_interval_id: void 0,
                         next_fresh_time: void 0,
                         refresh_enable: 'true',
@@ -37,7 +39,7 @@ export default {
                                 },
                                 status: {
                                         value: '',
-                                        type: 'int',
+                                        type: 'list',
                                         name: 'status'
                                 },
                                 time_range: {
@@ -178,19 +180,21 @@ export default {
                                                         label: '%',
                                                         minWidth: 50,
                                                         formatter: (item) => {
-                                                                try{
-                                                                if (item.request.settle === 1 && item.open_log) {
-                                                                         if(!item.open_log.trade_rule.attributes){
-                                                                                return 'view_consolelog';
-                                                                         }
-                                                                        return item.open_log.trade_rule.attributes.coverage;
-                                                                } else if (item.request.settle === 0) {
-                                                                        console.log('attributes',item.trade_rule.attributes);
-                                                                         return item.trade_rule.attributes.coverage;
-                                                                } else {
-                                                                        return 0;
-                                                                }
-                                                                }catch(error){return 'view_consolelog'};
+                                                                try {
+                                                                        if (item.request.settle === 1 && item.open_log) {
+                                                                                if (!item.open_log.trade_rule.attributes) {
+                                                                                        return 'view_consolelog';
+                                                                                }
+                                                                                return item.open_log.trade_rule.attributes.coverage;
+                                                                        } else if (item.request.settle === 0) {
+                                                                                console.log('attributes', item.trade_rule.attributes);
+                                                                                return item.trade_rule.attributes.coverage;
+                                                                        } else {
+                                                                                return 0;
+                                                                        }
+                                                                } catch (error) {
+                                                                        return 'view_consolelog'
+                                                                };
                                                         },
                                                         align: 'center'
                                                 }
@@ -470,7 +474,7 @@ export default {
                 onSearchKeyWord() {
                         this.load_data();
                 },
-                
+
                 refreshTable() {
                         console.log('refresh_enable', this.refresh_enable);
                         if (this.refresh_enable === "false") {
@@ -505,7 +509,7 @@ export default {
                         }).then(({
                                 value
                         }) => {
-                                // var opts = this.getKwargs();
+                                var opts = this.getKwargs();
                                 var kwargs = Object.assign({}, opts, {
                                         filename: value
                                 });
@@ -533,38 +537,50 @@ export default {
                         this.lp_orders.splice(index, 1);
                 },
                 show_trade_log(row) {
-                        var config = row;
-                        var ord_id = this.get_order_id(row);
-                        var title = {
-                                text: 'Trade Log:' + ord_id
-                        };
-                        var id = ord_id + "-" + row.time;
-                        var trade_log = {
-                                title,
-                                config,
-                                id
-                        };
-                        if (this.isDialogExist(this.trade_logs, trade_log) == false) {
-                                this.trade_logs.push(trade_log);
-                        };
+                        this.tradeLog_dialogVisible = true;
+                        this.log_dicts = row;
                 },
                 onCloseTradeLog(index) {
                         this.trade_logs.splice(index, 1);
                 },
                 onShowProfit() {
-                        // var kwargs = this.getKwargs();
-                        console.log('kwargs', kwargs);
+                        var kwargs = this.getKwargs();
                         if (kwargs.time == undefined) {
                                 this.$message.warning('Select time first');
                                 return;
                         }
-                        var params = {
-                                func_name: 'trade_log.trade_profit',
-                                kwargs
-                        }
-                        CommonApi.postFormAjax.call(this, params, data => {
-                                this.show_profit_dialog(data);
-                        })
+                        this.$store.dispatch('update_profitLog_kwargs', kwargs);
+                        this.$router.push({
+                                name: 'Profit Log',
+                                params: kwargs
+                        });
+                        // var params = {
+                        //         func_name: 'trade_log.trade_profit',
+                        //         kwargs
+                        // }
+                        // CommonApi.postFormAjax.call(this, params, data => {
+                        //         this.show_profit_dialog(data);
+                        // })
+                        // this.$$api_common_ajax({
+                        //         data: {
+                        //                 func_name: 'trade_log.trade_profit',
+                        //                 args: [],
+                        //                 kwargs:
+                        //         },
+                        //         fn: data => {
+                        //                 this.tableData = data[0];
+                        //                 this.pagination.total = data[1];
+                        //                 this.schedule_next_request();
+                        //         },
+                        //         errFn: (err) => {
+                        //                 this.$message({
+                        //                         showClose: true,
+                        //                         message: err.message,
+                        //                         type: 'error'
+                        //                 });
+                        //         }
+                        // });
+
                 },
                 show_profit_dialog(profit_dict) {
                         this.trade_profit.config = [];
@@ -585,12 +601,13 @@ export default {
                                 this.remain_sec = "-";
                                 return;
                         };
+
                         if (this.next_fresh_time && !this.data_loaded) {
+                                console.log('5555', this.next_fresh_time, this.data_loaded);
                                 remain_mil_sec = this.next_fresh_time - (new Date()).getTime();
                                 if (remain_mil_sec <= 0) {
                                         this.remain_sec = '0';
                                         this.load_data();
-                                        // this.data_loaded = true;
                                 } else {
                                         this.remain_sec = parseInt(remain_mil_sec * 0.001);
                                 }
@@ -600,11 +617,11 @@ export default {
                         this.next_fresh_time = (new Date()).getTime() + this.refresh_seconds * 1000;
                         this.data_loaded = false;
                 },
-                auto_refresh_control(){
-                        this.isActive =!this.isActive;
-                        if(this.isActive == false){
-                                this.$store.dispatch('cancel_global_ajax_source');
-                        }
+                auto_refresh_control() {
+                        this.isActive = !this.isActive;
+                        // if (this.isActive == false) {
+                        //         this.$store.dispatch('cancel_global_ajax_source');
+                        // }
                 },
                 onChangeCurrentPage(page) {
                         this.pagination.current_page = page;
@@ -615,12 +632,12 @@ export default {
                         this.getCurrentPageTable();
                 },
                 getCurrentPageTable() {
-                        // this.getKwargs();
+                        var kwargs = this.getKwargs();
                         this.$$api_common_ajax({
                                 data: {
                                         func_name: 'trade_log.page_trade_log',
                                         args: [this.pagination.current_page, this.pagination.page_size],
-                                        kwargs: {}
+                                        kwargs
                                 },
                                 fn: data => {
                                         this.tableData = data[0];
@@ -628,7 +645,11 @@ export default {
                                         this.schedule_next_request();
                                 },
                                 errFn: (err) => {
-                                        this.$message.error(err.msg);
+                                        this.$message({
+                                                showClose: true,
+                                                message: err.message,
+                                                type: 'error'
+                                        });
                                 }
                         });
                 },
