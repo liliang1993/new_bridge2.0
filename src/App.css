@@ -8,7 +8,7 @@
 body {
   line-height: 1.4;
   font-family: "微软雅黑";
-  font-size: 14px;
+  font-size: 12px;
 }
 input,
 textarea,
@@ -133,6 +133,9 @@ a {
 .vm {
   vertical-align: middle;
 }
+.tc {
+  text-align: center;
+}
 .mt5 {
   margin-top: 5px;
 }
@@ -190,7 +193,7 @@ a {
   background-color: #fff;
   height: 50px;
   line-height: 50px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 .el-table .el-table__body tr:nth-child(2n+1) {

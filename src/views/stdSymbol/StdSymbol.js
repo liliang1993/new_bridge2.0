@@ -13,7 +13,18 @@ export default {
                 quote_enable: 'true',
                 trade_enable: 'true'
             }],
-            dialogTableVisible: false,
+            edit_tableData: [{
+                std_symbol: '',
+                lp: '',
+                lp_symbol: '',
+                weight: '',
+                min_qty: '',
+                contract_size: '',
+                quote_enable: 'true',
+                trade_enable: 'true'
+            }],
+            addDialogTableVisible: false,
+            editDialogTableVisible: false,
             visible: false
         }
     },
@@ -34,8 +45,8 @@ export default {
                     columns: [{
                         attr: {
                             prop: 'std_symbol',
-                            label: this.$t('STD symbol'),
-                            minWidth: 180,
+                            label: this.$t('STD SYMBOL'),
+                            minWidth: 150,
                             sortable: true,
                             align: 'center'
                         }
@@ -43,23 +54,23 @@ export default {
                         attr: {
                             prop: 'lp',
                             label: this.$t('LP'),
-                            minWidth: 180,
+                            minWidth: 100,
                             sortable: true,
                             align: 'center'
                         }
                     }, {
                         attr: {
                             prop: 'lp_symbol',
-                            label: this.$t('LP symbol'),
-                            minWidth: 180,
+                            label: this.$t('LP SYMBOL'),
+                            minWidth: 150,
                             sortable: true,
                             align: 'center'
                         }
                     }, {
                         attr: {
                             prop: 'weight',
-                            label: this.$t('Weight'),
-                            width: 120,
+                            label: this.$t('WEIGHT'),
+                            minWidth: 100,
                             sortable: true,
                             scopedSlot: 'weight_attr',
                             align: 'center'
@@ -67,8 +78,8 @@ export default {
                     }, {
                         attr: {
                             prop: 'min_qty',
-                            label: this.$t('Min Qty'),
-                            width: 120,
+                            label: this.$t('MIN QTY'),
+                            minWidth: 100,
                             sortable: true,
                             scopedSlot: 'min_qty_attr',
                             align: 'center'
@@ -76,8 +87,8 @@ export default {
                     }, {
                         attr: {
                             prop: 'contract_size',
-                            label: this.$t('Contract Size'),
-                            minWidth: 180,
+                            label: this.$t('CON SIZE'),
+                            minWidth: 100,
                             sortable: true,
                             scopedSlot: 'contract_size_attr',
                             align: 'center'
@@ -85,8 +96,8 @@ export default {
                     }, {
                         attr: {
                             prop: 'quote_enable',
-                            label: this.$t('Quote Enable'),
-                            minWidth: 180,
+                            label: this.$t('QUOTE ENABLE'),
+                            minWidth: 130,
                             sortable: true,
                             scopedSlot: 'quote_attr',
                             align: 'center'
@@ -94,8 +105,8 @@ export default {
                     }, {
                         attr: {
                             prop: 'trade_enable',
-                            label: this.$t('Trade Enable'),
-                            minWidth: 180,
+                            label: this.$t('TRADE ENABLE'),
+                            minWidth: 130,
                             sortable: true,
                             scopedSlot: 'trade_attr',
                             align: 'center'
@@ -103,11 +114,10 @@ export default {
                     }, {
                         attr: {
                             // prop: 'address',
-                            label: this.$t('Operation'),
-                            minWidth: 180,
+                            label: this.$t('OPERATION'),
+                            minWidth: 100,
                             scopedSlot: 'handler',
-                            align: 'left',
-                            headerAlign: 'left'
+                            align: 'center',
                         }
                     }]
                 }
@@ -126,7 +136,7 @@ export default {
                     columns: [{
                         attr: {
                             prop: 'std_symbol',
-                            label: this.$t('Std symbol'),
+                            label: this.$t('STD SYMBOL'),
                             width: 90,
                             scopedSlot: 'std_symbol',
                             align: 'center'
@@ -142,7 +152,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'lp_symbol',
-                            label: this.$t('LP symbol'),
+                            label: this.$t('LP SYMBOL'),
                             width: 90,
                             scopedSlot: 'lp_symbol',
                             align: 'center'
@@ -150,7 +160,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'weight',
-                            label: this.$t('Weight'),
+                            label: this.$t('WEIGHT'),
                             width: 90,
                             scopedSlot: 'weight',
                             align: 'center'
@@ -158,7 +168,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'min_qty',
-                            label: this.$t('Min Qty'),
+                            label: this.$t('MIN QTY'),
                             width: 90,
                             scopedSlot: 'min_qty',
                             align: 'center'
@@ -166,7 +176,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'contract_size',
-                            label: this.$t('Contract Size'),
+                            label: this.$t('Con SIZE'),
                             width: 110,
                             scopedSlot: 'contract_size',
                             align: 'center'
@@ -174,7 +184,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'quote_enable',
-                            label: this.$t('Quote Enable'),
+                            label: this.$t('QUOTE ENABLE'),
                             minWidth: 120,
                             scopedSlot: 'quote_enable',
                             align: 'center'
@@ -182,7 +192,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'trade_enable',
-                            label: this.$t('Trade Enable'),
+                            label: this.$t('TRADE ENABLE'),
                             minWidth: 120,
                             scopedSlot: 'trade_enable',
                             align: 'center'
@@ -190,7 +200,85 @@ export default {
                     }]
                 }
             }
-        }
+        },
+        edit_tableConfig: {
+            get() {
+                return {
+                    table: {
+                        attr: {
+                            data: this.edit_tableData,
+                            maxHeight: '100%',
+                            border: false
+                        }
+                    },
+                    columns: [{
+                        attr: {
+                            prop: 'std_symbol',
+                            label: this.$t('STD SYMBOL'),
+                            width: 90,
+                            scopedSlot: 'std_symbol',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'lp',
+                            label: this.$t('LP'),
+                            width: 100,
+                            scopedSlot: 'lp',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'lp_symbol',
+                            label: this.$t('LP SYMBOL'),
+                            width: 90,
+                            scopedSlot: 'lp_symbol',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'weight',
+                            label: this.$t('WEIGHT'),
+                            width: 90,
+                            scopedSlot: 'weight',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'min_qty',
+                            label: this.$t('MIN QTY'),
+                            width: 90,
+                            scopedSlot: 'min_qty',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'contract_size',
+                            label: this.$t('Con SIZE'),
+                            width: 110,
+                            scopedSlot: 'contract_size',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'quote_enable',
+                            label: this.$t('QUOTE ENABLE'),
+                            minWidth: 120,
+                            scopedSlot: 'quote_enable',
+                            align: 'center'
+                        }
+                    }, {
+                        attr: {
+                            prop: 'trade_enable',
+                            label: this.$t('TRADE ENABLE'),
+                            minWidth: 120,
+                            scopedSlot: 'trade_enable',
+                            align: 'center'
+                        }
+                    }]
+                }
+            }
+        },
     },
     methods: {
         add_symbol_submit(data) {
@@ -209,10 +297,9 @@ export default {
                 fn: data => {
                     this.load_data();
                     this.get_global_std_symbols();
-                    this.dialogTableVisible = false;
+                    this.addDialogTableVisible = false;
                 },
                 errFn: (err) => {
-                    console.log('123', "错误了");
                     this.$message({
                         showClose: true,
                         message: err.response.data,
@@ -220,6 +307,11 @@ export default {
                     });
                 }
             });
+        },
+        editSymbol(row) {
+            this.editDialogTableVisible = true;
+            Object.assign(this.edit_tableData[0], row);
+
         },
         edit_symbol_submit(row) {
             row.weight = parseInt(row.weight);
@@ -234,7 +326,8 @@ export default {
                     kwargs: {}
                 },
                 fn: data => {
-                    row.editFlag = false;
+                    this.editDialogTableVisible = false;
+                    this.load_data();
                 },
                 errFn: (err) => {
                     this.$message({
@@ -260,18 +353,6 @@ export default {
                     row.visible = false;
                 }
             });
-        },
-        editSymbol(row) {
-            this.$set(row, 'editFlag', true);
-            for (var item of['weight', 'min_qty', 'contract_size', 'quote_enable', 'trade_enable']) {
-                row['orign-' + item] = row[item];
-            }
-        },
-        backOrigin(row) {
-            this.$set(row, 'editFlag', false);
-            for (var item of['weight', 'min_qty', 'contract_size', 'quote_enable', 'trade_enable']) {
-                row[item] = row['orign-' + item];
-            }
         },
         load_data() {
             this.$$api_common_ajax({

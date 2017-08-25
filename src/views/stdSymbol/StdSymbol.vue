@@ -2,7 +2,7 @@
   <div class='list'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='dialogTableVisible=true'>{{this.$t('Add symbol')}}</el-button>
+            <el-button type='primary' @click='addDialogTableVisible=true'>{{this.$t('Add symbol')}}</el-button>
         </el-col> 
     </el-row>
     <el-col :span="24" class='table-wrap'>
@@ -11,8 +11,6 @@
           :configs="tableConfig">
               <template slot="handler" scope="scope">
                   <i class='icon icon_edit' @click='editSymbol(scope.row)' v-if='!scope.row.editFlag'></i>
-                  <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
-                  <span class='btn_submit' v-if='scope.row.editFlag' @click='edit_symbol_submit(scope.row)'>Submit</span>
                   <el-popover
                     ref="popover{{$index}}" 
                     placement="top"
@@ -64,7 +62,7 @@
         </bel-table> 
     </el-col>
 
-    <el-dialog title="Add LP Symbols" :visible.sync="dialogTableVisible" top='40%'>
+    <el-dialog title="Add LP Symbols" :visible.sync="addDialogTableVisible" top='40%'>
            <bel-table
           ref="table"    
           :configs="new_tableConfig"
@@ -121,6 +119,66 @@
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
               <el-button type="primary" @click='add_symbol_submit(new_tableData[0])'>Submit</el-button>
+          </el-col>    
+      </el-dialog>
+
+      <el-dialog title="Edit LP Symbols" :visible.sync="editDialogTableVisible" top='40%'>
+           <bel-table
+          ref="table"    
+          :configs="edit_tableConfig"
+          class='user-table'
+          >   
+              <template slot="std_symbol" scope="scope">
+                <el-input v-model='scope.row.std_symbol'>
+                </el-input> 
+              </template>
+              <template slot="lp" scope="scope">
+                <el-select v-model="scope.row.lp" placeholder="请选择">
+                      <el-option
+                        v-for="item in $store.state.global.lps"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                </el-select>
+              </template>
+              <template slot="lp_symbol" scope="scope">
+                 <el-input v-model='scope.row.lp_symbol'>
+                </el-input>
+              </template>
+              <template slot="weight" scope="scope">
+                <el-input  v-model='scope.row.weight'>
+                </el-input> 
+              </template>
+              <template slot="min_qty" scope="scope">
+                <el-input  v-model='scope.row.min_qty'>
+                </el-input> 
+              </template>
+              <template slot="contract_size" scope="scope">
+                <el-input v-model='scope.row.contract_size'>
+                </el-input> 
+              </template>
+              <template slot="quote_enable" scope="scope">
+                 <el-switch
+                    v-model="scope.row.quote_enable"
+                    on-color="#13ce66"
+                    off-color="#ff4949"
+                    on-value="true"
+                    off-value="false">
+                  </el-switch> 
+              </template>
+              <template slot="trade_enable" scope="scope">
+                 <el-switch
+                    v-model="scope.row.trade_enable"
+                    on-color="#13ce66"
+                    off-color="#ff4949"
+                    on-value="true"
+                    off-value="false">
+                  </el-switch> 
+              </template>
+          </bel-table> 
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='edit_symbol_submit(edit_tableData[0])'>Submit</el-button>
           </el-col>    
       </el-dialog>
   </div>

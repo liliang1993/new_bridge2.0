@@ -1,7 +1,7 @@
 <template>
     <div class='clearfix'>
           <div class='actions-top'>
-            <el-button type='primary' @click='dialogTableVisible = true'>{{$t('Add user')}}</el-button>
+            <el-button type='primary' @click='addDialogTableVisible = true'>{{$t('Add user')}}</el-button>
           </div>
     <el-col :span="24" class='table-wrap'>
           <bel-table
@@ -9,62 +9,17 @@
           :configs="tableConfig"
           class='user-table'
           >   
-              <template slot="roles" scope="scope">
-                  <span v-if='!scope.row.editFlag'>{{scope.row.role}}</span>
-                  <el-select v-if='scope.row.editFlag' v-model="scope.row.role" placeholder="请选择">
-                      <el-option
-                        v-for="item in $store.state.global.roles"
-                        :key="item"
-                        :label="item"
-                        :value="item">
-                      </el-option>
-                  </el-select>
-              </template>
-              <template slot="lps" scope="scope">
-                <span v-if='!scope.row.editFlag'>{{scope.row.lps}}</span>
-                <el-input v-if='scope.row.editFlag' v-model='scope.row.lps'>
-                </el-input> 
-              </template>
-              <template slot="groups" scope="scope">
-                <span v-if='!scope.row.editFlag'>{{scope.row.groups}}</span>
-                <el-input v-if='scope.row.editFlag' v-model='scope.row.groups'>
-                </el-input> 
-              </template>
-              <template slot="symbols" scope="scope">
-                <span v-if='!scope.row.editFlag'>{{scope.row.symbols}}</span>
-                <el-input v-if='scope.row.editFlag' v-model='scope.row.symbols'>
-                </el-input> 
-              </template>
-              <template slot="desc" scope="scope">
-                <span v-if='!scope.row.editFlag'>{{scope.row.desc}}</span>
-                <el-input v-if='scope.row.editFlag' v-model='scope.row.desc'>
-                </el-input> 
-              </template>
-              <template slot="status" scope="scope">
-                  <span v-if='!scope.row.editFlag'  :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
-                    <el-select v-if='scope.row.editFlag' v-model="scope.row.status" placeholder="请选择">
-                      <el-option
-                        key="Enabled"
-                        label="Enabled"
-                        :value='0'>
-                      </el-option>
-                      <el-option
-                        key="Disabled"
-                        label="Disabled"
-                        :value='1'>
-                      </el-option>
-                    </el-select>
-              </template>
+          
               <template slot="password" scope="scope">
                 <span v-if='!scope.row.editFlag'></span>
                 <el-input v-if='scope.row.editFlag' type='password' placeholder='Input nothing means no change' v-model='scope.row.password'>
                 </el-input> 
               </template>
               <template slot="handler" scope="scope">
-                  <i class='icon icon_edit' @click='editUser(scope.row)' v-if='!scope.row.editFlag'></i>
-                  <i class='icon icon_back' v-if='scope.row.editFlag' @click='backOrigin(scope.row)'></i>
-                  <span class='btn_submit' v-if='scope.row.editFlag' @click='edit_user_submit(scope.row)'>Submit</span>
-                  </template>
+                  <div class='tc'>
+                    <i class='icon icon_edit' @click='editUser(scope.row)' v-if='!scope.row.editFlag'></i>
+                  </div> 
+              </template>
           </bel-table> 
     </el-col>  
     
@@ -82,10 +37,55 @@
             </el-pagination>
       </el-col>
 
-      <el-dialog title="Add User" :visible.sync="dialogTableVisible" top='40%'>
+      <el-dialog title="Add User" :visible.sync="addDialogTableVisible" top='40%'>
            <bel-table
           ref="table"    
-          :configs="new_tableConfig"
+          :configs="add_tableConfig"
+          class='user-table'
+          >   
+              <template slot="username" scope="scope">
+                <el-input v-model='scope.row.username'>
+                </el-input> 
+              </template>
+              <template slot="password" scope="scope">
+                <el-input v-model='scope.row.password'>
+                </el-input>
+              </template>
+              <template slot="roles" scope="scope">
+                  <el-select v-model="scope.row.role" placeholder="请选择">
+                      <el-option
+                        v-for="item in $store.state.global.roles"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                  </el-select>
+              </template>
+              <template slot="lps" scope="scope">
+                <el-input  v-model='scope.row.lps'>
+                </el-input> 
+              </template>
+              <template slot="groups" scope="scope">
+                <el-input  v-model='scope.row.groups'>
+                </el-input> 
+              </template>
+              <template slot="symbols" scope="scope">
+                <el-input v-model='scope.row.symbols'>
+                </el-input> 
+              </template>
+              <template slot="desc" scope="scope">
+                <el-input v-model='scope.row.desc'>
+                </el-input> 
+              </template>
+          </bel-table> 
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
+          </el-col>    
+      </el-dialog>
+      <el-dialog title="Edit User" :visible.sync="editDialogTableVisible" top='40%'>
+           <bel-table
+          ref="table"    
+          :configs="edit_tableConfig"
           class='user-table'
           >   
               <template slot="username" scope="scope">

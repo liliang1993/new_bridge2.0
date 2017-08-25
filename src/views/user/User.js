@@ -5,15 +5,25 @@ export default {
   name: 'user_list',
   data() {
     return {
-      dialogTableVisible: false,
+      addDialogTableVisible: false,
+      editDialogTableVisible: false,
       tableData: [],
-      new_tableData: [{
-        user: '',
+      add_tableData: [{
+        username: '',
         password: '',
         role: 'Admin',
         lps: '',
         groups: '',
-        symbol: '',
+        symbols: '',
+        desc: ''
+      }],
+      edit_tableData: [{
+        username: '',
+        password: '',
+        role: 'Admin',
+        lps: '',
+        groups: '',
+        symbols: '',
         desc: ''
       }],
       pagination: {
@@ -103,16 +113,7 @@ export default {
             }
           }, {
             attr: {
-              prop: '',
-              label: this.$t(''),
-              minWidth: 130,
-              align: 'center',
-              scopedSlot: 'password'
-            }
-          }, {
-            attr: {
-              label: this.$t(''),
-              minWidth: 100,
+              label: this.$t('EDIT'),
               scopedSlot: 'handler',
               align: 'left'
             }
@@ -120,12 +121,12 @@ export default {
         }
       }
     },
-    new_tableConfig: {
+    add_tableConfig: {
       get() {
         return {
           table: {
             attr: {
-              data: this.new_tableData,
+              data: this.add_tableData,
               maxHeight: '100%',
               border: false,
               defaultSort: {
@@ -177,11 +178,11 @@ export default {
             attr: {
               prop: 'symbols',
               label: this.$t('MT4 SYMBOLS'),
-              minWidth: 100,
+              minWidth: 120,
               align: 'center',
               scopedSlot: 'symbols'
-            },
-            // }, {
+            }
+          }, {
             attr: {
               prop: 'desc',
               label: this.$t('DESCRIPTION'),
@@ -192,16 +193,81 @@ export default {
           }]
         }
       }
-    }
+    },
+    edit_tableConfig: {
+      get() {
+        return {
+          table: {
+            attr: {
+              data: this.edit_tableData,
+              maxHeight: '100%',
+              border: false,
+              defaultSort: {
+                prop: 'user_id'
+              }
+            }
+          },
+          columns: [{
+            attr: {
+              prop: 'username',
+              label: this.$t('USERNAME'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'username'
+            }
+          }, {
+            attr: {
+              label: this.$t('PASSWORD'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'password'
+            }
+          }, {
+            attr: {
+              prop: 'role',
+              label: this.$t('ROLE'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'roles'
+            }
+          }, {
+            attr: {
+              prop: 'lps',
+              label: this.$t('LPS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'lps'
+            }
+          }, {
+            attr: {
+              prop: 'groups',
+              label: this.$t('GROUPS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'groups'
+            }
+          }, {
+            attr: {
+              prop: 'symbols',
+              label: this.$t('MT4 SYMBOLS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'symbols'
+            },
+          }, {
+            attr: {
+              prop: 'desc',
+              label: this.$t('DESCRIPTION'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'desc'
+            }
+          }]
+        }
+      }
+    },
   },
   methods: {
-    onCloseDialog(type) {
-      this[type].show = false;
-
-    },
-    onAddUser() {
-      this.add_user_dialog.show = true;
-    },
 
     // onEditUser(row) {
     //   this.edit_user_dialog.show = true;
@@ -212,19 +278,13 @@ export default {
     //   });
     // },
     editUser(row) {
-      this.$set(row, 'editFlag', true);
-      for (var item of['role', 'lps', 'groups', 'symbols', 'desc', 'status']) {
-        row['origin-' + item] = row[item];
-      }
-      console.log('row', row);
-    },
-    backOrigin(row) {
-      this.$set(row, 'editFlag', false);
-      for (var item of['role', 'lps', 'groups', 'symbols', 'desc', 'status']) {
-        row[item] = row['origin-' + item];
-      }
+      this.editDialogTableVisible = true;
+      Object.assign(this.edit_tableData[0], row);
+      console.log('edit_tableData', this.edit_tableData);
+
     },
     add_user_submit(data) {
+      console.log('data', data);
       this.$$api_common_ajax({
         data: {
           func_name: 'user.create_user',
@@ -237,9 +297,16 @@ export default {
         },
         fn: data => {
           this.find_page_user();
-          this.dialogTableVisible = false;
+          this.addDialogTableVisible = false;
         },
-        errFn: (err) => {}
+        errFn: (err) => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message: err.response.data,
+            type: 'error'
+          });
+        }
       });
     },
     edit_user_submit(row) {
@@ -299,7 +366,11 @@ export default {
           this.pagination.total = data[1];
         },
         errFn: (err) => {
-          // this.$message.error(err.msg);
+          this.$message({
+            showClose: true,
+            message: err.message,
+            type: 'error'
+          });
         }
       });
     },

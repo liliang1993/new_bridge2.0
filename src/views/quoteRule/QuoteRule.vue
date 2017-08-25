@@ -131,7 +131,63 @@
               </div>
           </template>
     </bel-table> 
-    
+    <el-dialog title="Edit quote rule" :visible.sync="editDialogTableVisible" top='40%'>
+          <el-row>
+              <el-col :span='8'>
+                  <p>Source:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='8'>
+                  <p>MT4 Symbol:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='8'>
+                  <p>STD Symbol:</p>
+                  <el-input></el-input>
+              </el-col>
+          </el-row> 
+          <el-col :span='24'>
+              <p>Rule</p>
+              <div class=''></div>
+          </el-col>  
+          <el-row>
+              <el-col :span='12'>
+                  <p>Digits:</p>
+                  <el-input></el-input>
+              </el-col> 
+               <el-col :span='12'>
+                  <p>Aggregator</p>
+                  <el-input></el-input>
+              </el-col> 
+               <el-col :span='12'>
+                  <p>Min spread:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='12'>
+                  <p>Max spread:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='12'>
+                  <p>Adjust:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='12'>
+                  <p>Markup:</p>
+                  <el-input></el-input>
+              </el-col>
+              <el-col :span='12'>
+                  <p>Type:</p>
+                  
+                  <div class="">
+                    
+                  </div>
+              </el-col>  
+          </el-row>  
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='add_user_submit(new_tableData[0])'>Confirm</el-button>
+          </el-col>    
+      </el-dialog>
+
   </div>
 </template>
   

@@ -22,7 +22,7 @@ export default {
           columns: [{
             attr: {
               prop: 'lp',
-              label: this.$t('lp'),
+              label: this.$t('LP'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -30,7 +30,7 @@ export default {
           }, {
             attr: {
               prop: 'type',
-              label: this.$t('type'),
+              label: this.$t('TYPE'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -38,7 +38,7 @@ export default {
           }, {
             attr: {
               prop: 'username',
-              label: this.$t('username'),
+              label: this.$t('USERNAME'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -46,7 +46,7 @@ export default {
           }, {
             attr: {
               prop: 'sender',
-              label: this.$t('sender'),
+              label: this.$t('SENDER'),
               width: 180,
               sortable: true,
               align: 'center',
@@ -54,7 +54,7 @@ export default {
           }, {
             attr: {
               prop: 'target',
-              label: this.$t('target'),
+              label: this.$t('TARGET'),
               width: 180,
               sortable: true,
               align: 'center',
@@ -63,7 +63,7 @@ export default {
           }, {
             attr: {
               prop: 'host',
-              label: this.$t('host'),
+              label: this.$t('HOST'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -71,7 +71,7 @@ export default {
           }, {
             attr: {
               prop: 'debug',
-              label: this.$t('debug'),
+              label: this.$t('DEBUG'),
               minWidth: 180,
               sortable: true,
               align: 'center',

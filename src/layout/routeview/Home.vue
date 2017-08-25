@@ -39,6 +39,15 @@
             >  
             </lp-order>
         </drag-dialog>
+        <!-- MT4 Position -->
+        <drag-dialog 
+                v-if='$store.state.mt4position.isShow'
+              class='mt4_position_dialog'
+              title="MT4 POSITION"
+              @close = "close_mt4_position()"
+            >
+                <mt4-position></mt4-position> 
+          </drag-dialog>
     </div>
 </template>
 <script>
@@ -73,6 +82,9 @@
             },
             close_lp_order_table(key){
                 this.$store.dispatch('delete_lp_order_dicts',key);
+            },
+            close_mt4_position(){
+                this.$store.dispatch('hide_mt4_positions');
             }
         },
         created(){

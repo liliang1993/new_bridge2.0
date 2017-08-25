@@ -9,6 +9,7 @@ import lang from './lang/';
 import CurrentOrder from './currentOrder/';
 import TradeRule from './trade-rule'
 import LpOrder from './lp-order/';
+import Mt4Position from './mt4-position/';
 // console.log('add', AddPosition);
 export {
   Echarts,
@@ -21,6 +22,7 @@ export {
   LpQuote,
   CurrentOrder,
   TradeRule,
-  LpOrder
+  LpOrder,
+  Mt4Position
   // DeletePosition
 };

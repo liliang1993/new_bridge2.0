@@ -38,7 +38,7 @@ export default {
           columns: [{
             attr: {
               prop: 'log_id',
-              label: this.$t('log_id'),
+              label: this.$t('LOG ID'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -46,7 +46,7 @@ export default {
           }, {
             attr: {
               prop: 'username',
-              label: this.$t('username'),
+              label: this.$t('USERNAME'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -54,7 +54,7 @@ export default {
           }, {
             attr: {
               prop: 'api',
-              label: this.$t('api'),
+              label: this.$t('API'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -62,7 +62,7 @@ export default {
           }, {
             attr: {
               prop: 'request',
-              label: this.$t('request'),
+              label: this.$t('REQUEST'),
               width: 290,
               sortable: true,
               align: 'left',
@@ -72,7 +72,7 @@ export default {
           }, {
             attr: {
               prop: 'result',
-              label: this.$t('result'),
+              label: this.$t('RESULT'),
               width: 180,
               sortable: true,
               showOverflowTooltip: false,
@@ -81,7 +81,7 @@ export default {
           }, {
             attr: {
               prop: 'status',
-              label: this.$t('status'),
+              label: this.$t('STATUS'),
               width: 180,
               sortable: true,
               align: 'center',
@@ -90,7 +90,7 @@ export default {
           }, {
             attr: {
               prop: 'remote_ip',
-              label: this.$t('ip'),
+              label: this.$t('IP'),
               minWidth: 180,
               sortable: true,
               align: 'center'
@@ -98,7 +98,7 @@ export default {
           }, {
             attr: {
               prop: 'create_time',
-              label: this.$t('time'),
+              label: this.$t('TIME'),
               minWidth: 180,
               sortable: true,
               align: 'center'
