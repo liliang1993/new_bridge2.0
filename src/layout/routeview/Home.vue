@@ -39,6 +39,21 @@
             >  
             </lp-order>
         </drag-dialog>
+        <!-- addPosition -->
+        <drag-dialog
+            v-if = '$store.state.global.add_position'
+            @close= 'close_addPosition_Dialog'
+        >
+                 <add-position></add-position>
+      </drag-dialog>
+      <!-- deletePosition -->
+      <drag-dialog
+            v-if = '$store.state.global.delete_position'
+
+            @close= 'close_deletePosition_Dialog'
+        >
+                 <delete-position></delete-position>
+      </drag-dialog>
         <!-- MT4 Position -->
         <drag-dialog 
                 v-if='$store.state.mt4position.isShow'
@@ -85,6 +100,12 @@
             },
             close_mt4_position(){
                 this.$store.dispatch('hide_mt4_positions');
+            },
+            close_addPosition_Dialog(){
+                this.$store.dispatch('hide_add_position');
+            },
+            close_deletePosition_Dialog(){
+                this.$store.dispatch('hide_delete_position');
             }
         },
         created(){

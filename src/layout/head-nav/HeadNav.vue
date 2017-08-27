@@ -27,6 +27,17 @@
                     </div>
                 </el-col>
                 <div  class='nav_menu'>
+                         <div class="lang">
+                            <el-dropdown @command="handleCommand" trigger="click">
+                                <span class="el-dropdown-link">{{$t('locales.' + locale)}}
+                                <i class='icon icon_drop_down'></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                  <el-dropdown-item v-for="(item,key,index) in langs" :key="index" :command="key">{{$t('locales.' + key)}}</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                        <em class='line'>|</em>
                         <div class="role">
                             <el-dropdown
                                 trigger="click"
@@ -70,25 +81,7 @@
                 </div>
             </el-row>
         </header>
-
-<!--         <drag-dialog
-            v-if="changePassDialog.show"
-            :isModal = "changePassDialog.isModal"
-            title="Change Password"
-            @close = "onclose('changePassDialog')"
-        >   
-                <form-data
-                 ref='changePass-form'
-                  style="padding:20px 40px 20px 20px"
-                  :LabelWidth = 'changePassDialog.labelWidth' 
-                  :FieldList='fieldlist'
-                  :DefaultValue='changePassDialog.default_value'
-                  :Rules='changePassDialog.rules'
-                  @onSubmit='updUserPass'
-                  >
-                  </form-data>
-        </drag-dialog>    --> 
-
+        
     </div>
 </template>
 
@@ -97,6 +90,6 @@
 	export default HeadNavJs;
 </script>
 
-<style scoped lang='less'>
+<style lang='less'>
 @import url(./HeadNav.less);
 </style>

@@ -6,9 +6,12 @@ import {
 export default {
     ajax_loading: false,
     context : store.get('context')||{},
+    add_position: false,
+    delete_position:false,
     user_info: store.get('user_info'),
     roles: ["Admin","RulesEditor","Whitelabel","WhitelabelPro"],
     quote_types:  ["asian", "spread", "raw", "delta"],
+    aggregator:['median','bestright','bestright_option'],
     sources: ['risehills','solid'],
     lps: store.get('lps'),
     std_symbols: store.get('std_symbols'),

@@ -12,7 +12,7 @@ import {
 
 export default {
 	path: 'stdsymbol_position',
-	name: 'Std Symbol Position',
+	name: 'STD Symbol Position',
 	icon: 'inbox',
 	component: StdSymbolPosition
 };

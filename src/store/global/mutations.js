@@ -16,6 +16,22 @@ export default {
         state.context = global_context;
         store.set('context', state.context);
     },
+    
+    [types.SHOW_ADD_POSITION](state) {
+        state.add_position = true;
+    },
+    [types.HIDE_ADD_POSITION](state) {
+         state.add_position = false;
+    },
+    [types.SHOW_DELETE_POSITION](state) {
+        state.delete_position = true;
+    },
+    [types.HIDE_DELETE_POSITION](state) {
+       state.delete_position = false;
+    },
+
+
+
 
     [types.UPDATE_GLOBAL_USER_INFO](state,global_user_info) {
         state.user_info = global_user_info;

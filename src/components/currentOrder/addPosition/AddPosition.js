@@ -10,7 +10,8 @@ export default {
         },
         result: []
       },
-      keyword: '',
+      logKeyword: '',
+      ordKeyword:'',
       search_header: 'MT4 logins',
       tableData: [],
       apis: {
@@ -164,57 +165,65 @@ export default {
     onclose(type) {
       this[type].show = false;
     },
-    onSearch() {
-      console.log('is_number', this.is_number(this.keyword));
-      if (!this.is_number(this.keyword)) {
-        this.$message.warning(this.search_header + ' should be a number');
-        return;
-      }
-      if (this.keyword) {
-        var args = [
-          [Number(this.keyword)]
-        ];
-        var params = {};
-        if (this.search_header == 'MT4 logins') {
-          params = {
+    onSearch(type) {
+      // console.log('is_number',this.keyword,this.is_number(this.keyword));
+      var keyword,params;
+      if(type =='MT4 logins'){
+        keyword = this.logKeyword;
+         console.log('keyword',keyword);
+        params = {
             func_name: this.apis.mt4logins_func_name,
-            args
+            args:[[Number(keyword)]],
+            kwargs:{}
           }
-        } else {
-          params = {
+      }else{
+        keyword =  this.ordKeyword;
+        params = {
             func_name: this.apis.mt4orders_func_name,
-            args
+            args:[[Number(keyword)]],
+            kwargs:{}
           }
-        }
-        CommonApi.postFormAjax.call(this, params, data => {
-          this.tableData = [];
-          data.forEach(item => {
-            var temp = {};
-            for (var k in item) {
-              temp[k] = {};
-              if (k === 'VOLUME') {
-                temp[k].value = Number(item[k]) / 100;
-              } else {
-                temp[k].value = item[k];
-              }
-              temp[k].class = '';
-            }
-            var spacialAttr = {
-              min_size: {
-                value: '0.01',
-                class: ''
-              },
-              step_size: {
-                value: '0.01',
-                class: ''
-              }
-            }
-            Object.assign(temp, spacialAttr);
-            this.tableData.push(temp);
+      };
+      if (!this.is_number(keyword)) {
+        this.$message.warning(type + ' should be a number');
+        return;
+      };
+      this.request_search_result(params);
+    },
+    request_search_result(params){
+        this.$$api_common_ajax({
+            data: params,
+            fn: data => {
+              this.tableData = [];
+              data.forEach(item => {
+                var temp = {};
+                for (var k in item) {
+                  temp[k] = {};
+                  if (k === 'VOLUME') {
+                    temp[k].value = Number(item[k]) / 100;
+                  } else {
+                    temp[k].value = item[k];
+                  }
+                  temp[k].class = '';
+                }
+                var spacialAttr = {
+                  min_size: {
+                    value: '0.01',
+                    class: ''
+                  },
+                  step_size: {
+                    value: '0.01',
+                    class: ''
+                  }
+                }
+                Object.assign(temp, spacialAttr);
+                this.tableData.push(temp);
+              })
+            },
+            errFn: err=>{
+
+            }     
           });
-          console.log('table1', this.tableData);
-        });
-      }
     },
     addNewRow() {
       console.log('row', this.newRowData);
@@ -228,7 +237,7 @@ export default {
       console.log('index', index);
     },
     parse_input(k, v) {
-      console.log('kv', k, v);
+      // console.log('kv', k, v);
       if (-1 != ["LOGIN", "TICKET", "CMD", "DIGITS", "CONTRACT_SIZE"].indexOf(k)) {
         console.log('parseint', parseInt(v));
         var result = parseInt(v);
@@ -262,6 +271,7 @@ export default {
       this.tableData.forEach(row => {
         for (var k in row) {
           var [result, v] = this.parse_input(k, row[k].value);
+          console.log('result',result);
           if (result == false) {
             flag = false;
             console.log('false', k);
@@ -271,6 +281,7 @@ export default {
           }
         }
       });
+      console.log('tableData1', this.tableData);
       console.log('flag', flag);
       if (flag == true) {
         var position = {};
@@ -298,16 +309,22 @@ export default {
           Object.assign(position, spacialAttr);
           temp.push(position);
         });
-        var params = {
-          func_name: this.apis.createposition_func_name,
-          args: [temp]
-        }
-        CommonApi.postFormAjax.call(this, params, data => {
-          this.addPositionDialog.show = true;
-          this.addPositionDialog.result = data;
-          console.log('create', data, this.addPositionDialog);
+          this.$$api_common_ajax({
+          data: {
+            func_name: 'router_api.create_positions',
+            args:[],
+            kwargs:{}
+          },
+          fn: data => {
+            this.addPositionDialog.show = true;
+            this.addPositionDialog.result = data;
+          },
+          errFn: (err) => {
+            // this.$message.error(err.msg);
 
-        })
+          }
+        });
+
       };
       console.log('table2', this.tableData);
     }

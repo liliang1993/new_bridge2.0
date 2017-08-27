@@ -1,26 +1,15 @@
 <template>
-    <div class='list'>
-      <!-- <el-row   class="top-action">
-          <el-col  :span='6' >
-                  <el-input placeholder="请输入内容" v-model="keyword">
-                  <el-select  v-model='search_header'  slot="prepend" placeholder="请选择">
-                        <el-option label="MT4 logins" value="MT4 logins"></el-option>
-                        <el-option label="MT4 orders" value="MT4 orders"></el-option>
-                  </el-select>
-                  <el-button slot="append" icon="search"  @click='onSearch'></el-button>
-                </el-input>
-          </el-col> 
-      </el-row> -->
+    <div class='add_position'>
       <el-row >
               <div class="search_bar">
                 <p>MT4 logins:</p>
-                <input type="text" placeholder="input" class='search_bar'>
-                <el-button class='r' type='primary'>Search Logins</el-button>  
+                <input type="text" placeholder="input"  v-model='logKeyword'  class='search_bar'>
+                <el-button class='r' type='primary'@click='onSearch("MT4 logins")'>Search Logins</el-button>  
               </div>     
               <div class="search_bar">  
                 <p>MT4 orders:</p>
-                <input type="text" placeholder="input" class='search_bar'>
-                <el-button class='r' type='primary'>Search Orders</el-button>  
+                <input type="text" placeholder="input" v-model='ordKeyword' class='search_bar'>
+                <el-button class='r' type='primary'  @click='onSearch("MT4 orders")''>Search Orders</el-button>  
               </div>   
       </el-row>
       <bel-table
@@ -48,7 +37,7 @@
                   <el-button  type='primary' @click='onSubmit' >Submit</el-button>
           </el-col>  -->
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click=''>Sumbit</el-button>
+              <el-button type="primary" @click='onSubmit'>Sumbit</el-button>
           </el-col> 
     </el-row>
    
@@ -59,6 +48,6 @@
 import AddPositionJs from './AddPosition.js';
 export default AddPositionJs;
 </script>
-<style scoped lang='less'>
+<style  lang='less'>
 @import url(./AddPosition.less);
 </style>

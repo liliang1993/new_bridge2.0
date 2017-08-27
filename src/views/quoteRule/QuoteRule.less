@@ -1,4 +1,5 @@
-.actions-top{
+.quote_rule_container{
+    .actions-top{
         height: 70px;
         .el-button{
         border-radius:20px;
@@ -10,13 +11,65 @@
         margin:15px 0;
         }
     }
-.type_formore{
-    color:#3a8dff;
-    text-decoration: underline;
-}   
-.type_label{
-    display:block;
-    text-align: left;
-    font-size:12px;
-    line-height: 16px;
+    .type_formore{
+        color:#3a8dff;
+        text-decoration: underline;
+    }   
+    .type_label{
+        display:block;
+        text-align: left;
+        font-size:12px;
+        line-height: 16px;
+    }
+    .quoteRule_dialog{
+        .el-dialog{
+            width:537px;
+            .type_wrap{
+                position: relative;
+                background-color: #ccc;
+                // height:20px;
+                text-align: center;
+                width: 495px;
+                margin-top: 10px;
+                .type_content{
+                    margin:0 auto;
+                    padding:10px 0;
+                    display: inline-block;
+                    .type_item{
+                        float:left;
+                        p{
+                            margin-bottom: 5px;
+                        }
+                        input{
+                        width:130px;
+                        height:36px;
+                        }
+                        &+.type_item{
+                            margin-left: 23px;
+                        }
+                    } 
+                }
+                
+                
+                &:before{
+                    content:'';
+                    position: absolute;
+                    top:-20px;
+                    left:80px;
+                     width: 0;
+                    height: 0;
+                    border-top: 10px solid transparent;
+                    border-right:10px solid transparent;
+                    border-bottom:10px solid #ccc;
+                    border-left: 10px solid transparent;
+                    
+                }
+            }
+        }
+    }
+    .add_dialog{
+        .el-dialog{
+            width: 1300px;
+        }
+    }
 }

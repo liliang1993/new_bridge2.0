@@ -85,7 +85,6 @@ export default {
               label: this.$t('GROUPS'),
               minWidth: 100,
               align: 'center',
-              scopedSlot: 'groups'
             }
           }, {
             attr: {
@@ -135,6 +134,15 @@ export default {
             }
           },
           columns: [{
+            attr: {
+              prop: 'username',
+              label: this.$t('USERNAME'),
+              minWidth: 100,
+              align: 'center',
+              type:'expand',
+              scopedSlot: 'expand'
+            }
+          },{
             attr: {
               prop: 'username',
               label: this.$t('USERNAME'),
@@ -321,7 +329,8 @@ export default {
           }
         },
         fn: data => {
-          this.$set(row, 'editFlag', false);
+            this.editDialogTableVisible = false;
+            this.find_page_user();
 
         },
         errFn: (err) => {

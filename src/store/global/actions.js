@@ -33,6 +33,39 @@ export default{
 			resolve()
 		});
 	},
+
+	show_add_position: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.SHOW_ADD_POSITION);
+			resolve()
+		});
+	},
+	hide_add_position: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.HIDE_ADD_POSITION);
+			resolve()
+		});
+	},
+	show_delete_position: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.SHOW_DELETE_POSITION);
+			resolve()
+		});
+	},
+	hide_delete_position: ({
+		commit
+	}) => {
+		return new Promise((resolve, reject) => {
+			commit(types.HIDE_DELETE_POSITION);
+			resolve()
+		});
+	}, 
 	// update_global_user_info: ({
 	// 	commit
 	// }, {

@@ -261,7 +261,12 @@ export default {
     }
   },
   methods: {
-
+    show_add_position(){
+      this.$store.dispatch("show_add_position");
+    },
+    show_delete_position(){
+      this.$store.dispatch("show_delete_position");
+    },
     interval_check() {
       var remain_mil_sec;
       if (this.isActive === false) {

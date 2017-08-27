@@ -124,7 +124,7 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_user_submit(new_tableData[0])'>Confirm</el-button>
+              <el-button type="primary" @click='edit_user_submit(edit_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog>
         <!-- <drag-dialog

@@ -57,8 +57,7 @@ export default {
         }
     },
     mounted() {
-        // this.setDialogInfo('access');
-        // this.onGetSetting();
+        Vue.config.lang = this.$store.state.global.locale;
     },
     computed: {
         routesFilter: function() {

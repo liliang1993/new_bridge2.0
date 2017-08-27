@@ -2,121 +2,86 @@ export default {
   name: 'quote_rule',
   data() {
     return {
-      add_rule_dialog: {
-        show: false,
-        isModal: true,
-        title: {
-          text: this.$t('Add rule'),
-        },
-        fields: [{
-          key: 'source',
-          type: 'select',
-          list: (() => {
-            var i, len, sources, source, result;
-            result = [];
-            sources = this.$store.state.global.sources;
-            for (i = 0, len = sources.length; i < len; i++) {
-              source = sources[i];
-              result.push({
-                value: source,
-                text: source
-              });
-            }
-            return result;
-          })(),
-          desc: '请选择',
-          label: this.$t('source')
-        }, {
-          key: 'mt4_symbol',
-          type: 'input',
-          value: '',
-          label: this.$t('MT4 Symbol')
-        }, {
-          key: 'std_symbol',
-          type: 'select',
-          list: (() => {
-            var i, len, std_symbols, std_symbol, result;
-            result = [];
-            std_symbols = this.$store.state.global.std_symbols;
-            for (i = 0, len = std_symbols.length; i < len; i++) {
-              std_symbol = std_symbols[i];
-              result.push({
-                value: std_symbol,
-                text: std_symbol
-              });
-            }
-            return result;
-          })(),
-          desc: '请选择',
-          label: this.$t('STD Symbol')
-        }, {
-          type: 'input',
-          key: 'digits',
-          value: '',
-          label: this.$t('digits')
-        }, {
-          type: 'input',
-          key: 'minimal_spread',
-          value: '',
-          label: this.$t('min spread')
-        }, {
-          type: 'input',
-          key: 'maximal_spread',
-          value: '',
-          label: this.$t('max spread')
-        }, {
-          key: 'aggregator',
-          type: 'select',
-          list: [{
-            value: 'median',
-            text: 'median'
-          }, {
-            value: 'bestright',
-            text: 'bestright'
-          }, {
-            value: 'bestright-option',
-            text: 'bestright-option'
-          }],
-          desc: '请选择',
-          label: 'aggregator'
-        }, {
-          type: 'number',
-          key: 'adjust',
-          value: '',
-          label: 'adjust'
-        }, {
-          key: 'type',
-          type: 'select',
-          list: (() => {
-            var i, len, results;
-            results = [];
-            var quote_types = this.$store.state.global.quote_types;
-            for (i = 0, len = quote_types.length; i < len; i++) {
-              var quote_type = quote_types[i];
-              results.push({
-                value: quote_type,
-                text: quote_type
-              });
-            }
-            console.log('1111', results);
-            return results;
-          })(),
-          desc: '请选择',
-          label: this.$t('type')
-        }],
-        default_value: {
-          source: this.$store.state.global.sources[0],
-          mt4_symbol: '',
-          std_symbol: this.$store.state.global.std_symbols[0],
-          digits: '',
-          minimal_spread: '',
-          maximal_spread: '',
-          aggregator: 'median',
-          adjust: '',
-          type: this.$store.state.global.quote_types[0]
+      tableData: [],
+      // add_tableData:[{
+      //   source:'',
+      //   mt4_symbol:'',
+      //   std_symbol:'',
+      //   type:'raw',
+      //   attributes:{
+      //     digits:'',
+      //     aggregator:'median',
+      //     minimal_spread:'',
+      //     maximal_spread:'',
+      //     adjust:'',
+      //     markup:'',
+      //     bid_delta:'',
+      //     ofr_delta:'',
+      //     asian_delta:'',
+      //     spread:'',
+      //     random:'',
+
+      //     }
+      //   },{
+      //   source:'',
+      //   mt4_symbol:'',
+      //   std_symbol:'',
+      //   type:'raw',
+      //   attributes:{
+      //     digits:'',
+      //     aggregator:'median',
+      //     minimal_spread:'',
+      //     maximal_spread:'',
+      //     adjust:'',
+      //     markup:'',
+      //     bid_delta:'',
+      //     ofr_delta:'',
+      //     asian_delta:'',
+      //     spread:'',
+      //     random:'',
+
+      //     }
+      //   }],
+      editDialogTableVisible:false,
+      addDialogTableVisible:false,
+      addDialog:{
+        source:this.$store.state.global.sources[0],
+        mt4_symbol:'',
+        std_symbol:this.$store.state.global.std_symbols[0],
+        type:'raw',
+        attributes:{
+        digits:'',
+        aggregator:'median',
+        minimal_spread:'',
+        maximal_spread:'',
+        adjust:'',
+        markup:'',
+        bid_delta:'',
+        ofr_delta:'',
+        asian_delta:'',
+        spread:'',
+        random:''
         }
       },
-      tableData: [],
+      editDialog:{
+        source:'',
+        mt4_symbol:'',
+        std_symbol:'',
+        type:'raw',
+        attributes:{
+          digits:'',
+        aggregator:'',
+        minimal_spread:'',
+        maximal_spread:'',
+        adjust:'',
+        markup:'',
+        bid_delta:'',
+        ofr_delta:'',
+        asian_delta:'',
+        spread:'',
+        random:''
+        }
+      }
     }
   },
   computed: {
@@ -146,7 +111,7 @@ export default {
             attr: {
               prop: 'mt4_symbol',
               label: this.$t('MT4 SYMBOL'),
-              minWidth: 150,
+              minWidth: 120,
               sortable: true,
               align: 'center'
             }
@@ -154,7 +119,7 @@ export default {
             attr: {
               prop: 'std_symbol',
               label: this.$t('STD SYMBOL'),
-              minWidth: 150,
+              minWidth: 120,
               sortable: true,
               align: 'center'
             }
@@ -162,7 +127,7 @@ export default {
             attr: {
               prop: 'type',
               label: this.$t('TYPE'),
-              width: 100,
+              width: 80,
               sortable: true,
               scopedSlot: 'type_attr',
               align: 'center'
@@ -170,7 +135,7 @@ export default {
           }, {
             attr: {
               label: this.$t('DIGITS'),
-              width: 100,
+              width: 80,
               sortable: true,
               scopedSlot: 'digits_attr',
               align: 'center'
@@ -179,7 +144,7 @@ export default {
             attr: {
               prop: 'attributes.bid_delta',
               label: this.$t('BID DELTA'),
-              minWidth: 120,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -187,7 +152,7 @@ export default {
             attr: {
               prop: 'attributes.ofr_delta',
               label: this.$t('OFR DDLTA'),
-              minWidth: 120,
+              minWidth: 100,
               sortable: true,
               scopedSlot: 'ofr_delta_attr',
               align: 'center'
@@ -196,7 +161,7 @@ export default {
             attr: {
               prop: 'attributes.minimal_spread',
               label: this.$t('MIN SPREAD'),
-              minWidth: 130,
+              minWidth: 100,
               sortable: true,
               scopedSlot: 'min_spread_attr',
               align: 'center'
@@ -205,7 +170,7 @@ export default {
             attr: {
               prop: 'attributes.maximal_spread',
               label: this.$t('MAX SPREAD'),
-              minWidth: 130,
+              minWidth: 100,
               sortable: true,
               scopedSlot: 'max_spread_attr',
               align: 'center'
@@ -214,7 +179,7 @@ export default {
             attr: {
               prop: 'attributes.adjust',
               label: this.$t('ADJUST'),
-              minWidth: 120,
+              minWidth: 100,
               sortable: true,
               scopedSlot: 'adjust_attr',
               align: 'center'
@@ -223,16 +188,15 @@ export default {
             attr: {
               prop: 'attributes.markup',
               label: this.$t('MARKUP'),
-              minWidth: 120,
+              minWidth: 100,
               sortable: true,
-              scopedSlot: 'adjust_attr',
               align: 'center'
             }
           }, {
             attr: {
               prop: 'attributes.aggregator',
               label: this.$t('AGGREGATOR'),
-              minWidth: 130,
+              minWidth: 100,
               sortable: true,
               scopedSlot: 'aggregator_attr',
               align: 'center'
@@ -241,8 +205,115 @@ export default {
             attr: {
               // prop: 'address',
               label: this.$t('Operation'),
-              width: 120,
+              minWidth: 100,
               scopedSlot: 'handler',
+              align: 'center'
+            }
+          }]
+        }
+      }
+    },
+    add_tableConfig: {
+      get() {
+        return {
+          table: {
+            attr: {
+              data: this.add_tableData,
+              maxHeight: '100%',
+              border: false,
+
+              defaultSort: {
+                prop: 'std_symbol'
+              }
+            }
+          },
+          columns: [{
+            attr: {
+              prop: 'source',
+              label: this.$t('SOURCE'),
+              minWidth: 90,
+              sortable: true,
+              align: 'center',
+              scopedSlot:'source'
+            }
+          }, {
+            attr: {
+              prop: 'mt4_symbol',
+              label: this.$t('MT4 SYMBOL'),
+              minWidth: 120,
+              sortable: true,
+              align: 'center',
+              scopedSlot:'mt4_symbol'
+            }
+          }, {
+            attr: {
+              prop: 'std_symbol',
+              label: this.$t('STD SYMBOL'),
+              minWidth: 120,
+              sortable: true,
+              align: 'center',
+              scopedSlot:'std_symbol'
+            }
+          }, {
+            attr: {
+              prop: 'type',
+              label: this.$t('TYPE'),
+              minWidth: 100,
+              sortable: true,
+              scopedSlot: 'type_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              label: this.$t('DIGITS'),
+              minWidth: 80,
+              sortable: true,
+              scopedSlot: 'digits_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.minimal_spread',
+              label: this.$t('MIN SPREAD'),
+              minWidth: 110,
+              sortable: true,
+              scopedSlot: 'min_spread_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.maximal_spread',
+              label: this.$t('MAX SPREAD'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'max_spread_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.adjust',
+              label: this.$t('ADJUST'),
+              minWidth: 100,
+              sortable: true,
+              scopedSlot: 'adjust_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.markup',
+              label: this.$t('MARKUP'),
+              minWidth: 100,
+              sortable: true,
+              scopedSlot: 'adjust_attr',
+              align: 'center'
+            }
+          }, {
+            attr: {
+              prop: 'attributes.aggregator',
+              label: this.$t('AGGREGATOR'),
+              minWidth: 120,
+              sortable: true,
+              scopedSlot: 'aggregator_attr',
               align: 'center'
             }
           }]
@@ -251,77 +322,85 @@ export default {
     }
   },
   methods: {
-    add_rule_submit(data) {
+    add_quoteRule_submit() {
       var attributes = {
-        digits: parseInt(data.digits),
-        minimal_spread: parseInt(data.minimal_spread),
-        maximal_spread: parseInt(data.maximal_spread),
-        aggregator: data.aggregator,
-        adjust: parseInt(data.adjust)
+        digits: parseInt(this.addDialog.attributes.digits),
+        minimal_spread: parseInt(this.addDialog.attributes.minimal_spread),
+        maximal_spread: parseInt(this.addDialog.attributes.maximal_spread),
+        aggregator: this.addDialog.attributes.aggregator,
+        adjust: parseInt(this.addDialog.attributes.adjust),
+        markup: parseInt(this.addDialog.attributes.markup),
+      }
+      console.log('attr', attributes);
+      if (this.editDialog.type == 'delta') {
+        Object.assign(attributes, {
+          bid_delta: parseInt(this.addDialog.attributes.bid_delta),
+          ofr_delta: parseInt(this.addDialog.attributes.ofr_delta),
+          random: parseInt(this.addDialog.attributes.random)
+        });
+      } else if (this.addDialog.type == 'asian') {
+        Object.assign(attributes, {
+          asian_delta: parseInt(this.addDialog.attributes.asian_delta),
+          random: parseInt(this.addDialog.attributes.random)
+        });
+      } else if (this.addDialog.type == 'spread') {
+        Object.assign(attributes, {
+          spread: parseInt(this.addDialog.attributes.spread),
+          random: parseInt(this.addDialog.attributes.random)
+        });
       }
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.quote_add_rule',
-          args: [data.source, data.mt4_symbol, data.std_symbol, data.type, attributes],
+          args: [this.addDialog.source, this.addDialog.mt4_symbol, this.addDialog.std_symbol, this.addDialog.type,attributes],
           kwargs: {}
         },
         fn: data => {
           this.load_data();
-          this.onCloseRuleDialog();
+          this.addDialogTableVisible = false;
         }
       });
     },
-    onEditRule(row) {
-      this.$set(row, 'editFlag', true);
-    },
     edit_quote_rule(row) {
-      this.$set(row, 'editFlag', true);
-      for (var item of['type', 'digits', 'bid_delta', 'ofr_delta', 'minimal_spread', 'maximal_spread', 'adjust', 'aggregator']) {
-        row.attributes['origin-' + item] = row.attributes[item];
-      }
+        this.editDialogTableVisible = true;
+        Object.assign(this.editDialog,row);
     },
-    backOrigin(row) {
-      this.$set(row, 'editFlag', false);
-      for (var item of['type', 'digits', 'bid_delta', 'ofr_delta', 'minimal_spread', 'maximal_spread', 'adjust', 'aggregator']) {
-        row.attributes[item] = row.attributes['origin-' + item];
-        console.log('123', row.attributes);
-      }
-    },
-    edit_rule_submit(row) {
-      console.log('row', row);
+    edit_quoteRule_submit() {
       var attributes = {
-        digits: parseInt(row.attributes.digits),
-        minimal_spread: parseInt(row.attributes.minimal_spread),
-        maximal_spread: parseInt(row.attributes.maximal_spread),
-        aggregator: row.attributes.aggregator,
-        adjust: parseInt(row.attributes.adjust)
+        digits: parseInt(this.editDialog.attributes.digits),
+        minimal_spread: parseInt(this.editDialog.attributes.minimal_spread),
+        maximal_spread: parseInt(this.editDialog.attributes.maximal_spread),
+        aggregator: this.editDialog.attributes.aggregator,
+        adjust: parseInt(this.editDialog.attributes.adjust),
+        markup: parseInt(this.editDialog.attributes.markup),
       }
       console.log('attr', attributes);
-      if (row.type == 'delta') {
+      if (this.editDialog.type == 'delta') {
         Object.assign(attributes, {
-          bid_delta: row.attributes.bid_delta,
-          ofr_delta: row.attributes.ofr_delta,
-          random: row.attributes.random
+          bid_delta: parseInt(this.editDialog.attributes.bid_delta),
+          ofr_delta: parseInt(this.editDialog.attributes.ofr_delta),
+          random: parseInt(this.editDialog.attributes.random)
         });
-      } else if (row.type == 'asian') {
+      } else if (this.editDialog.type == 'asian') {
         Object.assign(attributes, {
-          asian_delta: row.attributes.asian_delta,
-          random: row.attributes.random
+          asian_delta: parseInt(this.editDialog.attributes.asian_delta),
+          random: parseInt(this.editDialog.attributes.random)
         });
-      } else if (row.type == 'spread') {
+      } else if (this.editDialog.type == 'spread') {
         Object.assign(attributes, {
-          spread_delta: row.attributes.spread_delta,
-          random: row.attributes.random
+          spread: parseInt(this.editDialog.attributes.spread),
+          random: parseInt(this.editDialog.attributes.random)
         });
       }
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.quote_update_rule',
-          args: [row.source, row.mt4_symbol, row.std_symbol, row.type, attributes],
+          args: [this.editDialog.source, this.editDialog.mt4_symbol, this.editDialog.std_symbol, this.editDialog.type, attributes],
           kwargs: {}
         },
         fn: data => {
-          this.$set(row, 'editFlag', false);
+          this.load_data();
+          this.editDialogTableVisible = false;
         }
       });
     },
@@ -334,7 +413,7 @@ export default {
           kwargs: {}
         },
         fn: data => {
-          console.log('123');
+          this.load_data();
           row.visible = false;
         }
       });

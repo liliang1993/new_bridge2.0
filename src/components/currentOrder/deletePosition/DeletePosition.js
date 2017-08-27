@@ -4,14 +4,11 @@ export default {
     return {
       lp_symbols: {},
       orders_value: "",
-      search_disabled: false,
       listData: [],
-      tableData: [],
-      del_reason: '',
-      submit_disabled: true,
-      apis: {
-        func_name: 'router_api.page_positions'
-      }
+      editDialogTableVisible:false,
+      lpPositionData:[],
+      del_reason: '', 
+      row_index:undefined,
     }
   },
   computed: {
@@ -108,17 +105,45 @@ export default {
           }]
         }
       }
+    },
+    edit_tableConfig: {
+      get() {
+        return {
+          table: {
+            attr: {
+              data: this.lpPositionData,
+              maxHeight: '100%',
+              border: false,
+              defaultSort: {
+                prop: 'std_symbol'
+              }
+            }
+          },
+          columns: [{
+            attr: {
+              prop: 'lp',
+              label: this.$t('LP'),
+              minWidth: 90,
+              align: 'center'
+            }
+          }, {
+            attr: {
+              label: this.$t('QTY'),
+              minWidth: 90,
+              align: 'center',
+              scopedSlot:'qty'
+            }
+          }]
+        }
+      }
     }
   },
   methods: {
-    onclose(type) {
-      this[type].show = false;
-    },
     load_order_data(orders) {
       this.listData = [];
       for (var order of orders) {
         var abook_qty = order.quantity - order.bbook_quantity
-        var lp_positions = this.get_lp_positions(order.trade_log.orders, order.std_symbol)
+        var lp_positions = this.get_lp_positions(order, order.std_symbol)
         var row = {
           order_id: order.order_id,
           group: order.trade_log.request.group,
@@ -132,66 +157,69 @@ export default {
         this.listData.push(row);
       }
     },
-    get_lp_positions(lp_orders, std_symbol) {
-      var lp_filled = {}
-      var lp_positions = {}
-      var lps = this.lp_symbols[std_symbol]
-      if (lps == undefined) {
-        return lp_positions
-      }
-      for (var order of lp_orders) {
-        if (order.state == "filled" || order.state == "partial") {
-          var filled = lp_filled[order.lp];
-          if (filled == undefined) {
-            lp_filled[order.lp] = order.quantity;
-          } else {
-            lp_filled[order.lp] = filled + order.quantity;
-          }
-        }
-      }
-      for (var lp of lps) {
-        var filled = lp_filled[lp]
-        if (filled != undefined) {
-          lp_positions[lp] = filled;
+    get_lp_positions(position, std_symbol) {
+      var filled, i, j, len, len1, lp_filled, lp_orders, lp_positions, lps, order;
+    lp_orders = position.trade_log.orders;
+    lp_filled = {};
+    lp_positions = {};
+    lps = this.lp_symbols[std_symbol];
+    if (lps === undefined) {
+      return lp_positions;
+    }
+    for (i = 0, len = lp_orders.length; i < len; i++) {
+      order = lp_orders[i];
+      if (order.state === "filled" || order.state === "partial") {
+        filled = lp_filled[order.lp];
+        if (filled === undefined) {
+          lp_filled[order.lp] = order.quantity;
         } else {
-          lp_positions[lp] = 0;
+          lp_filled[order.lp] = filled + order.quantity;
         }
-      };
-      if (lp_filled["bbook"] != undefined) {
-        lp_positions["bbook"] = lp_filled["bbook"]
-      };
-      return lp_positions
-    },
-
-    onIconClick() {
-      if (!this.is_number(this.orders_value)) {
-        this.$message.warning('input value should be number');
-        return;
+      }
+    }
+    for (j = 0, len1 = lps.length; j < len1; j++) {
+     var lp = lps[j];
+      filled = lp_filled[lp];
+      if (filled !== undefined) {
+        lp_positions[lp] = filled;
       } else {
-
-        var args = [
-          [Number(this.orders_value)]
-        ];
+        lp_positions[lp] = 0;
+      }
+    }
+    lp_positions["bbook"] = position["bbook_quantity"];
+    return lp_positions;
+    },
+    onSearch(){
+        var i, len, order, order_str, orders, ref;
+        orders = [];
+        ref = this.orders_value.split(",");
+        for (i = 0, len = ref.length; i < len; i++) {
+          order_str = ref[i];
+          order = parseInt(order_str);
+          if (!isNaN(order)) {
+            orders.push(order);
+          }
+        };
+        if (orders.length === 0) {
+         this.$message.warning('input value should be number');
+          return;
+        };
         this.$$api_common_ajax({
           data: {
             func_name: 'router_api.get_positions',
-            args,
+            args:[orders],
             kwargs: {}
           },
           fn: data => {
             this.load_order_data(data);
             console.log('listData', this.listData);
-            if (this.listData.length > 0) {
-              this.submit_disabled = false;
-            } else {
-              this.submit_disabled = true;
-            }
           },
           errFn: (err) => {
             // this.$message.error(err.msg);
           }
         });
-      }
+
+
     },
     onDeleteRow(row) {
       var index = this.listData.indexOf(row);
@@ -230,23 +258,6 @@ export default {
           }
           datas.push(data);
         };
-        // var params = {
-        //   func_name: 'router_api.delete_positions',
-        //   args: [datas, this.del_reason],
-
-        // }
-        // CommonApi.postFormAjax.call(this, params, data => {
-        //   console.log('result', data);
-        //   if (data == 'ok') {
-        //     this.$emit('onRestTableDate');
-        //     this.del_reason = '';
-        //     this.orders_value = '';
-        //     this.listData = [];
-        //     this.$message.success('Delete Positions Success!');
-        //   } else {
-        //     this.$message.warning('deleted failed, please retry!');
-        //   }
-        // })
         this.$$api_common_ajax({
           data: {
             func_name: 'router_api.delete_positions',
@@ -290,14 +301,33 @@ export default {
       };
       this.lp_symbols = lp_symbols
     },
+    editPosition(row,index){
+        this.lpPositionData = [];
+        this.row_index = index;
+        this.editDialogTableVisible = true;
+        for(var lp in row.lp_positions){
+            var result = {}; 
+            result.lp =lp;
+            result.qty = row.lp_positions[lp];
+            this.lpPositionData.push(result);
+            console.log('lp_positions',row,this.lpPositionData);
+        }
+    },
+    closeLpPosition(){
+      this.editDialogTableVisible = false;
+    },
+    edit_position_submit(){
+          var lp_positions = {};
+          for(var item of this.lpPositionData){
+              var lp = item.lp;
+              var qty = item.qty;
+              lp_positions[lp]=qty;
+          }
+          this.$set(this.listData[this.row_index],"lp_positions",lp_positions);
+          // console.log('lp_positions',this.lpPositionData,lp_positions);
+          this.editDialogTableVisible = false;
+    },
     init() {
-      //   var params = {
-      //     func_name: 'router_api.lp_get_all_alive_symbols'
-      //   };
-      //   CommonApi.postFormAjax.call(this, params, data => {
-      //     this.get_alive_lp_symbols(data);
-      //     console.log('data1', data);
-      //   });
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.lp_get_all_alive_symbols',

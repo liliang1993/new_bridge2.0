@@ -68,7 +68,7 @@
                                         </el-tooltip>
                                         <span
                                             class='menu-name vm'
-                                            v-if="$store.state.leftmenu.menu_flag">{{item.children[0].name}}<!-- {{route.path+'/'+item.path}} --></span> </el-menu-item>
+                                            v-if="$store.state.leftmenu.menu_flag">{{$t(item.children[0].name)}}<!-- {{route.path+'/'+item.path}} --></span> </el-menu-item>
                         </template>
                     </el-menu>
                 </el-col>
