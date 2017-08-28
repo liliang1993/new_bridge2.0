@@ -1,8 +1,8 @@
 <template>
     <div class='list'>
     <div class='top-action'>
-            <b>Source:</b>
-            <el-select class='round_select' v-model="current_source" placeholder="请选择" @change = 'changeSelect'>
+            <b>{{$t('Source')}}:</b>
+            <el-select class='round_select' v-model="current_source" :placeholder="$t('select source')" @change = 'changeSelect'>
                 <el-option
                   v-for="item in options"
                   :label="item.label"

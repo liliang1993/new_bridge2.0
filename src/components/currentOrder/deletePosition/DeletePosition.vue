@@ -1,9 +1,9 @@
 <template>
     <div class='list'>
       <div class='search_bar'>
-            <p>bridge orders：</p>
-            <input type="text" class='input' v-model='orders_value'>
-            <el-button type='primary' @click ='onSearch'>Search</el-button> 
+            <p>{{$t('Bridge Orders')}}:</p>
+            <input type="text" :placeholder='$t("Input orders separated by a comma(eg:\",\")")' class='input' v-model='orders_value'>
+            <el-button type='primary' @click ='onSearch'>{{$t('Search')}}</el-button> 
       </div>
       <bel-table
       ref="table"
@@ -25,9 +25,9 @@
                   @click='onDeleteRow(scope.row)'></el-button>
           </template>
     </bel-table>
-      <input class= 'del_reason' placeholder="the reason why you want to delete these orders" v-model="del_reason">       
+      <input class= 'del_reason' :placeholder='$t("the reason why you want to delete these orders")' v-model="del_reason">       
       <el-col :span='24' class='confirm_btn'>
-          <el-button  type='primary'  @click='onSubmit' >Submit</el-button>
+          <el-button  type='primary'  @click='onSubmit' >{{$t('Submit')}}</el-button>
       </el-col> 
        <drag-dialog  
         v-if='editDialogTableVisible'

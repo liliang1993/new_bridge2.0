@@ -28,20 +28,20 @@
     </el-col>
     <el-dialog  class='dialog' :visible.sync="dialogTableVisible">
       <div class="title">
-        <span><i>LOG_ID:</i>{{dialog.log_id}}</span>
-        <span><i>USERNAME:</i>{{dialog.username}}</span>
-        <span><i>API:</i>{{dialog.api}}</span>
+        <span><i>{{$t('LOG_ID')+':'}}</i>{{dialog.log_id}}</span>
+        <span><i>{{$t('USERNAME')+':'}}</i>{{dialog.username}}</span>
+        <span><i>{{$t('API')+':'}}</i>{{dialog.api}}</span>
       </div>
       <div class="log_wrap">
         <ul>
           <li>
-            <p>REQUEST</p>
+            <p>{{$t('REQUEST')}}</p>
             <div class="code">
                 <pre>{{dialog.request}}</pre>
             </div>
           </li>
           <li>
-            <p>RESULT</p>
+            <p>{{$t('RESULT')}}</p>
             <div class="code">
                 <pre>{{dialog.result}}</pre>
             </div>

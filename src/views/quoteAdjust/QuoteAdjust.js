@@ -186,7 +186,7 @@ export default {
             {
               attr: {
                 prop: 'update_at',
-                label: this.$t('Update At'),
+                label: this.$t('UPDATE AT'),
                 minWidth: 120,
                 sortable: true,
                 align: 'center',
@@ -240,7 +240,7 @@ export default {
       })(this);
     },
     ws_handle_msg(data) {
-      console.log('ws123',data);
+      console.log('ws123', data);
       this.on_quote_tick(this.source, data);
     },
     ws_on_open() {
@@ -470,8 +470,8 @@ export default {
       this.interval_check();
     }, 100);
   },
-  beforeRouteLeave(to,from,next){
-      this.ws_close();
-      next();
+  beforeRouteLeave(to, from, next) {
+    this.ws_close();
+    next();
   }
 }

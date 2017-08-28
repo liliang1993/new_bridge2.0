@@ -14,7 +14,7 @@
             <traderule-dia></traderule-dia>
         </drag-dialog>
 
-        <drag-dialog class='add_traderule_dialog' 
+<!--         <drag-dialog class='add_traderule_dialog' 
         v-if='$store.state.traderule.edit_trade_rule'
         
         @close = 'close_edit_trade_rule'
@@ -27,7 +27,7 @@
         @close = 'close_add_trade_rule'
         >
             <traderule-dia></traderule-dia>
-        </drag-dialog>
+        </drag-dialog> -->
 
         <drag-dialog  
         v-for='(item,key) in $store.state.currentorder.lp_order_dicts'

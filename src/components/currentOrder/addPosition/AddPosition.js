@@ -11,7 +11,7 @@ export default {
         result: []
       },
       logKeyword: '',
-      ordKeyword:'',
+      ordKeyword: '',
       search_header: 'MT4 logins',
       tableData: [],
       apis: {
@@ -63,9 +63,9 @@ export default {
           }, {
             attr: {
               prop: 'TICKET',
-              label: this.$t('ORD_ID'),
+              label: this.$t('ORD ID'),
               width: 65,
-              scopedSlot: this.$t('ORD_ID'),
+              scopedSlot: this.$t('ORD ID'),
               align: 'center',
             }
           }, {
@@ -103,33 +103,33 @@ export default {
           }, {
             attr: {
               prop: 'DIGITS',
-              label: this.$t('DIGHTS'),
+              label: this.$t('DIGITS'),
               width: 70,
-              scopedSlot: this.$t('DIGHTS'),
+              scopedSlot: this.$t('DIGITS'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'CONTRACT_SIZE',
-              label: this.$t('CON_SIZE'),
+              label: this.$t('CONT SIZE'),
               width: 90,
-              scopedSlot: this.$t('CON_SIZE'),
+              scopedSlot: this.$t('CONT SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'min_size',
-              label: this.$t('MIN_SIZE'),
+              label: this.$t('MIN SIZE'),
               width: 80,
-              scopedSlot: this.$t('MIN_SIZE'),
+              scopedSlot: this.$t('MIN SIZE'),
               align: 'center'
             }
           }, {
             attr: {
               prop: 'step_size',
-              label: this.$t('STEP_SIZE'),
+              label: this.$t('STEP SIZE'),
               width: 90,
-              scopedSlot: this.$t('STEP_SIZE'),
+              scopedSlot: this.$t('STEP SIZE'),
               align: 'center'
             }
           }, {
@@ -167,22 +167,26 @@ export default {
     },
     onSearch(type) {
       // console.log('is_number',this.keyword,this.is_number(this.keyword));
-      var keyword,params;
-      if(type =='MT4 logins'){
+      var keyword, params;
+      if (type == 'MT4 logins') {
         keyword = this.logKeyword;
-         console.log('keyword',keyword);
+        console.log('keyword', keyword);
         params = {
-            func_name: this.apis.mt4logins_func_name,
-            args:[[Number(keyword)]],
-            kwargs:{}
-          }
-      }else{
-        keyword =  this.ordKeyword;
+          func_name: this.apis.mt4logins_func_name,
+          args: [
+            [Number(keyword)]
+          ],
+          kwargs: {}
+        }
+      } else {
+        keyword = this.ordKeyword;
         params = {
-            func_name: this.apis.mt4orders_func_name,
-            args:[[Number(keyword)]],
-            kwargs:{}
-          }
+          func_name: this.apis.mt4orders_func_name,
+          args: [
+            [Number(keyword)]
+          ],
+          kwargs: {}
+        }
       };
       if (!this.is_number(keyword)) {
         this.$message.warning(type + ' should be a number');
@@ -190,40 +194,40 @@ export default {
       };
       this.request_search_result(params);
     },
-    request_search_result(params){
-        this.$$api_common_ajax({
-            data: params,
-            fn: data => {
-              this.tableData = [];
-              data.forEach(item => {
-                var temp = {};
-                for (var k in item) {
-                  temp[k] = {};
-                  if (k === 'VOLUME') {
-                    temp[k].value = Number(item[k]) / 100;
-                  } else {
-                    temp[k].value = item[k];
-                  }
-                  temp[k].class = '';
-                }
-                var spacialAttr = {
-                  min_size: {
-                    value: '0.01',
-                    class: ''
-                  },
-                  step_size: {
-                    value: '0.01',
-                    class: ''
-                  }
-                }
-                Object.assign(temp, spacialAttr);
-                this.tableData.push(temp);
-              })
-            },
-            errFn: err=>{
+    request_search_result(params) {
+      this.$$api_common_ajax({
+        data: params,
+        fn: data => {
+          this.tableData = [];
+          data.forEach(item => {
+            var temp = {};
+            for (var k in item) {
+              temp[k] = {};
+              if (k === 'VOLUME') {
+                temp[k].value = Number(item[k]) / 100;
+              } else {
+                temp[k].value = item[k];
+              }
+              temp[k].class = '';
+            }
+            var spacialAttr = {
+              min_size: {
+                value: '0.01',
+                class: ''
+              },
+              step_size: {
+                value: '0.01',
+                class: ''
+              }
+            }
+            Object.assign(temp, spacialAttr);
+            this.tableData.push(temp);
+          })
+        },
+        errFn: err => {
 
-            }     
-          });
+        }
+      });
     },
     addNewRow() {
       console.log('row', this.newRowData);
@@ -271,7 +275,7 @@ export default {
       this.tableData.forEach(row => {
         for (var k in row) {
           var [result, v] = this.parse_input(k, row[k].value);
-          console.log('result',result);
+          console.log('result', result);
           if (result == false) {
             flag = false;
             console.log('false', k);
@@ -309,11 +313,11 @@ export default {
           Object.assign(position, spacialAttr);
           temp.push(position);
         });
-          this.$$api_common_ajax({
+        this.$$api_common_ajax({
           data: {
             func_name: 'router_api.create_positions',
-            args:[],
-            kwargs:{}
+            args: [],
+            kwargs: {}
           },
           fn: data => {
             this.addPositionDialog.show = true;

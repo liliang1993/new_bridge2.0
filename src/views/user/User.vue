@@ -1,7 +1,7 @@
 <template>
     <div class='clearfix'>
           <div class='actions-top'>
-            <el-button type='primary' @click='addDialogTableVisible = true'>{{$t('Add user')}}</el-button>
+            <el-button type='primary' @click='addDialogTableVisible = true'>{{$t('Add User')}}</el-button>
           </div>
     <el-col :span="24" class='table-wrap'>
           <bel-table
@@ -10,11 +10,9 @@
           class='user-table'
           >   
           
-              <template slot="password" scope="scope">
-                <span v-if='!scope.row.editFlag'></span>
-                <el-input v-if='scope.row.editFlag' type='password' placeholder='Input nothing means no change' v-model='scope.row.password'>
-                </el-input> 
-              </template>
+              <template slot="status" scope="scope">
+              <span :style="scope.row.status== 0 ? 'color:black;' : 'color:red;' ">{{scope.row.status == 0 ? 'Enabled' : 'Disabled'}}</span>
+          </template>
               <template slot="handler" scope="scope">
                   <div class='tc'>
                     <i class='icon icon_edit' @click='editUser(scope.row)' v-if='!scope.row.editFlag'></i>
@@ -37,7 +35,7 @@
             </el-pagination>
       </el-col>
 
-      <el-dialog title="Add User" :visible.sync="addDialogTableVisible" top='40%'>
+      <el-dialog title="Add User" :visible.sync="addDialogTableVisible" top='40%'  >
            <bel-table
           ref="table"    
           :configs="add_tableConfig"
@@ -82,14 +80,15 @@
               <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog>
-      <el-dialog title="Edit User" :visible.sync="editDialogTableVisible" top='40%'>
+      <el-dialog title="Edit User" :visible.sync="editDialogTableVisible" top='40%'
+      >
            <bel-table
           ref="table"    
           :configs="edit_tableConfig"
           class='user-table'
           >   
               <template slot="username" scope="scope">
-                <el-input v-model='scope.row.username'>
+                <el-input disabled=true  v-model='scope.row.username'>
                 </el-input> 
               </template>
               <template slot="password" scope="scope">

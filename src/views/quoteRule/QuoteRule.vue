@@ -2,7 +2,7 @@
   <div class='quote_rule_container'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='addDialogTableVisible=true'>{{$t('Add rule')}}</el-button>
+            <el-button type='primary' @click='addDialogTableVisible=true'>{{$t('Add Rule')}}</el-button>
         </el-col> 
     </el-row>
     <bel-table
@@ -68,7 +68,7 @@
               <el-popover
                     class='type_attr_popover'
                     placement="bottom-start"
-                    v-if='!scope.row.editFlag && scope.row.hoverContent'
+                    v-if='scope.row.hoverContent'
                     width="160"
                     trigger='hover'
                     >
@@ -76,14 +76,15 @@
                       <tbody>
                           <tr v-for=' obj in scope.row.hoverContent'>
                               <td v-for ='(item,key) in obj'>
-                                {{item}}
+                                {{$t(item)}}
                               </td>
                           </tr>
                       </tbody>
                     </table>
-                     <span class='type_formore' v-if='!scope.row.editFlag' slot="reference">{{scope.row.type}}</span>
+                     <span class='type_formore' slot="reference">
+                     {{$t(scope.row.type)}}</span>
               </el-popover> 
-              <span v-if='!scope.row.editFlag &&!scope.row.hoverContent'>{{scope.row.type}} </span>  
+              <span v-if='!scope.row.hoverContent'>{{$t(scope.row.type)}} </span>  
               <el-select class='db' v-if='scope.row.editFlag' v-model='scope.row.type'>
                 <el-option 
                   key="raw"
@@ -129,32 +130,32 @@
               </div>
           </template>
     </bel-table> 
-    <el-dialog class='quoteRule_dialog' title="Edit quote rule" :visible.sync="editDialogTableVisible" top='20%'>
+    <el-dialog class='quoteRule_dialog' :title="$t('Edit Quote Rule')" :visible.sync="editDialogTableVisible" top='20%'>
           <el-row :gutter='40'>
               <el-col :span='8'>
-                  <p>Source:</p>
+                  <p>{{$t('Source')}}:</p>
                   <el-input disabled=true v-model='editDialog.source'></el-input>
               </el-col>
               <el-col :span='8'>
-                  <p>MT4 Symbol:</p>
+                  <p>{{$t('MT4 Symbol')}}:</p>
                   <el-input disabled=true v-model='editDialog.mt4_symbol'></el-input>
               </el-col>
               <el-col :span='8'>
-                  <p>STD Symbol:</p>
+                  <p>{{$t('STD Symbol')}}:</p>
                   <el-input disabled=true v-model='editDialog.std_symbol'></el-input>
               </el-col>
           </el-row> 
           <el-col :span='24'>
-              <p>Rule</p>
+              <p class='sub_title'>{{$t('RULE')}}</p>
               <div class=''></div>
           </el-col>  
           <el-row :gutter='40'>
               <el-col :span='12'>
-                  <p>Digits:</p>
+                  <p>{{$t('Digits')}}:</p>
                   <el-input v-model='editDialog.attributes.digits'></el-input>
               </el-col> 
                <el-col :span='12'>
-                  <p>Aggregator</p>
+                  <p>{{$t('Aggregator')}}:</p>
                    <el-select class='w100' v-model="editDialog.attributes.aggregator" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.aggregator"
@@ -165,43 +166,43 @@
                     </el-select>
               </el-col> 
                <el-col :span='12'>
-                  <p>Min spread:</p>
+                  <p>{{$t('Min spread')}}:</p>
                   <el-input v-model='editDialog.attributes.minimal_spread'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Max spread:</p>
+                  <p>{{$t('Max spread')}}:</p>
                   <el-input v-model='editDialog.attributes.maximal_spread'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Adjust:</p>
+                  <p>{{$t('Adjust')}}:</p>
                   <el-input v-model='editDialog.attributes.adjust'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Markup:</p>
+                  <p>{{$t('Markup')}}:</p>
                   <el-input v-model='editDialog.attributes.markup'></el-input>
               </el-col>
               <el-col :span='12' class='pr'>
-                  <p>Type:</p>
+                  <p>{{$t('Type')}}</p>
                    <el-select class='w100' v-model="editDialog.type" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.quote_types"
                       :key="item"
-                      :label="item"
+                      :label="$t(item)"
                       :value="item">
                     </el-option>
                   </el-select>
                   <div class="type_wrap" v-if="editDialog.type=='delta'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Bid_delta:</p>
+                            <p>{{$t('Bid_Delta')}}:</p>
                             <input type="text" v-model='editDialog.attributes.bid_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Ofr_delta</p>
+                            <p>{{$t('Ofr_Delta')}}:</p>
                             <input type="text" v-model='editDialog.attributes.ofr_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='editDialog.attributes.random'>
                         </div>
                       </div>
@@ -209,11 +210,11 @@
                   <div class="type_wrap" v-if="editDialog.type=='asian'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Asian_delta:</p>
+                            <p>{{$t('Asian_Delta')}}:</p>
                             <input type="text" v-model='editDialog.attributes.asian_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='editDialog.attributes.random'>
                         </div>
                       </div>
@@ -221,11 +222,11 @@
                   <div class="type_wrap" v-if="editDialog.type=='spread'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Spread:</p>
+                            <p>{{$t('Spread')}}:</p>
                             <input type="text" v-model='editDialog.attributes.spread'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='editDialog.attributes.random'>
                         </div>
                       </div>
@@ -233,7 +234,7 @@
               </el-col>  
           </el-row>  
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='edit_quoteRule_submit()'>Confirm</el-button>
+              <el-button type="primary" @click='edit_quoteRule_submit()'>{{$t('Confirm')}}</el-button>
           </el-col>    
       </el-dialog>
     <!-- <el-dialog class='add_dialog' title="Add quote rule" :visible.sync="addDialogTableVisible" top='20%'>
@@ -354,10 +355,10 @@
               <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog> -->
-      <el-dialog class='quoteRule_dialog' title="Add quote rule" :visible.sync="addDialogTableVisible" top='20%'>
+      <el-dialog class='quoteRule_dialog' :title="$t('Add Quote Rule')" :visible.sync="addDialogTableVisible" top='20%'>
           <el-row :gutter='40'>
               <el-col :span='8'>
-                  <p>Source:</p>
+                  <p>{{$t('Source')+':'}}</p>
                   <el-select class='w100' v-model="addDialog.source" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.sources"
@@ -368,11 +369,11 @@
                     </el-select>
               </el-col>
               <el-col :span='8'>
-                  <p>MT4 Symbol:</p>
+                  <p>{{$t('MT4 Symbol')+':'}}</p>
                   <el-input v-model='addDialog.mt4_symbol'></el-input>
               </el-col>
               <el-col :span='8'>
-                  <p>STD Symbol:</p>
+                  <p>{{$t('STD Symbol')+':'}}</p>
                  <el-select class='w100' v-model="addDialog.std_symbol" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.std_symbols"
@@ -384,16 +385,16 @@
               </el-col>
           </el-row> 
           <el-col :span='24'>
-              <p>Rule</p>
+              <p class='sub_title'>{{$t('RULE')}}</p>
               <div class=''></div>
           </el-col>  
           <el-row :gutter='40'>
               <el-col :span='12'>
-                  <p>Digits:</p>
+                  <p>{{$t('Digits')+':'}}</p>
                   <el-input v-model='addDialog.attributes.digits'></el-input>
               </el-col> 
                <el-col :span='12'>
-                  <p>Aggregator</p>
+                  <p>{{$t('Aggregator')+':'}}</p>
                   <el-select class='w100' v-model="addDialog.attributes.aggregator" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.aggregator"
@@ -404,43 +405,43 @@
                     </el-select>
               </el-col> 
                <el-col :span='12'>
-                  <p>Min spread:</p>
+                  <p>{{$t('Min spread')+':'}}</p>
                   <el-input v-model='addDialog.attributes.minimal_spread'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Max spread:</p>
+                  <p>{{$t('Max spread')+':'}}</p>
                   <el-input v-model='addDialog.attributes.maximal_spread'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Adjust:</p>
+                  <p>{{$t('Adjust')+':'}}</p>
                   <el-input v-model='addDialog.attributes.adjust'></el-input>
               </el-col>
               <el-col :span='12'>
-                  <p>Markup:</p>
+                  <p>{{$t('Markup')+':'}}</p>
                   <el-input v-model='addDialog.attributes.markup'></el-input>
               </el-col>
               <el-col :span='12' class='pr'>
-                  <p>Type:</p>
+                  <p>{{$t('Type')+':'}}</p>
                    <el-select class='w100' v-model="addDialog.type" placeholder="请选择">
                     <el-option
                       v-for="item in $store.state.global.quote_types"
                       :key="item"
-                      :label="item"
+                      :label="$t(item)"
                       :value="item">
                     </el-option>
                   </el-select>
                   <div class="type_wrap" v-if="addDialog.type=='delta'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Bid_delta:</p>
+                            <p>{{$t('BID_DELTA')}}:</p>
                             <input type="text" v-model='addDialog.attributes.bid_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Ofr_delta</p>
+                            <p>{{$t('OFR_DELTA')}}:</p>
                             <input type="text" v-model='addDialog.attributes.ofr_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='addDialog.attributes.random'>
                         </div>
                       </div>
@@ -448,11 +449,11 @@
                   <div class="type_wrap" v-if="addDialog.type=='asian'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Asian_delta:</p>
+                            <p>{{$t('ASIAN_DELTA')}}:</p>
                             <input type="text" v-model='addDialog.attributes.asian_delta'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='addDialog.attributes.random'>
                         </div>
                       </div>
@@ -460,11 +461,11 @@
                   <div class="type_wrap" v-if="addDialog.type=='spread'"> 
                       <div class="type_content  fix">
                           <div class="type_item">
-                            <p>Spread:</p>
+                            <p>{{$t('Spread')}}:</p>
                             <input type="text" v-model='addDialog.attributes.spread'>
                         </div>
                         <div class="type_item">
-                            <p>Random</p>
+                            <p>{{$t('Random')}}:</p>
                             <input type="text" v-model='addDialog.attributes.random'>
                         </div>
                       </div>
@@ -472,7 +473,7 @@
               </el-col>  
           </el-row>  
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_quoteRule_submit()'>Confirm</el-button>
+              <el-button type="primary" @click='add_quoteRule_submit()'>{{$t('Confirm')}}</el-button>
           </el-col>    
       </el-dialog>
   </div>

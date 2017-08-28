@@ -42,44 +42,44 @@ export default {
 
       //     }
       //   }],
-      editDialogTableVisible:false,
-      addDialogTableVisible:false,
-      addDialog:{
-        source:this.$store.state.global.sources[0],
-        mt4_symbol:'',
-        std_symbol:this.$store.state.global.std_symbols[0],
-        type:'raw',
-        attributes:{
-        digits:'',
-        aggregator:'median',
-        minimal_spread:'',
-        maximal_spread:'',
-        adjust:'',
-        markup:'',
-        bid_delta:'',
-        ofr_delta:'',
-        asian_delta:'',
-        spread:'',
-        random:''
+      editDialogTableVisible: false,
+      addDialogTableVisible: false,
+      addDialog: {
+        source: this.$store.state.global.sources[0],
+        mt4_symbol: '',
+        std_symbol: this.$store.state.global.std_symbols[0],
+        type: 'raw',
+        attributes: {
+          digits: '',
+          aggregator: 'median',
+          minimal_spread: '',
+          maximal_spread: '',
+          adjust: '',
+          markup: '',
+          bid_delta: '',
+          ofr_delta: '',
+          asian_delta: '',
+          spread: '',
+          random: ''
         }
       },
-      editDialog:{
-        source:'',
-        mt4_symbol:'',
-        std_symbol:'',
-        type:'raw',
-        attributes:{
-          digits:'',
-        aggregator:'',
-        minimal_spread:'',
-        maximal_spread:'',
-        adjust:'',
-        markup:'',
-        bid_delta:'',
-        ofr_delta:'',
-        asian_delta:'',
-        spread:'',
-        random:''
+      editDialog: {
+        source: '',
+        mt4_symbol: '',
+        std_symbol: '',
+        type: 'raw',
+        attributes: {
+          digits: '',
+          aggregator: '',
+          minimal_spread: '',
+          maximal_spread: '',
+          adjust: '',
+          markup: '',
+          bid_delta: '',
+          ofr_delta: '',
+          asian_delta: '',
+          spread: '',
+          random: ''
         }
       }
     }
@@ -127,7 +127,7 @@ export default {
             attr: {
               prop: 'type',
               label: this.$t('TYPE'),
-              width: 80,
+              minWidth: 120,
               sortable: true,
               scopedSlot: 'type_attr',
               align: 'center'
@@ -135,7 +135,7 @@ export default {
           }, {
             attr: {
               label: this.$t('DIGITS'),
-              width: 80,
+              minWidth: 120,
               sortable: true,
               scopedSlot: 'digits_attr',
               align: 'center'
@@ -151,7 +151,7 @@ export default {
           }, {
             attr: {
               prop: 'attributes.ofr_delta',
-              label: this.$t('OFR DDLTA'),
+              label: this.$t('OFR DELTA'),
               minWidth: 100,
               sortable: true,
               scopedSlot: 'ofr_delta_attr',
@@ -204,7 +204,7 @@ export default {
           }, {
             attr: {
               // prop: 'address',
-              label: this.$t('Operation'),
+              label: this.$t('OPERATION'),
               minWidth: 100,
               scopedSlot: 'handler',
               align: 'center'
@@ -234,7 +234,7 @@ export default {
               minWidth: 90,
               sortable: true,
               align: 'center',
-              scopedSlot:'source'
+              scopedSlot: 'source'
             }
           }, {
             attr: {
@@ -243,7 +243,7 @@ export default {
               minWidth: 120,
               sortable: true,
               align: 'center',
-              scopedSlot:'mt4_symbol'
+              scopedSlot: 'mt4_symbol'
             }
           }, {
             attr: {
@@ -252,7 +252,7 @@ export default {
               minWidth: 120,
               sortable: true,
               align: 'center',
-              scopedSlot:'std_symbol'
+              scopedSlot: 'std_symbol'
             }
           }, {
             attr: {
@@ -352,7 +352,7 @@ export default {
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.quote_add_rule',
-          args: [this.addDialog.source, this.addDialog.mt4_symbol, this.addDialog.std_symbol, this.addDialog.type,attributes],
+          args: [this.addDialog.source, this.addDialog.mt4_symbol, this.addDialog.std_symbol, this.addDialog.type, attributes],
           kwargs: {}
         },
         fn: data => {
@@ -362,8 +362,8 @@ export default {
       });
     },
     edit_quote_rule(row) {
-        this.editDialogTableVisible = true;
-        Object.assign(this.editDialog,row);
+      this.editDialogTableVisible = true;
+      Object.assign(this.editDialog, row);
     },
     edit_quoteRule_submit() {
       var attributes = {
@@ -432,8 +432,8 @@ export default {
             switch (item.type) {
               case 'delta':
                 item.hoverContent = [{
-                  label: 'ofr_delta',
-                  value: item.attributes.ofr_delta || 'null'
+                  label: 'bid_delta',
+                  value: item.attributes.bid_delta || 'null'
                 }, {
                   label: 'ofr_delta',
                   value: item.attributes.ofr_delta || 'null'

@@ -44,7 +44,7 @@ module.exports = {
           }, {
             attr: {
               prop: 'bid_time',
-              label: this.$t('Time'),
+              label: this.$t('TIME'),
               width: 150,
               sortable: true,
               align: 'center',
@@ -60,7 +60,7 @@ module.exports = {
           }, {
             attr: {
               prop: 'bid',
-              label: this.$t('Bid'),
+              label: this.$t('BID'),
               width: 100,
               sortable: true,
               align: 'center',
@@ -77,7 +77,7 @@ module.exports = {
           }, {
             attr: {
               prop: 'ofr',
-              label: this.$t('Ofr'),
+              label: this.$t('OFR'),
               width: 100,
               sortable: true,
               align: 'center',
@@ -87,7 +87,7 @@ module.exports = {
           }, {
             attr: {
               prop: 'ofr_size',
-              label: this.$t('Size'),
+              label: this.$t('SIZE'),
               width: 100,
               sortable: true,
               align: 'center',
@@ -95,7 +95,7 @@ module.exports = {
           }, {
             attr: {
               prop: 'ofr_time',
-              label: this.$t('Time'),
+              label: this.$t('TIME'),
               width: 150,
               sortable: true,
               align: 'center',

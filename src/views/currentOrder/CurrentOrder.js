@@ -13,7 +13,7 @@ export default {
       addPositionDialogVisible: false,
       tradeLogDialogVisible: false,
       lp_orders: [],
-      log_dicts:{},
+      log_dicts: {},
       add_position: {
         show: false,
         title: {
@@ -244,7 +244,7 @@ export default {
             attr: {
               prop: 'done',
               label: this.$t('DONE'),
-              minWidth: 50,
+              minWidth: 70,
               align: 'center'
             }
           }, {
@@ -261,10 +261,10 @@ export default {
     }
   },
   methods: {
-    show_add_position(){
+    show_add_position() {
       this.$store.dispatch("show_add_position");
     },
-    show_delete_position(){
+    show_delete_position() {
       this.$store.dispatch("show_delete_position");
     },
     interval_check() {
@@ -273,7 +273,7 @@ export default {
         this.remain_sec = "-";
         return;
       };
-      console.log('5555',this.next_fresh_time,this.data_loaded);
+      console.log('5555', this.next_fresh_time, this.data_loaded);
       if (this.next_fresh_time && !this.data_loaded) {
         remain_mil_sec = this.next_fresh_time - (new Date()).getTime();
 
@@ -289,16 +289,19 @@ export default {
     schedule_next_request() {
       this.next_fresh_time = (new Date()).getTime() + this.refresh_seconds * 1000;
       this.data_loaded = false;
-      console.log('444',this.next_fresh_time,this.data_loaded);
+      console.log('444', this.next_fresh_time, this.data_loaded);
     },
     auto_refresh_control() {
       this.isActive = !this.isActive;
       // if(this.isActive = false){}
     },
     //
-    showLpOrdersTable(row){
-        var param ={id:row.order_id,value:row.trade_log};
-        this.$store.dispatch('update_lp_order_dicts',param);
+    showLpOrdersTable(row) {
+      var param = {
+        id: row.order_id,
+        value: row.trade_log
+      };
+      this.$store.dispatch('update_lp_order_dicts', param);
     },
 
     onDetail(row) {
@@ -316,9 +319,9 @@ export default {
         this.trade_logs.push(trade_log);
       };
     },
-    showTradeLog(row){
-        this.tradeLogDialogVisible = true;
-        this.log_dicts = row;
+    showTradeLog(row) {
+      this.tradeLogDialogVisible = true;
+      this.log_dicts = row;
     },
     onCloseLpOrder(index) {
       this.lp_orders.splice(index, 1);

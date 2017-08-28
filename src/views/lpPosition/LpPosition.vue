@@ -1,11 +1,11 @@
 <template>
     <div class="list">
         <div class='lp_position_panel'>
-                <span class="green">green: position </span>
-                <span class="red">red: negative</span>
-                <span class='title_b'>NEXT REFRESH:</span>
+                <span class="green">{{$t('Green:Positive')}}</span>
+                <span class="red">{{$t('Red:Negative')}}</span>
+                <span class='title_b'>{{$t('NEXT REFRESH')}}:</span>
                 <span class='remain_sec' >{{remain_sec}}</span>
-                <span  class='title_b'>STATUS:</span>
+                <span  class='title_b'>{{$t('STATUS')}}:</span>
                 <span :style="{color : load_text_color}">{{load_status}}</span>
         </div> 
         <div class="table-wrap">
@@ -39,13 +39,14 @@
        line-height:22px;
        padding-bottom: 15px;
        padding-top: 20px;
+       font-size: 14px;
        span{
         display: inline-block;
         height:22px;
        }
       .title_b{
              margin-left: 10px;
-             font-size: 14px;
+             
              font-weight: bold; 
       }
       .remain_sec{

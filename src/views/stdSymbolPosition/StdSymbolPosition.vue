@@ -1,11 +1,11 @@
 <template>
     <section class="chart">
         <div class='auto_refresh_panel'>
-            <b>CURRENT:</b>
+            <b>{{$t("Current")}}:</b>
             <span class='current_symbol'>{{current_std_symbol}}</span>
-            <b>NEXT REFRESH:</b>
+            <b>{{$t('NEXT REFRESH')}}:</b>
              <span class='remain_sec' >{{remain_sec}}</span>
-            <b>STATUS:</b>
+            <b>{{$t('STATUS')}}:</b>
             <span :style='{color:load_text_color}'>{{load_status}}</span>
         </div>
         <div class="wrap">
@@ -17,7 +17,7 @@
             <div class='chart_show_panel' v-if='show_lp_symbols'>
                     <div class='tip_bar fix'>
                         <div class="total_div">
-                             Total Qty:
+                             {{$t("Total Qty")}}:
                             <span :style="{color:total_qty_color}">
                             {{total_qty}}</span>
                         </div>  
@@ -31,7 +31,7 @@
                                         <div>
                                                 <a href="javascript:void(0)" @click='showEditLpSymbol(item)'>
                                                     <span class="lp_status"  :style="{'color': item.lp_symbol.trade_enable?'green' :'red'}">
-                                                        {{item.lp_symbol.trade_enable? 'Enabled' : 'Disabled' }}
+                                                        {{item.lp_symbol.trade_enable? $t('Enabled') : $t('Disabled' )}}
                                                     </span>
                                                     S:
                                                     <span>

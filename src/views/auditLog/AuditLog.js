@@ -38,7 +38,7 @@ export default {
           columns: [{
             attr: {
               prop: 'log_id',
-              label: this.$t('LOG ID'),
+              label: this.$t('LOG_ID'),
               minWidth: 180,
               sortable: true,
               align: 'center'

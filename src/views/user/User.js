@@ -139,15 +139,6 @@ export default {
               label: this.$t('USERNAME'),
               minWidth: 100,
               align: 'center',
-              type:'expand',
-              scopedSlot: 'expand'
-            }
-          },{
-            attr: {
-              prop: 'username',
-              label: this.$t('USERNAME'),
-              minWidth: 100,
-              align: 'center',
               scopedSlot: 'username'
             }
           }, {
@@ -329,8 +320,8 @@ export default {
           }
         },
         fn: data => {
-            this.editDialogTableVisible = false;
-            this.find_page_user();
+          this.editDialogTableVisible = false;
+          this.find_page_user();
 
         },
         errFn: (err) => {

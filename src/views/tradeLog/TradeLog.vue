@@ -2,27 +2,27 @@
     <div class='clearfix tradelog_container'>
     <el-row class='actions-top fix'>
             <div class="search_item">
-              <label>CLIENT</label>
+              <label>{{$t('CLIENT')}}</label>
               <el-input class='search_input' v-model='keywords.client.value'></el-input>
             </div>
             <div class="search_item">
-              <label>ORD ID</label>  
+              <label>{{$t('ORD ID')}}</label>  
             <el-input class='search_input' v-model='keywords.ord_id.value'></el-input> 
             </div>
             <div class="search_item">
-             <label>GROUP</label>  
+             <label>{{$t('GROUP')}}</label>  
             <el-input class='search_input' v-model='keywords.group.value'></el-input>  
             </div>
             <div class="search_item">
-              <label>SYMBOL</label>
+              <label>{{$t('SYMBOL')}}</label>
             <el-input class='search_input' v-model='keywords.symbol.value'></el-input>
             </div>
             <div class="search_item">
-              <label>SIZE</label>  
+              <label>{{$t('SIZE')}}</label>  
               <el-input class='search_input' v-model='keywords.size.value'></el-input>
             </div>
             <div class="search_item">
-              <label>STATUS</label>
+              <label>{{$t('STATUS')}}</label>
               <el-select class='search_select' v-model="keywords.status.value" placeholder="请选择">
                   <el-option
                     v-for="item in $store.state.global.ord_status"
@@ -33,13 +33,13 @@
               </el-select>
             </div>
             <div class="search_item">
-              <label>TIME</label>
+              <label>{{$t('TIME')}}</label>
             <el-date-picker class='search_date_picker' v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围" picker-options="pickerOptions" format="yyyy/MM//dd"></el-date-picker>
             </div>
             <div class="button_bar">
-              <el-button  type='primary' @click='onSearchKeyWord'>Search</el-button>
-              <el-button  type='primary' @click='onDownLoad'>Download Detailed Execel</el-button>   
-              <el-button type='primary' @click='onShowProfit'>Show Profit</el-button>
+              <el-button  type='primary' @click='onSearchKeyWord'>{{$t('Search')}}</el-button>
+              <el-button  type='primary' @click='onDownLoad'>{{$t('Download Detailed Excel')}}</el-button>   
+              <el-button type='primary' @click='onShowProfit'>{{$t('Show Profit')}}</el-button>
             </div>
             
     </el-row>
@@ -47,9 +47,9 @@
       line-height: 30px;'>
            <em style="color:#969696;font-weight:bold;">TRADE LOG - </em>
            <span class='table_update_at'>{{nowTime}}</span>
-           <em class='next_refresh'>NEXT REFRESH: </em> 
+           <em class='next_refresh'>{{$t("NEXT REFRESH")}}: </em> 
             <span class='remain_sec'>{{remain_sec}}</span>
-           <strong class='desc'>ENABLE AUTO REFRESH:</strong>
+           <strong class='desc'>{{$t('ENABLE AUTO REFRESH')}}:</strong>
             <i class='icon icon_refresh_enable' :class="{active: isActive}" @click='auto_refresh_control()'></i>
     </el-row>
     <bel-table

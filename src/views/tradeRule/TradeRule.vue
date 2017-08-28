@@ -2,7 +2,7 @@
   <div class='list'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click = 'open_create_new_group_dialog'>{{$t('Add group')}}</el-button>
+            <el-button type='primary' @click = 'open_create_new_group_dialog'>{{$t('Add Group')}}</el-button>
         </el-col> 
     </el-row>
     <bel-table
@@ -12,14 +12,14 @@
                <router-link :to="{ path:'/home/trade_rule/group_trade_rule', query: {source: scope.row.source,group: scope.row.group} }">  
               <a
                   href="javascript:void(0);"
-                  > View rules</a>
+                  > {{$t('VIEW RULES')}}</a>
               </router-link>
           </template>
           <template slot="copygroup" scope="scope">
              <a
                   href="javascript:void(0);"
                   @click = 'copy_new_group(scope.row)'
-                  > Copy to new group</a>
+                  > {{$t("Copy to new group")}}</a>
           </template>
           <template slot="remark" scope="scope">
               <a

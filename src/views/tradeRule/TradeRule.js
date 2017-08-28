@@ -225,7 +225,7 @@ export default {
                     columns: [{
                         attr: {
                             prop: 'source',
-                            label: this.$t('source'),
+                            label: this.$t('SOURCE'),
                             // width: 120,
                             sortable: true,
                             // scopedSlot: 'date',
@@ -234,14 +234,14 @@ export default {
                     }, {
                         attr: {
                             prop: 'group',
-                            label: this.$t('group'),
+                            label: this.$t('GROUP'),
                             // width: 120,
                             sortable: true,
                             align: 'center'
                         }
                     }, {
                         attr: {
-                            label: this.$t('MT4 symbol'),
+                            label: this.$t('MT4 SYMBOL'),
                             // width: 150,
                             sortable: true,
                             formatter(item) {
@@ -252,7 +252,7 @@ export default {
                     }, {
                         attr: {
                             // prop: 'weight',
-                            label: this.$t('View rules'),
+                            label: this.$t('VIEW RULES'),
                             // width: 100,
                             sortable: true,
                             align: 'center',
@@ -260,8 +260,7 @@ export default {
                         }
                     }, {
                         attr: {
-                            // prop: 'weight',
-                            label: this.$t('Create to new rules'),
+                            label: this.$t('CREATE TO NEW RULES'),
                             // width: 180,
                             sortable: true,
                             align: 'center',

@@ -2,7 +2,7 @@
   <div class='list'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='addDialogTableVisible=true'>{{this.$t('Add symbol')}}</el-button>
+            <el-button type='primary' @click='addDialogTableVisible=true'>{{$t('Add Symbol')}}</el-button>
         </el-col> 
     </el-row>
     <el-col :span="24" class='table-wrap'>

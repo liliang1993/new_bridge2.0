@@ -2,14 +2,14 @@
     <div class='add_position'>
       <el-row >
               <div class="search_bar">
-                <p>MT4 logins:</p>
-                <input type="text" placeholder="input"  v-model='logKeyword'  class='search_bar'>
-                <el-button class='r' type='primary'@click='onSearch("MT4 logins")'>Search Logins</el-button>  
+                <p>{{$t('MT4 Logins')}}:</p>
+                <input type="text" :placeholder='$t("Input logins(must be numbers) separated by a comma(eg\",\")")'  v-model='logKeyword'  class='search_bar'>
+                <el-button class='r' type='primary'  @click='onSearch("MT4 logins")'>{{$t('Search Logins')}}</el-button>  
               </div>     
               <div class="search_bar">  
-                <p>MT4 orders:</p>
-                <input type="text" placeholder="input" v-model='ordKeyword' class='search_bar'>
-                <el-button class='r' type='primary'  @click='onSearch("MT4 orders")''>Search Orders</el-button>  
+                <p>{{$t('MT4 Orders')}}:</p>
+                <input type="text" :placeholder='$t("Input orders separated by a comma(eg:\",\")")' v-model='ordKeyword' class='search_bar'>
+                <el-button class='r' type='primary'  @click='onSearch("MT4 orders")'>{{$t('Search Orders')}}</el-button>  
               </div>   
       </el-row>
       <bel-table
@@ -30,14 +30,10 @@
     </bel-table>
     <el-row>
         <el-col :span='24' class='btm-action'>
-             <!--  <el-button  class='icon'  icon="plus" @click='addNewRow()' ></el-button> -->
              <i class='icon icon_add' @click='addNewRow()'></i>
         </el-col>
-         <!-- <el-col :span='2' >
-                  <el-button  type='primary' @click='onSubmit' >Submit</el-button>
-          </el-col>  -->
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='onSubmit'>Sumbit</el-button>
+              <el-button type="primary" @click='onSubmit'>{{$t('Submit')}}</el-button>
           </el-col> 
     </el-row>
    

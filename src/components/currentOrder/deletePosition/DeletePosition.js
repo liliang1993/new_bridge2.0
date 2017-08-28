@@ -5,10 +5,10 @@ export default {
       lp_symbols: {},
       orders_value: "",
       listData: [],
-      editDialogTableVisible:false,
-      lpPositionData:[],
-      del_reason: '', 
-      row_index:undefined,
+      editDialogTableVisible: false,
+      lpPositionData: [],
+      del_reason: '',
+      row_index: undefined,
     }
   },
   computed: {
@@ -28,7 +28,7 @@ export default {
           columns: [{
             attr: {
               prop: 'order_id',
-              label: this.$t('OrderID'),
+              label: this.$t('ORD ID'),
               width: 90,
               // sortable: true,
               align: 'center'
@@ -131,7 +131,7 @@ export default {
               label: this.$t('QTY'),
               minWidth: 90,
               align: 'center',
-              scopedSlot:'qty'
+              scopedSlot: 'qty'
             }
           }]
         }
@@ -159,65 +159,65 @@ export default {
     },
     get_lp_positions(position, std_symbol) {
       var filled, i, j, len, len1, lp_filled, lp_orders, lp_positions, lps, order;
-    lp_orders = position.trade_log.orders;
-    lp_filled = {};
-    lp_positions = {};
-    lps = this.lp_symbols[std_symbol];
-    if (lps === undefined) {
-      return lp_positions;
-    }
-    for (i = 0, len = lp_orders.length; i < len; i++) {
-      order = lp_orders[i];
-      if (order.state === "filled" || order.state === "partial") {
-        filled = lp_filled[order.lp];
-        if (filled === undefined) {
-          lp_filled[order.lp] = order.quantity;
-        } else {
-          lp_filled[order.lp] = filled + order.quantity;
+      lp_orders = position.trade_log.orders;
+      lp_filled = {};
+      lp_positions = {};
+      lps = this.lp_symbols[std_symbol];
+      if (lps === undefined) {
+        return lp_positions;
+      }
+      for (i = 0, len = lp_orders.length; i < len; i++) {
+        order = lp_orders[i];
+        if (order.state === "filled" || order.state === "partial") {
+          filled = lp_filled[order.lp];
+          if (filled === undefined) {
+            lp_filled[order.lp] = order.quantity;
+          } else {
+            lp_filled[order.lp] = filled + order.quantity;
+          }
         }
       }
-    }
-    for (j = 0, len1 = lps.length; j < len1; j++) {
-     var lp = lps[j];
-      filled = lp_filled[lp];
-      if (filled !== undefined) {
-        lp_positions[lp] = filled;
-      } else {
-        lp_positions[lp] = 0;
+      for (j = 0, len1 = lps.length; j < len1; j++) {
+        var lp = lps[j];
+        filled = lp_filled[lp];
+        if (filled !== undefined) {
+          lp_positions[lp] = filled;
+        } else {
+          lp_positions[lp] = 0;
+        }
       }
-    }
-    lp_positions["bbook"] = position["bbook_quantity"];
-    return lp_positions;
+      lp_positions["bbook"] = position["bbook_quantity"];
+      return lp_positions;
     },
-    onSearch(){
-        var i, len, order, order_str, orders, ref;
-        orders = [];
-        ref = this.orders_value.split(",");
-        for (i = 0, len = ref.length; i < len; i++) {
-          order_str = ref[i];
-          order = parseInt(order_str);
-          if (!isNaN(order)) {
-            orders.push(order);
-          }
-        };
-        if (orders.length === 0) {
-         this.$message.warning('input value should be number');
-          return;
-        };
-        this.$$api_common_ajax({
-          data: {
-            func_name: 'router_api.get_positions',
-            args:[orders],
-            kwargs: {}
-          },
-          fn: data => {
-            this.load_order_data(data);
-            console.log('listData', this.listData);
-          },
-          errFn: (err) => {
-            // this.$message.error(err.msg);
-          }
-        });
+    onSearch() {
+      var i, len, order, order_str, orders, ref;
+      orders = [];
+      ref = this.orders_value.split(",");
+      for (i = 0, len = ref.length; i < len; i++) {
+        order_str = ref[i];
+        order = parseInt(order_str);
+        if (!isNaN(order)) {
+          orders.push(order);
+        }
+      };
+      if (orders.length === 0) {
+        this.$message.warning('input value should be number');
+        return;
+      };
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.get_positions',
+          args: [orders],
+          kwargs: {}
+        },
+        fn: data => {
+          this.load_order_data(data);
+          console.log('listData', this.listData);
+        },
+        errFn: (err) => {
+          // this.$message.error(err.msg);
+        }
+      });
 
 
     },
@@ -301,31 +301,31 @@ export default {
       };
       this.lp_symbols = lp_symbols
     },
-    editPosition(row,index){
-        this.lpPositionData = [];
-        this.row_index = index;
-        this.editDialogTableVisible = true;
-        for(var lp in row.lp_positions){
-            var result = {}; 
-            result.lp =lp;
-            result.qty = row.lp_positions[lp];
-            this.lpPositionData.push(result);
-            console.log('lp_positions',row,this.lpPositionData);
-        }
+    editPosition(row, index) {
+      this.lpPositionData = [];
+      this.row_index = index;
+      this.editDialogTableVisible = true;
+      for (var lp in row.lp_positions) {
+        var result = {};
+        result.lp = lp;
+        result.qty = row.lp_positions[lp];
+        this.lpPositionData.push(result);
+        console.log('lp_positions', row, this.lpPositionData);
+      }
     },
-    closeLpPosition(){
+    closeLpPosition() {
       this.editDialogTableVisible = false;
     },
-    edit_position_submit(){
-          var lp_positions = {};
-          for(var item of this.lpPositionData){
-              var lp = item.lp;
-              var qty = item.qty;
-              lp_positions[lp]=qty;
-          }
-          this.$set(this.listData[this.row_index],"lp_positions",lp_positions);
-          // console.log('lp_positions',this.lpPositionData,lp_positions);
-          this.editDialogTableVisible = false;
+    edit_position_submit() {
+      var lp_positions = {};
+      for (var item of this.lpPositionData) {
+        var lp = item.lp;
+        var qty = item.qty;
+        lp_positions[lp] = qty;
+      }
+      this.$set(this.listData[this.row_index], "lp_positions", lp_positions);
+      // console.log('lp_positions',this.lpPositionData,lp_positions);
+      this.editDialogTableVisible = false;
     },
     init() {
       this.$$api_common_ajax({

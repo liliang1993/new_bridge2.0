@@ -48,53 +48,6 @@ export default {
         }
       }
     },
-    // load_symbols(){
-    //   var params = {
-    //     func_name:'router_api.lp_get_symbols'
-    //   }
-    //   CommonApi.postFormAjax.call(this,params,data=>{
-    //       var fn, i, j, len, len1, lp, ref, ref1, s, std_symbol;
-    //       var lp_symbols = data;
-    //       console.log('lp_symbols',lp_symbols);
-
-    //       fn =(s)=>{
-    //         var lp, lp_symbol;
-    //         s.quantity = 0;
-    //         lp = s.lp;
-    //         console.log('std_symbols',this.std_symbols);
-    //         if (s.std_symbol in this.std_symbols) {
-    //           this.std_symbols[s.std_symbol][s.lp] = s;
-    //         } else {
-    //           lp_symbol = new Object();
-    //           lp_symbol[s.lp] = s;
-    //           this.std_symbols[s.std_symbol] = lp_symbol;
-    //         }
-    //       };
-    //       for (i = 0, len = lp_symbols.length; i < len; i++) {
-    //         s = lp_symbols[i];
-    //         fn(s);
-    //       }
-    //       ref = this.std_symbols;
-
-    //       for (std_symbol in ref) {
-    //         lp_symbols = ref[std_symbol];
-    //         ref1 = ["bbook", "unexpect_bbook"];
-    //         for (j = 0, len1 = ref1.length; j < len1; j++) {
-    //           lp = ref1[j];
-    //           lp_symbols[lp] = new Object({
-    //             "lp": lp,
-    //             "std_symbol": std_symbol,
-    //             "weight": 0,
-    //             "lp_symbol": "-",
-    //             "trade_enable": true,
-    //             "quantity": 0
-    //           });
-    //         }
-    //       }
-    //       this.render_symbols_table();
-    //       this.request_symbol_positions();
-    //   });
-    // },
     load_symbols() {
       this.$$api_common_ajax({
         data: {
@@ -224,7 +177,7 @@ export default {
       this.columns.push({
         attr: {
           prop: 'std_symbol',
-          label: 'STD SYMBOL',
+          label: this.$t('STD SYMBOL'),
           sortable: true,
           fixed: 'left',
           minwidth: '220',
@@ -235,7 +188,7 @@ export default {
         this.columns.push({
           attr: {
             prop: lp_name,
-            label: lp_name.toUpperCase(),
+            label: this.$t(lp_name.toUpperCase()),
             sortable: true,
             scopedSlot: lp_name,
             align: 'center'
@@ -245,7 +198,7 @@ export default {
       this.columns.push({
         attr: {
           prop: 'total',
-          label: 'Total',
+          label: this.$t('TOTAL'),
           sortable: true,
           scopedSlot: 'total',
           minwidth: '220',

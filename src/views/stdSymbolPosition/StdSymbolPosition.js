@@ -5,7 +5,7 @@ module.exports = {
       std_symbols: {},
       load_text_color: 'black',
       load_status: 'loading...',
-      current_std_symbol: 'NotSelected',
+      current_std_symbol: this.$t("NotSelected"),
       current_lp_symbols: {},
       show_lp_symbols: false,
       total_qty: 0,

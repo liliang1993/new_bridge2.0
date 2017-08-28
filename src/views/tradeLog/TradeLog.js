@@ -424,7 +424,7 @@ export default {
                                         }, {
                                                 attr: {
                                                         // prop: 'exec_price',
-                                                        label: this.$t('status'),
+                                                        label: this.$t('STATUS'),
                                                         minWidth: 60,
                                                         // formatter:function(r){
                                                         //         status = r.confirm.status;

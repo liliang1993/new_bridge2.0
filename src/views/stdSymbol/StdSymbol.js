@@ -176,7 +176,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'contract_size',
-                            label: this.$t('Con SIZE'),
+                            label: this.$t('CON SIZE'),
                             width: 110,
                             scopedSlot: 'contract_size',
                             align: 'center'
@@ -254,7 +254,7 @@ export default {
                     }, {
                         attr: {
                             prop: 'contract_size',
-                            label: this.$t('Con SIZE'),
+                            label: this.$t('CON SIZE'),
                             width: 110,
                             scopedSlot: 'contract_size',
                             align: 'center'

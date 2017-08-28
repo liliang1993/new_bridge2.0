@@ -10,9 +10,9 @@
       line-height: 30px;'>
            <em style="color:#969696;font-weight:bold;">ORDER POSITIONS - </em>
            <span class='table_update_at'>{{nowTime}}</span>
-           <em class='next_refresh'>NEXT REFRESH: </em> 
+           <em class='next_refresh'>{{$t('NEXT REFRESH')}}: </em> 
             <span class='remain_sec'>{{remain_sec}}</span>
-           <strong class='desc'>ENABLE AUTO REFRESH:</strong>
+           <strong class='desc'>{{$t('ENABLE AUTO REFRESH')}}:</strong>
             <i class='icon icon_refresh_enable' :class="{active: isActive}" @click='auto_refresh_control()'></i>
     </el-row>
     <bel-table
@@ -26,7 +26,7 @@
           <template slot="detail" scope="scope">
               <a
                   href = "JavaScript:void(0)" 
-                 @click='showTradeLog(scope.row)' >{{$t('Detail')}}</a>
+                 @click='showTradeLog(scope.row)' >{{$t('DETAIL')}}</a>
           </template>
     </bel-table>
     <el-col :span="24" class='btm-action'>
@@ -41,6 +41,20 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
+      <el-dialog
+      title="TradeLog"
+      class='trade_log_dialog'
+      :visible.sync="tradeLogDialogVisible"
+      top='10%'>
+        <div class="log_wrap">
+              <ul>
+                <li v-for='(item,key) in log_dicts'>
+                    <p>{{key.toUpperCase()}}</p>
+                    <pre>{{item}}</pre>
+                </li>
+              </ul>
+          </div>   
+    </el-dialog>
   </div>
 </template>
   
