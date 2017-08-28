@@ -2,12 +2,12 @@
     <div>
       <el-row class='actions-top'>     
           <el-col :span='21'>
-                      <el-button type='primary' @click='onEditRules()'>{{$t('Edit rules')}}</el-button>
-                      <el-button type='primary' @click='ondefaultSplippage()'>{{$t('Revert splippage to default')}}</el-button>
+                      <el-button type='primary' @click='onEditRules()'>{{$t('Edit Rules')}}</el-button>
+                      <el-button type='primary' @click='ondefaultSplippage()'>{{$t('Revert Slippage to default')}}</el-button>
                       <el-button type='primary' @click='onSubmitChanges()'>{{$t('Submit Changes')}}</el-button>
-                      <el-button type='primary' @click='onInvertSelect()'>{{$t('Invert select')}}</el-button>
-                      <el-button type='danger'   @click='onBatchDelete()'>{{$t('Delete selected rules')}}</el-button>
-                      <el-button type='primary' @click='addTradeRule()'>{{$t('Add rule')}}</el-button>
+                      <el-button type='primary' @click='onInvertSelect()'>{{$t('Invert Select')}}</el-button>
+                      <el-button type='danger'   @click='onBatchDelete()'>{{$t('Delete Selected Rules')}}</el-button>
+                      <el-button type='primary' @click='addTradeRule()'>{{$t('Add Rule')}}</el-button>
                       </el-col>
           </el-row>
     <bel-table
@@ -17,16 +17,6 @@
       @selection-change = 'onSelectionChange '
       >
         <template slot="handler" scope="scope">
-              <!-- <el-button
-                  type="info"
-                  icon='edit'
-                  size="mini"
-                  @click='onEditRowRule(scope.row)'></el-button>
-              <el-button
-                  type="danger"
-                  icon='delete'
-                  size="mini"
-                 @click='onSingleDelete(scope.row)' ></el-button> -->
              <i class='icon icon_edit' @click='editTradeRule(scope.row)'></i>
               <el-popover
                 ref="popover{{$index}}" 
@@ -39,7 +29,7 @@
                   <el-button type="primary" size="mini" @click="delete_symbol(scope.row,scope.$index)">确定</el-button>
                 </div>
               </el-popover>   
-              <i class="icon icon_delete" v-popover:popover{{$index}} v-if='!scope.row.editFlag' ></i>
+              <i class="icon icon_delete" v-popover:popover{{$index}} ></i>
     </template>
         <template slot="route_type" scope="scope">
                 <div  v-if = 'editFlag'>
@@ -79,6 +69,10 @@
                v-for='item in scope.row.attributes.limit_order_types'>
                {{$store.state.global.limit_order_types[item.type]+' '+item.tol}}
                </div>
+               <!-- <el-col :span='12' v-if = 'editFlag'
+               v-for='item in scope.row.attributes.limit_order_types_res'>
+                
+               </div> -->
         </template>
     
         <template slot="coverage" scope="scope">

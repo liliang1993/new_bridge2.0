@@ -283,44 +283,8 @@ export default {
             return this.$store.state.traderule.update_traderule_table;
         }
     },
-    watch: {
-        get_up_traderule_table(v) {
-            if (v) {
-                if (v == true) {
-                    this.load_data();
-                    this.$store.dispatch('update_traderule_table', false);
-                }
-            }
-        }
-    },
     methods: {
-        onEditRemark(row) {
-            console.log('row', row);
-            var title = {
-                text: 'Edit ' + row.source + "-" + row.group + ' remark'
-            }
-            var key = row.source + "_" + row.group;
-            var default_value = {
-                remark: row.remark,
-                group: row.group
-            };
-            console.log('default_value', default_value);
-            var config = Object.assign({}, {
-                default_value
-            }, {
-                title
-            });
-            console.log('config', config);
-            if (!(key in this.$store.state.traderule.remark_dialogs)) {
-                this.$store.dispatch('update_remark_dialogs', {
-                    key,
-                    config
-                });
-            };
-        },
-        open_create_new_group_dialog() {
-            this.$store.dispatch('show_trade_group');
-        },
+        
         copy_new_group(row) {
             console.log('row', row);
             this.dialogTableVisible = true;
@@ -328,38 +292,6 @@ export default {
             this.copy_group_dialog.group = row.group;
         },
         copyGroupSumbit(data) {
-
-        },
-        GroupTradeRulesTable(row) {
-            // var title = {
-            //     text: 'Trade Rules - Source:' + row.source + " Group: " + row.group
-            // }
-            // var source = row.source;
-            // var group = row.group;
-            // var key = source + "_" + group;;
-            // var title = 'Trade Rules - Source:' + source + ' Group: ' + group;
-            // var tableData = [];
-            // for (var k in this.$store.state.traderule.trade_rules) {
-            //     var rule = this.$store.state.traderule.trade_rules[k];
-            //     if (rule.source === source && rule.group === group) {
-            //         var new_rule = this.deepCopy(rule);
-            //         new_rule.source = source;
-            //         new_rule.group = group;
-            //         tableData.push(new_rule);
-            //     }
-            // }
-            // var config = Object.assign({}, {
-            //     source,
-            //     group,
-            //     title,
-            //     tableData
-            // });
-            // if (!(key in this.$store.state.traderule.view_rules_dialogs)) {
-            //     this.$store.dispatch('update_view_rules_dialogs', {
-            //         key,
-            //         config
-            //     });
-            // };
 
         },
         render_groups(rules) {
@@ -406,6 +338,9 @@ export default {
             });
             this.tableData = source_groups;
             console.log('tableData', this.tableData);
+        },
+        open_create_new_group_dialog(){
+
         },
         render_remarks() {
             var i, j, len, len1, remark_dict, remark, row;

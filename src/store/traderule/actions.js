@@ -1,81 +1,22 @@
 import * as types from './mutations_types';
 
 export default {
-	// update_trade_rules: ({
-	// 	commit
-	// }, trade_rules) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.UPDATE_TRADE_RULES,trade_rules);
-	// 		resolve();
-	// 	});
-	// },
-
-	// update_remark_dialogs: ({
-	// 	commit
-	// }, remark_dialog) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.UPDATE_REMARK_DIALOGS,remark_dialog);
-	// 		resolve();
-	// 	});
-	// },
-	// delete_remark_dialogs:({
-	// 	commit
-	// }, dialog_id) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.DELETE_REMARK_DIALOGS,dialog_id);
-	// 		resolve();
-	// 	});
-	// },
-	// update_traderule_remark:({
-	// 	commit
-	// }) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.DELETE_REMARK_DIALOGS);
-	// 		resolve();
-	// 	});
-	// },
-
-	// update_copy_to_new_group_dialogs: ({
-	// 	commit
-	// }, copy_to_new_goup_dialog) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.UPDATE_COPY_TO_NEW__GROUP_DIALOGS,copy_to_new_goup_dialog);
-	// 		resolve();
-	// 	});
-	// },
-	// delete_copy_to_new_group_dialogs:({
-	// 	commit
-	// }, dialog_id) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.DELETE_COPY_TO_NEW__GROUP_DIALOGS,dialog_id);
-	// 		resolve();
-	// 	});
-	// },
-
-	// update_traderule_table:({
-	// 	commit
-	// },flag) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		commit(types.UPDATE_TRADERULE_TABLE,flag);
-	// 		resolve();
-	// 	});
-	// },
-	update_edit_rules_dicts: ({
+	update_edit_rules_dict: ({
 		commit
-	}, edit_rules_config) => {
+	},dict) => {
 		return new Promise((resolve, reject) => {
-			commit(types.UPDATE_EDIT_RULES_DICTS, edit_rules_config);
+			commit(types.UPDATE_EDIT_RULES_DICT, dict);
 			resolve();
 		});
 	},
-	delete_edit_rules_dicts: ({
-		commit
-	}, edit_rules_id) => {
-		return new Promise((resolve, reject) => {
-			commit(types.DELETE_EDIT_RULES_DICTS, edit_rules_id);
-			resolve();
-		});
-	},
+	// delete_edit_rules_dicts: ({
+	// 	commit
+	// }, edit_rules_id) => {
+	// 	return new Promise((resolve, reject) => {
+	// 		commit(types.DELETE_EDIT_RULES_DICTS, edit_rules_id);
+	// 		resolve();
+	// 	});
+	// },
 	show_trade_group: ({
 		commit
 	}) => {

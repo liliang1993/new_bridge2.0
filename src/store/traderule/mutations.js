@@ -37,17 +37,19 @@ export default {
   // [types.UPDATE_TRADERULE_TABLE](state,flag) {
   //             state.update_traderule_table = flag;
   //     },
-  [types.UPDATE_EDIT_RULES_DICTS](state, edit_rules_config) {
-    // Vue.set(state.edit_rules_dicts,view_rules_dialog.key,view_rules_dialog.config);
-    state.edit_rules_dicts.push(edit_rules_config);
-  }, [types.DELETE_EDIT_RULES_DICTS](state, edit_rules_id) {
-    for (var item of state.edit_rules_dicts) {
-      if (edit_rules_id === item.id) {
-        var index = state.edit_rules_dicts.indexOf(item);
-        state.edit_rules_dicts.splice(index, 1);
-      }
-    }
-  }, [types.SHOW_TRADAE_GROUP](state) {
+  [types.UPDATE_EDIT_RULES_DICT](state,{common,attributes}) {
+    Vue.set(state.edit_rules_dict,"common",common);
+    Vue.set(state.edit_rules_dict,"attributes",attributes);
+  }, 
+  // [types.DELETE_EDIT_RULES_DICTS](state, edit_rules_id) {
+  //   for (var item of state.edit_rules_dicts) {
+  //     if (edit_rules_id === item.id) {
+  //       var index = state.edit_rules_dicts.indexOf(item);
+  //       state.edit_rules_dicts.splice(index, 1);
+  //     }
+  //   }
+  // }, 
+  [types.SHOW_TRADAE_GROUP](state) {
     state.add_trade_group = true;
   }, [types.HIDE_TRADAE_GROUP](state) {
     state.add_trade_group = false;

@@ -36,17 +36,17 @@
           <h2 class='sub_title'>TradeRule</h2>
         </el-col>
         <el-col :span='24'>     
-          <label>{{$t('route_type')}}:</label>
+          <label>{{$t('Route_type')}}:</label>
         </el-col>
       <el-row :gutter='10'>
         <el-col :span='8'>
-            {{$t('if size')}} >=
-            <el-input class='dib w70'  v-model='route_type.threshold'>
+            {{$t('If Size')}} >=
+            <el-input class='dib w60'  v-model='route_type.threshold'>
             </el-input> 
         </el-col>
-        <el-col :span='8'>
-           {{$t('then')}}
-          <el-select class='w80' v-model="route_type.left" placeholder="请选择">
+        <el-col :span='6'>
+           {{$t('Then')}}
+          <el-select class='w70' v-model="route_type.left" placeholder="请选择">
            <el-option
               v-for="item in route_type_select_options"
               :key="item"
@@ -55,9 +55,9 @@
             </el-option>   
           </el-select> 
         </el-col>
-        <el-col :span='8'>
-          {{$t('else')}}
-          <el-select v-model="route_type.right"  class='w80'>
+        <el-col :span='6'>
+          {{$t('Else')}}
+          <el-select v-model="route_type.right"  class='w70'>
               <el-option
                 v-for="item in route_type_select_options"
                 :key="item"
@@ -69,15 +69,15 @@
       </el-row>
       <el-row :gutter='10'>
           <el-col :span='6'>
-                <label>{{$t('coverage')}}:</label>
+                <label>{{$t('Coverage')}}:</label>
                 <el-input v-model='coverage'></el-input>
             </el-col>  
             <el-col :span='6'>
-                <label>{{$t('better_fill')}}:</label>
+                <label>{{$t('Better_fill')}}:</label>
                 <el-input v-model='better_fill'></el-input>
             </el-col>  
             <el-col :span='6'>
-                <label>{{$t('open_partial')}}:</label>
+                <label>{{$t('Open_partial')}}:</label>
                 <el-select v-model="open_partial"  class='w100'>
                    <el-option
                     label="true"
@@ -90,14 +90,14 @@
               </el-select>
             </el-col>  
             <el-col :span='6'>
-                <label>{{$t('open_lp_rejected_retry')}}:</label>
+                <label>{{$t("Open_lp_rejected_retry")}}:</label>
                 <el-select v-model="open_lp_rejected_retry"  class='w100'>
                      <el-option
-                    label="true"
+                    :label="$t('true')"
                     value="true">
                   </el-option>
                   <el-option
-                    label="false"
+                    :label="$t('false')"
                     value="false">
                   </el-option>
                 </el-select>
@@ -121,16 +121,16 @@
           <el-input v-model='close_probe'></el-input>  
         </el-col>
         <el-col :span='12'>
-          <label>{{$t('markup')}}</label>
+          <label>{{$t('Markup')}}</label>
           <el-input v-model = 'markup'></el-input>  
         </el-col>
         <el-col :span='12'>
-              <label class='db'>{{$t('bbook_exec_type')}}:</label>
+              <label class='db'>{{$t('BBook_exec_type')}}:</label>
               <el-select v-model='bbook_exec_type' class='w100'>
                  <el-option
                     v-for="item in bbook_exec_type_options"
                     :key="item"
-                    :label="item"
+                    :label="$t(item)"
                     :value="item">
                   </el-option>   
               </el-select>
@@ -139,17 +139,17 @@
        <el-row :gutter='10'>
        <el-col :span='24'>
          <label> 
-             {{$t('limit_order_types')}}:
+             {{$t('Limit_order_types')}}:
           </label>
        </el-col>
           
           <el-col :span='8' v-for='item in limit_order_types_options'>
-              <el-checkbox v-model="item.isChecked">{{item.label}}</el-checkbox>
+              <el-checkbox v-model="item.isChecked">{{$t(item.label)}}</el-checkbox>
               <el-input v-model='item.value'></el-input>
           </el-col>
       </el-row>
       <el-row>
-        <el-col>{{$t('lps')}}:</el-col>
+        <el-col>{{$t('LPS')}}:</el-col>
         <el-col :span='3' v-for='item in lps_options'>
           <el-checkbox v-model="item.value">{{item.label}}</el-checkbox>
         </el-col>
@@ -157,19 +157,19 @@
       <el-row>
           <el-col :span='24'>
               <label>  
-              {{$t('slippages')}}:
+              {{$t('Slippages')}}:
               <i class='icon icon_add' @click='addNewRow'></i>
               </label>
               <el-row :gutter='15' class='lh35' v-for='(group,index) in slippages_options'>
                     <el-col :span='7' v-for='(item ,key) in group '>
-                      <el-input v-model='item.value' :placeholder=item.desc></el-input>  
+                      <el-input v-model='item.value' :placeholder='$t(item.desc)'></el-input>  
                     </el-col>
                     <i class='icon icon_delete' @click = 'deleteRow(index)'></i>
               </el-row>
           </el-col>
       </el-row> 
       <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='submit'>Confirm</el-button>
+              <el-button type="primary" @click='submit'>{{$t('Confirm')}}</el-button>
       </el-col> 
     </div>
 </template>

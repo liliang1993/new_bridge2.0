@@ -139,6 +139,7 @@
   "A Book Percentage": "百分比 ",
   "Better_fill": "滑点让利",
   "Better_fill percentage ": "百分比",
+  "Coverage":"打单比例",
   "Open_partial": "允许开仓部分成交",
   "Open_lp_rejected_retry": "抛单失败重试",
 
@@ -156,8 +157,8 @@
   "Take Profit": "止盈",
   "Tolerate": "可接受最大点子",
   "BBook_exec_type": "BBook执行类型",
-  "Worst": "最差报价",
-  "Vwap": "加权平均",
+  "worst": "最差报价",
+  "vwap": "加权平均",
   "Slippages": "滑点范围",
   ">= size": "手数大于",
   "Min Slippages": "滑点下限",

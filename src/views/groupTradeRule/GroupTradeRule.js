@@ -58,7 +58,7 @@ export default {
           },
           sortable: true,
           align: 'center',
-          scopedSlot: 'limit_order_types_normal'
+          scopedSlot: 'limit_order_types'
         }
       }, {
         attr: {
@@ -202,8 +202,20 @@ export default {
   },
   methods: {
     editTradeRule(row) {
+      if(this.$store.state.traderule.edit_trade_rule == true){
+        this.$message.warning('please close current edit dialog!');
+        return;
+      }
+      var dict = {};
+      dict.common = {
+        source: row.source,
+        group: row.group,
+        std_symbol: row.std_symbol,
+        mt4_symbol: row.mt4_symbol
+      };
+      dict.attributes = row.attributes;
       this.$store.dispatch('show_edit_trade_rule');
-      // row.attributes
+      this.$store.dispatch('update_edit_rules_dict',dict); 
     },
     addTradeRule(){
       this.$store.dispatch('show_trade_rule');
@@ -211,21 +223,6 @@ export default {
     onInvertSelect() {
       this.toggleSelection(this.tableData);
     },
-
-    onSingleDelete(row) {
-      this.$confirm('你确定删除吗', 'prompt', {
-        type: 'warning'
-      }).then(() => {
-        var params = {
-          func_name: 'router_api.trade_del_rule',
-          args: [row.source, row.group, row.mt4_symbol]
-        };
-        CommonApi.postFormAjax.call(this, params, data => {
-          this.$store.dispatch('update_traderule_table', true);
-        })
-      })
-    },
-
     group_rules_edited() {
 
     },
@@ -263,18 +260,34 @@ export default {
             mt4_symbol: rule.mt4_symbol
           });
         }
-        var params = {
-          func_name: 'router_api.trade_del_rules',
-          args: [selected_rules]
-        };
-        CommonApi.postFormAjax.call(this, params, data => {
-          this.$store.dispatch('update_traderule_table', true);
-        })
+         this.$$api_common_ajax({
+            data: {
+                func_name: 'router_api.trade_del_rules',
+                args: [selected_rules],
+                kwargs: {}
+            },
+            fn: data => {
+                 this.load_data();
+            }
+        });
       })
     },
     onEditRules() {
       this.editFlag = true;
       console.log('this.columns', this.columns);
+    },
+    delete_symbol(row,index){
+         this.$$api_common_ajax({
+            data: {
+                func_name: 'router_api.trade_del_rule',
+                args: [row.source, row.group, row.mt4_symbol],
+                kwargs: {}
+            },
+            fn: data => {
+                 this.load_data();
+                 row.visible = false;
+            }
+        });
     },
     onSubmitChanges() {
       this.editFlag = false;
@@ -282,18 +295,28 @@ export default {
     },
     load_data() {
       this.tableData = [];
-      for (var k in this.$store.state.traderule.trade_rules) {
-        var rule = this.$store.state.traderule.trade_rules[k];
-        var source = this.$route.query.source;
-        var group = this.$route.query.group;
-        if (rule.source === source && rule.group === group) {
-          // var new_rule = this.deepCopy(rule);
-          console.log('new_rule', rule);
-          rule.source = source;
-          rule.group = group;
-          this.tableData.push(rule);
-        }
-      }
+      this.$$api_common_ajax({
+                data: {
+                    func_name: 'router_api.trade_get_all_rules',
+                    args: [],
+                    kwargs: {}
+                },
+                fn: data => {
+                     for (var k in data) {
+                        var rule =data[k];
+                        var source = this.$route.query.source;
+                        var group = this.$route.query.group;
+                        if (rule.source === source && rule.group === group) {
+                          console.log('new_rule', rule);
+                          rule.source = source;
+                          rule.group = group;
+                          this.tableData.push(rule);
+                        }
+                        console.log('tableData',this.tableData);
+                      }
+                }
+            });
+     
     }
   },
   mounted() {
