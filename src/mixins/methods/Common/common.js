@@ -157,32 +157,66 @@ module.exports = {
     'bid': [],
     'ofr': []
   }) {
-    var lp_quotes = {};
-    var bid_lps = [];
-    var ofr_lps = [];
-    var bid_prices = [];
-    var ofr_prices = [];
-    for (var item of quotes.bid) {
-      bid_lps.push(item.lp);
-      bid_prices.push(item.price);
-    };
-    for (var item of quotes.ofr) {
-      ofr_lps.push(item.lp);
-      ofr_prices.push(item.price);
-    };
-    var lps = [].concat(bid_lps).concat(ofr_lps);
+        var bid_lps, bid_prices, i, j, k, l, len, len1, len2, lp, lp_quote, lp_quotes, lps, ofr_lps, ofr_prices, ref, ref1, side, side_quote;
+    lp_quotes = new Object;
+    bid_lps = (function() {
+      var j, len, ref, results;
+      ref = quotes.bid;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        i = ref[j];
+        results.push(i.lp);
+      }
+      return results;
+    })();
+    ofr_lps = (function() {
+      var j, len, ref, results;
+      ref = quotes.ofr;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        i = ref[j];
+        results.push(i.lp);
+      }
+      return results;
+    })();
+    bid_prices = (function() {
+      var j, len, ref, results;
+      ref = quotes.bid;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        i = ref[j];
+        results.push(i.price);
+      }
+      return results;
+    })();
+    ofr_prices = (function() {
+      var j, len, ref, results;
+      ref = quotes.ofr;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        i = ref[j];
+        results.push(i.price);
+      }
+      return results;
+    })();
+    lps = [].concat(bid_lps).concat(ofr_lps);
     lps.sort();
-    for (var lp of lps) {
-      var lp_quote = {};
+    for (j = 0, len = lps.length; j < len; j++) {
+      lp = lps[j];
+      lp_quote = new Object;
       lp_quotes[lp] = lp_quote;
-    };
-    for (var side of['bid', 'ofr']) {
-      for (var side_quote of quotes[side]) {
+    }
+    ref = ['bid', 'ofr'];
+    for (k = 0, len1 = ref.length; k < len1; k++) {
+      side = ref[k];
+      ref1 = quotes[side];
+      for (l = 0, len2 = ref1.length; l < len2; l++) {
+        side_quote = ref1[l];
         lp_quotes[side_quote.lp][side + "_price"] = side_quote.price;
         lp_quotes[side_quote.lp][side + "_size"] = side_quote.size;
         lp_quotes[side_quote.lp][side + "_time"] = side_quote.time;
       }
-    };
+    }
     return lp_quotes;
   },
   getKwargs() {

@@ -8,6 +8,7 @@ import user from './userinfo/';
 import global from './global/';
 import traderule from './traderule/';
 import currentorder from './currentorder/';
+import clienttradelog from './clienttradelog/';
 import profitlog from './profitlog/';
 import mt4position from './mt4position/';
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     user,
     traderule,
     currentorder,
+    clienttradelog,
     profitlog,
     mt4position
   }

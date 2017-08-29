@@ -357,8 +357,41 @@ export default {
       this.tableData = [];
       this.mt4_panel_show = true;
       for (mt4_symbol in this.quote_rules[source]) {
-        this.tableData.push(this.quote_rules[source][mt4_symbol]);
+        this.tableData.push(this.quote_rules[source][mt4_symbol]);    
       }
+      for (var item of this.tableData) {
+            item.visible = false;
+            switch (item.type) {
+              case 'delta':
+                item.hoverContent = [{
+                  label: 'bid_delta',
+                  value: item.attributes.bid_delta || 'null'
+                }, {
+                  label: 'ofr_delta',
+                  value: item.attributes.ofr_delta || 'null'
+                }, {
+                  label: 'random',
+                  value: item.attributes.random || 'null'
+                }];
+                break;
+              case 'asian':
+                item.hoverContent = [{
+                  label: 'asian_delta',
+                  value: item.attributes.asian_delta || 'null'
+                }, {
+                  label: 'random',
+                  value: item.attributes.random || 'null'
+                }];
+              case 'spread':
+                item.hoverContent = [{
+                  label: 'spread',
+                  value: item.attributes.spread || 'null'
+                }, {
+                  label: 'random',
+                  value: item.attributes.random || 'null'
+                }];
+            }
+          };
       this.set_description("Loaded source: " + source);
       console.log('source_rules', this.quote_rules[source]);
     },

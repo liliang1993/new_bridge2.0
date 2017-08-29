@@ -1,8 +1,8 @@
 <template>
-    <section class="chart">
+    <section class="std_symbol_position_container">
         <div class='auto_refresh_panel'>
             <b>{{$t("Current")}}:</b>
-            <span class='current_symbol'>{{current_std_symbol}}</span>
+            <span class='current_symbol'>{{current_std_symbol||$t("NotSelected")}}</span>
             <b>{{$t('NEXT REFRESH')}}:</b>
              <span class='remain_sec' >{{remain_sec}}</span>
             <b>{{$t('STATUS')}}:</b>
@@ -65,7 +65,7 @@
                     </div>
             </div>  
        </div>
-        <el-dialog title="Edit LP symbol" :visible.sync="editLpSymbolDialogTableVisible" top='30%'>
+        <el-dialog class='edit_lpSymbol' title="Edit LP symbol" :visible.sync="editLpSymbolDialogTableVisible" top='30%'>
             <el-row :gutter='20'>
                 <el-col :span='12'>
                     <p>STD Symbol:</p>
@@ -114,7 +114,7 @@
                     <el-input v-model='dialog.weight'></el-input>  
                 </el-col> 
                 <el-col :span='24' class='confirm_btn'>
-                    <el-button type="primary" >Confirm</el-button>
+                    <el-button type="primary" @click='edit_lpSymbol_submit' >Confirm</el-button>
                 </el-col>  
             </el-row>
         </el-table>
@@ -126,6 +126,6 @@
     import StdSymbolPositionJs from './StdSymbolPosition.js';
     export default StdSymbolPositionJs;
 </script>
-<style scoped lang='less'>
+<style lang='less'>
   @import url(./StdSymbolPosition.less);
 </style>

@@ -31,11 +31,26 @@
              <i class='icon icon_back' v-if='scope.row.editFlag' @click='exitEdit(scope.row)'></i>
       </template>
       <template slot="rule_type" scope="scope">
-            <a 
-            href = "JavaScript:void(0)"
-            type="text">
-            {{scope.row.type}}
-            </a>
+            <el-popover
+                    class='type_attr_popover'
+                    placement="bottom-start"
+                    v-if='scope.row.hoverContent'
+                    width="160"
+                    trigger='hover'
+                    >
+                    <table class='w100'>
+                      <tbody>
+                          <tr v-for=' obj in scope.row.hoverContent'>
+                              <td v-for ='(item,key) in obj'>
+                                {{$t(item)}}
+                              </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                     <span class='text_link' slot="reference">
+                     {{$t(scope.row.type)}}</span>
+              </el-popover> 
+              <span v-if='!scope.row.hoverContent'>{{$t(scope.row.type)}} </span> 
       </template>
       <template slot="edit_adjust" scope="scope">
           <span v-if='!scope.row.editFlag'>{{scope.row.adjust_step}}</span>
@@ -49,7 +64,7 @@
             <span :style="scope.row.attributes.adjust > 0 ? 'color:rgb(93,205,11);':(scope.row.attributes.adjust < 0 ?'color:red;' : 'color:black;')">{{scope.row.attributes.adjust > 0 ? '+'+scope.row.attributes.adjust : scope.row.attributes.adjust}}</span>
       </template>
       <template slot="std_symbol" scope="scope">
-            <a href = "JavaScript:void(0)" class='lp_quote_link' type="text" @click = 'showLpQuoteTable(scope.row)'>{{scope.row.std_symbol}}</a>
+            <a href = "JavaScript:void(0)" class='text_link' type="text" @click = 'showLpQuoteTable(scope.row)'>{{scope.row.std_symbol}}</a>
       </template>
       <template   slot="bid_change" scope="scope">
             <span class='arrow' :style="scope.row.bid_change== '&darr;' ?'color : red;' : ' color: green;' " v-html ='scope.row.bid_change'></span>

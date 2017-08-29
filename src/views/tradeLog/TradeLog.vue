@@ -95,16 +95,6 @@
                 @size-change='onChangePageSize'>
             </el-pagination>
       </el-col>
-<!--       
-      <drag-dialog 
-        v-for = "(lp_order,index) in lp_orders"
-        class='drag_dialog'
-        :key="lp_order"
-        :title="lp_order.title"
-        @close = "onCloseLpOrder(index)"
-      >
-      <lp-order :LPOrder ='lp_order.config'></lp-order>
-    </drag-dialog> -->
   <el-dialog
       title="TradeLog"
       class='trade_log_dialog'

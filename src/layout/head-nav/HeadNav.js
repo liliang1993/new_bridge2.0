@@ -6,52 +6,57 @@ export default {
     name: 'head-nav',
     data() {
         return {
-            changePassDialog: {
-                show: false,
-                isModal: true,
-                default_value: {},
-                labelWidth: "180px",
-                rules: {
-                    ori_password: [{
-                        required: true,
-                        message: '旧密码不能为空！',
-                        trigger: 'blur'
-                    }],
-                    new_password: [{
-                        required: true,
-                        message: '新密码不能为空！',
-                        trigger: 'blur'
-                    }, {
-                        trigger: 'blur',
-                        validator: (rule, value, callback) => {
-                            if (value === '') {
-                                callback(new Error('请再次输入密码'));
-                            } else {
-                                if ('' !== this.changePassDialog.default_value.new_password) {
-                                    this.$refs["changePass-form"].$refs["form-data"].validateField('confirm_password');
-                                }
-                                callback();
-                            }
-                        }
-                    }],
-                    confirm_password: [{
-                        required: true,
-                        message: '确认密码不能为空！',
-                        trigger: 'blur'
-                    }, {
-                        trigger: 'blur',
-                        validator: (rule, value, callback) => {
-                            if (value === '') {
-                                callback(new Error('请再次输入密码'));
-                            } else if (value !== this.changePassDialog.default_value.new_password) {
-                                callback(new Error('两次输入密码不一致!'));
-                            } else {
-                                callback();
-                            }
-                        }
-                    }],
-                }
+            dialogTableVisible:false,
+            changePassDialog:{
+                // origin,
+                // new
             },
+            // changePassDialog: {
+            //     show: false,
+            //     isModal: true,
+            //     default_value: {},
+            //     labelWidth: "180px",
+            //     rules: {
+            //         ori_password: [{
+            //             required: true,
+            //             message: '旧密码不能为空！',
+            //             trigger: 'blur'
+            //         }],
+            //         new_password: [{
+            //             required: true,
+            //             message: '新密码不能为空！',
+            //             trigger: 'blur'
+            //         }, {
+            //             trigger: 'blur',
+            //             validator: (rule, value, callback) => {
+            //                 if (value === '') {
+            //                     callback(new Error('请再次输入密码'));
+            //                 } else {
+            //                     if ('' !== this.changePassDialog.default_value.new_password) {
+            //                         this.$refs["changePass-form"].$refs["form-data"].validateField('confirm_password');
+            //                     }
+            //                     callback();
+            //                 }
+            //             }
+            //         }],
+            //         confirm_password: [{
+            //             required: true,
+            //             message: '确认密码不能为空！',
+            //             trigger: 'blur'
+            //         }, {
+            //             trigger: 'blur',
+            //             validator: (rule, value, callback) => {
+            //                 if (value === '') {
+            //                     callback(new Error('请再次输入密码'));
+            //                 } else if (value !== this.changePassDialog.default_value.new_password) {
+            //                     callback(new Error('两次输入密码不一致!'));
+            //                 } else {
+            //                     callback();
+            //                 }
+            //             }
+            //         }],
+            //     }
+            // },
             locale: this.$store.state.global.locale,
             langs: LANGS
         }
@@ -92,24 +97,30 @@ export default {
          * @param  {object} userinfo 当前修改密码的表单信息
          */
         updUserPass(userinfo) {
-            this.$refs[userinfo].validate((valid) => {
-                if (valid) {
-                    this.$$api_common_ajax({
+            this.dialogTableVisible = true;
+            this.$$api_common_ajax({
                         data: {
-                            old_password: this.dialog[userinfo].old_password,
-                            password: this.dialog[userinfo].password,
-                            password_confirm: this.dialog[userinfo].password_confirm
+                            old_password: this.dialog.old_password,
+                            password: this.dialog.password,
+                            password_confirm: this.dialog.password_confirm
                         },
                         fn: data => {
-                            this.dialog.show_pass = false;
+                            this.dialogTableVisible = true;
                             this.$message.success('修改成功！');
                         }
-                    });
-                }
             });
         },
         toggleLeftMenu() {
             this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open');
+        },
+        handleCommand(command){
+                console.log('command',command);
+                switch(command){
+                    case 'logout': this.logout(); 
+                    break;
+                    case 'updUserPass': this.updUserPass(); 
+                    break;
+                }
         },
         /**
          * 更改系统默认语言
@@ -117,7 +128,7 @@ export default {
          * @param  {[type]} command [description]
          * @return {[type]}         [description]
          */
-        handleCommand(command) {
+        languageCommand(command) {
             this.$store.dispatch('update_global_locale', command).then(() => {
                 this.locale = command;
                 Vue.config.lang = command;

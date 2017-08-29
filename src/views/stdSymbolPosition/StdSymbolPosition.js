@@ -5,7 +5,7 @@ module.exports = {
       std_symbols: {},
       load_text_color: 'black',
       load_status: 'loading...',
-      current_std_symbol: this.$t("NotSelected"),
+      current_std_symbol: '',
       current_lp_symbols: {},
       show_lp_symbols: false,
       total_qty: 0,
@@ -27,55 +27,13 @@ module.exports = {
         remain_mil_sec = this.next_fresh_time - (new Date()).getTime();
         if (remain_mil_sec <= 0) {
           this.remain_sec = 0
-          console.log('remain_sec', this.remain_sec);
           this.request_symbol_positions();
         } else {
           this.remain_sec = parseInt(remain_mil_sec * 0.001);
-          console.log('remain_sec', this.remain_sec);
         }
       }
     },
     load_std_symbols() {
-      this.std_symbols = {};
-      // var params = {
-      //   func_name: "router_api.lp_get_symbols",
-      // }
-      // CommonApi.postFormAjax.call(this, params, data => {
-      //   var fn, i, j, len, len1, lp, ref, ref1, s, std_symbol;
-      //   var lp_symbols = data;
-      //   console.log('lp_symbols', lp_symbols);
-      //   fn = s => {
-      //     var $std_symbol_li;
-      //     if (s.std_symbol in this.std_symbols) {
-      //       this.std_symbols[s.std_symbol].push(s);
-      //     } else {
-      //       this.$set(this.std_symbols, s.std_symbol, [s]);
-      //     }
-      //   };
-      //   for (i = 0, len = lp_symbols.length; i < len; i++) {
-      //     s = lp_symbols[i];
-      //     fn(s);
-      //   }
-      //   console.log('std_symbols', this.std_symbols);
-      //   ref = this.std_symbols;
-      //   for (std_symbol in ref) {
-      //     lp_symbols = ref[std_symbol];
-      //     ref1 = ["bbook", "unexpect_bbook"];
-      //     for (j = 0, len1 = ref1.length; j < len1; j++) {
-      //       lp = ref1[j];
-      //       lp_symbols.push(new Object({
-      //         "lp": lp,
-      //         "std_symbol": std_symbol,
-      //         "weight": 0,
-      //         "lp_symbol": "-",
-      //         "trade_enable": true,
-      //         "quantity": 0
-      //       }));
-      //     }
-      //   }
-      //   this.load_status = 'Load symbols success';
-      //   this.load_text_color = 'green';
-      // })
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.lp_get_symbols',
@@ -115,8 +73,12 @@ module.exports = {
               }));
             }
           }
+          console.log('this.std_symbols',this.std_symbols);
           this.load_status = 'Load symbols success';
           this.load_text_color = 'green';
+          if (this.current_std_symbol) {
+            this.select_std_symbol_chart(this.current_std_symbol);
+          }
         }
       });
     },
@@ -129,6 +91,7 @@ module.exports = {
       max_weight = Math.max.apply(Math, (function() {
         var i, len, results;
         results = [];
+        console.log('lp_symbols',this.std_symbols,lp_symbols);
         for (i = 0, len = lp_symbols.length; i < len; i++) {
           s = lp_symbols[i];
           results.push(s.weight);
@@ -154,20 +117,6 @@ module.exports = {
     request_symbol_positions() {
       this.load_status = "Reqesting positions ...";
       this.load_text_color = 'black';
-      // params = {
-      //   "func_name": "router_api.get_symbol_positions",
-      //   "kwargs": {
-      //     "std_symbol": this.current_std_symbol
-      //   }
-      // }
-      // CommonApi.postFormAjax.call(this, params, data => {
-      //   this.render_symbol_positions(data);
-      //   this.load_status = "Reqested position OK!";
-      //   this.load_text_color = 'green';
-      //   this.next_fresh_time = (new Date()).getTime() + 2000;
-      //   this.api_requested = false;
-      // });
-      // this.api_requested = true;
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.get_symbol_positions',
@@ -258,8 +207,34 @@ module.exports = {
       console.log('item', item);
       if (!(item.lp_symbol.lp_symbol == '-')) {
         this.editLpSymbolDialogTableVisible = true;
-        Object.assign(this.dialog, item.lp_symbol);
+        var quote_enable = this.boolean_to_string(item.lp_symbol.quote_enable);
+        var trade_enable = this.boolean_to_string(item.lp_symbol.trade_enable);
+        Object.assign(this.dialog, item.lp_symbol,{quote_enable,trade_enable});
       }
+    },
+    edit_lpSymbol_submit(){
+      var  quote_enable = this.string_to_boolean(this.dialog.quote_enable);
+      var  trade_enable = this.string_to_boolean(this.dialog.trade_enable);
+      var weight = parseInt(this.dialog.weight);
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'router_api.lp_add_symbol',
+          args: [this.dialog.lp, this.dialog.lp_symbol,this.dialog.std_symbol,quote_enable, trade_enable,weight,this.dialog.min_qty,this.dialog.contract_size],
+          kwargs: {}
+        },
+        fn: data => {
+          this.editLpSymbolDialogTableVisible  = false;
+          this.load_std_symbols();
+
+        },
+        errFn: (err) => {
+          this.$message({
+            showClose: true,
+            message: err,
+            type: 'error'
+          });
+        }
+      });
     },
     init() {
       this.load_std_symbols();

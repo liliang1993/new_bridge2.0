@@ -188,9 +188,13 @@ export default {
   mounted() {
     console.log('yijinggaibian');
     // this.lp_order = v;
-    var r = this.lp_order
+    var r = this.lp_order;
+    console.log('lp_order',this.lp_order);
     var reqprice = r.request.price;
-    var lp_quote_dict = this.get_lp_quote_dict(r.lp_quote);
+    var lp_quote_dict = this.get_lp_quote_dict(r.lp_quote || {
+            "bid": [],
+            "ofr": []
+          });
     r.orders.sort(this.order_id_sort);
     var traded_lps = {};
     this.digits = r.request.digits;
@@ -211,15 +215,17 @@ export default {
       };
       this.render_row(order, lp, ord_price, ord_qty, ord_status, lp_slippage, client_spread);
     };
+    console.log('lp_quote',lp_quote_dict);
     for (var lp_name in lp_quote_dict) {
+        var quote = lp_quote_dict[lp_name];
       if (traded_lps[lp_name] === undefined) {
         var order = {
           lp: lp_name,
           order_id: '-'
-        }
+        };
+        this.render_row(order, quote, '-', '-', '-', '-', '-');
       };
-      var quote = lp_quote_dict[lp_name];
-      this.render_row(order, quote, '-', '-', '-', '-', '-');
+      
     };
   }
 }

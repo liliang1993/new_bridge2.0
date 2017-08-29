@@ -293,9 +293,7 @@ export default {
     },
     auto_refresh_control() {
       this.isActive = !this.isActive;
-      // if(this.isActive = false){}
     },
-    //
     showLpOrdersTable(row) {
       var param = {
         id: row.order_id,
@@ -303,28 +301,9 @@ export default {
       };
       this.$store.dispatch('update_lp_order_dicts', param);
     },
-
-    onDetail(row) {
-      var config = row.trade_log;
-      var id = row.order_id;
-      var title = {
-        text: 'Trade Log' + row.order_id
-      };
-      var trade_log = {
-        title,
-        config,
-        id
-      };
-      if (this.isDialogExist(this.trade_logs, row) == false) {
-        this.trade_logs.push(trade_log);
-      };
-    },
     showTradeLog(row) {
       this.tradeLogDialogVisible = true;
       this.log_dicts = row;
-    },
-    onCloseLpOrder(index) {
-      this.lp_orders.splice(index, 1);
     },
     onChangeCurrentPage(page) {
       this.pagination.current_page = page;

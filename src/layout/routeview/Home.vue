@@ -36,10 +36,21 @@
             :Attributes = '$store.state.traderule.edit_rules_dict.attributes'
             ></traderule-dia>
         </drag-dialog>
-
+        <!-- currentorder lp_order -->
         <drag-dialog  
         v-for='(item,key) in $store.state.currentorder.lp_order_dicts'
         @close = 'close_lp_order_table(key)'
+        :key = key
+        >
+            <lp-order
+            :LPOrder ='item'
+            >  
+            </lp-order>
+        </drag-dialog>
+            <!-- clienttradelog lp_order -->
+            <drag-dialog  
+        v-for='(item,key) in $store.state.clienttradelog.lp_order_dicts'
+        @close = 'close_tlog_lp_order_table(key)'
         :key = key
         >
             <lp-order
@@ -123,6 +134,9 @@
             },
             close_lp_order_table(key){
                 this.$store.dispatch('delete_lp_order_dicts',key);
+            },
+            close_tlog_lp_order_table(key){
+                this.$store.dispatch('delete_tlog_lp_order_dicts',key);
             },
             close_mt4_position(){
                 this.$store.dispatch('hide_mt4_positions');

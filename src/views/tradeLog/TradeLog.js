@@ -518,20 +518,27 @@ export default {
                 },
                 show_lp_orders(row) {
                         console.log('row', row);
+                        
+                        
+                        // var id = ord_id + "-" + row.time;
+                        // var config = row;
+                        // var lp_order = {
+                        //         title,
+                        //         config,
+                        //         id
+                        // };
+                        // if (this.isDialogExist(this.lp_orders, lp_order) == false) {
+                        //         this.lp_orders.push(lp_order);
+                        // };
                         var ord_id = this.get_order_id(row);
                         var title = {
                                 text: '#' + ord_id + ' LP Orders Settle:' + row.request.settle
                         };
-                        var id = ord_id + "-" + row.time;
-                        var config = row;
-                        var lp_order = {
-                                title,
-                                config,
-                                id
-                        };
-                        if (this.isDialogExist(this.lp_orders, lp_order) == false) {
-                                this.lp_orders.push(lp_order);
-                        };
+                         var param = {
+                         id: [ord_id,row.time],
+                         value: row.trade_log
+                         };
+                         this.$store.dispatch('update_tlog_lp_order_dicts', param);       
                 },
                 onCloseLpOrder(index) {
                         this.lp_orders.splice(index, 1);

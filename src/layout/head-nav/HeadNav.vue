@@ -1,26 +1,8 @@
 <template>
     <div>
-
         <header class="head-nav" >
             <el-row>
                 <el-col :span="10" class="logo">
-                   <!--  <span class='username'>
-                        <el-dropdown
-                                trigger="click"
-                            >
-                            <span class="el-dropdown-link">
-                                {{this.$store.state.user.userinfo.username}}<i
-                                    class="el-icon-caret-bottom el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item
-                                        command='pass'
-                                        >修改密码</el-dropdown-item>
-                                <el-dropdown-item
-                                        command='logout'>退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </span> -->
                     <div class="logo">
                         <i class='icon icon_logo'></i>
                         <i class='icon icon_align_justify' @click='toggleLeftMenu'></i>  
@@ -28,7 +10,7 @@
                 </el-col>
                 <div  class='nav_menu'>
                          <div class="lang">
-                            <el-dropdown @command="handleCommand" trigger="click">
+                            <el-dropdown @command="languageCommand" trigger="click">
                                 <span class="el-dropdown-link">{{$t('locales.' + locale)}}
                                 <i class='icon icon_drop_down'></i>
                                 </span>
@@ -40,6 +22,7 @@
                         <em class='line'>|</em>
                         <div class="role">
                             <el-dropdown
+                                @command="handleCommand"
                                 trigger="click"
                             >
                                 <span class="el-dropdown-link">
@@ -48,7 +31,7 @@
                                 </span>
                                 <el-dropdown-menu class='role_drop_down' slot="dropdown">
                                     <el-dropdown-item
-                                            command='pass'
+                                            command='updUserPass'
                                             >修改密码</el-dropdown-item>
                                     <el-dropdown-item
                                             command='logout'>退出</el-dropdown-item>
@@ -76,12 +59,31 @@
                                         {{$t(item.children[0].name)}}
                                     </el-menu-item>
                             </template>
-                        </el-menu>
-                       
+                        </el-menu>     
                 </div>
             </el-row>
-        </header>
-        
+        </header> 
+          <el-dialog title='$store.state.user.userinfo.username' :visible.sync="dialogTableVisible" top='40%'  >
+        <div class="form_item">
+            <p></p>
+
+        </div>
+        <div class="form_item">
+            <p>Origin Password:</p>
+            <el-input></el-input>        
+        </div>
+        <div class="form_item">
+            <p>New Password:</p>
+            <el-input></el-input>        
+        </div>
+        <div class="form_item">
+            <p>Confirm Password</p>
+            <el-input></el-input>        
+        </div>
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
+          </el-col>    
+      </el-dialog>
     </div>
 </template>
 
