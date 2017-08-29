@@ -1,5 +1,5 @@
 <template>
-  <div class='list'>
+  <div class='trade_rule'>
     <el-row>
         <el-col :span='24' class='actions-top'>
             <el-button type='primary' @click = 'open_create_new_group_dialog'>{{$t('Add Group')}}</el-button>
@@ -28,46 +28,49 @@
                   >{{scope.row.remark}}</a>
           </template>
     </bel-table> 
-    <!-- <drag-dialog
-                v-if = 'create_new_group_dialog.show'
-                :title="create_new_group_dialog.title"
-                :isModal = 'create_new_group_dialog.isModal'
-                @close="onCloseDialog('create_new_group_dialog')"
-      >
-                <form-data1
-                style = 'padding: 10px;'
-                ref='form-data'
-                :FieldList='fieldlist'
-                :DefaultValue='create_new_group_dialog.default_value'
-                @onSubmit= "create_new_group_submit"
-                >  
-                </form-data1>
-      </drag-dialog>  -->
-      <!-- <traderule-dialog></traderule-dialog>  -->
-     <!-- <drag-dialog
-                v-if = 'edit.show'
-                :title="create_new_group_dialog.title"
-                :isModal = 'create_new_group_dialog.isModal'
-                @close="onCloseDialog('create_new_group_dialog')"
-      >
-                <form-data1
-                style = 'padding: 10px;'
-                ref='form-data'
-                :FieldList='fieldlist'
-                :DefaultValue='create_new_group_dialog.default_value'
-                @onSubmit= "create_new_group_submit"
-                >  
-                </form-data1>
-      </drag-dialog>  -->
+
       <el-dialog :visible.sync="dialogTableVisible" top='40%' class='copy_group_dialog'>   
-          <h2>{{'Copy '+copy_group_dialog.source+'-'+copy_group_dialog.group+' to new group'}}</h2> 
-          <form-data
+          <h2>{{'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'}}</h2> 
+          <!-- <form-data
                 ref='form-data'
                 :FieldList='copy_to_new_group.fields'
                 :DefaultValue='copy_to_new_group.default_value'
                 @onSubmit= "copyGroupSumbit"
                 >  
-          </form-data>
+          </form-data> -->
+          <div class="form_item">
+              <p>{{$t("Source")}}:</p>
+               <el-select v-model='copyNewGroup_dict.source' class='w100'>
+                 <el-option
+                    v-for="item in $store.state.global.sources"
+                    :key="item"
+                    :label="$t(item)"
+                    :value="item">
+                  </el-option>   
+              </el-select>
+          </div>
+           <div class="form_item">
+              <p>{{$t("NewGroup")}}:</p>
+               <el-input v-model='copyNewGroup_dict.new_group'></el-input> 
+          </div>
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='copyGroupSumbit'>{{$t('Confirm')}}</el-button>
+          </el-col>
+      </el-dialog>
+        <el-dialog :visible.sync="remarkDialogTableVisible" top='40%' class='copy_group_dialog'>   
+          <h2>{{'Edit '+remarkDialog_dict.group+' Remark'}}</h2> 
+          <div class="form_item">
+              <p>{{$t("Remark")}}:</p>
+               <el-input
+                v-model="remarkDialog_dict.remark"
+                type='textarea'
+                autosize
+               >
+               </el-input> 
+          </div>
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='remarkSumbit'>{{$t('Confirm')}}</el-button>
+          </el-col>
       </el-dialog>
   </div>
 </template>

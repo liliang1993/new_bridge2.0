@@ -1,7 +1,7 @@
-.actions-top {
+.trade_rule .actions-top {
   height: 70px;
 }
-.actions-top .el-button {
+.trade_rule .actions-top .el-button {
   border-radius: 20px;
   width: 120px;
   height: 40px;
@@ -10,8 +10,14 @@
   font-size: 14px;
   margin: 15px 0;
 }
-h2 {
+.trade_rule h2 {
   margin-top: 5px;
   margin-bottom: 20px;
   font-size: 14px;
+}
+.trade_rule .form_item {
+  margin-bottom: 20px;
+}
+.trade_rule .form_item p {
+  margin-bottom: 10px;
 }

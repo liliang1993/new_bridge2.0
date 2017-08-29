@@ -19,7 +19,7 @@
 
         <drag-dialog class='add_traderule_dialog' 
         v-if='$store.state.traderule.add_trade_rule'
-        :title = "{text:$t('edit Trade Rule')}"
+        :title = "{text:$t('Add Trade Rule')}"
         @close = 'close_add_trade_rule'
         >
             <traderule-dia
@@ -28,7 +28,7 @@
         </drag-dialog>
         <drag-dialog class='add_traderule_dialog' 
         v-if='$store.state.traderule.edit_trade_rule'
-        
+        :title = "{text:$t('Edit Trade Rule')}"
         @close = 'close_edit_trade_rule'
         >
             <traderule-dia

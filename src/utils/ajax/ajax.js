@@ -33,7 +33,9 @@ export default function({
 	var options = {
 		method: type,
 		url: path,
-		headers: headers && typeof headers === 'object' ? headers : {}
+		headers: headers && typeof headers === 'object' ? headers : {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
 			// cancelToken: this.$store.state.global.ajax_source.token
 	};
 

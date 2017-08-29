@@ -110,56 +110,60 @@ export default {
       }
     }
   },
-  watch:{
+  watch: {
     Attributes: {
       deep: true,
-      handler(v){
+      handler(v) {
         if (v) {
-          console.log('v',v);
+          console.log('v', v);
         }
       }
     },
   },
   methods: {
-    initObj(){
+    initObj() {
       this.limit_order_types_init();
-      this.lps_init();
+      // this.lps_init();
       this.slippages_init();
     },
-    limit_order_types_init(){
-      if(this.Attributes.limit_order_types !== undefined){
-           for(var item of this.Attributes.limit_order_types){
-                  var index = item.type;
-                  var value = item.tol;
-                  this.limit_order_types_options[index].isChecked = true;
-                  this.limit_order_types_options[index].value =value;
-            };
+    limit_order_types_init() {
+      if (this.Attributes.limit_order_types !== undefined) {
+        for (var item of this.Attributes.limit_order_types) {
+          var index = item.type;
+          var value = item.tol;
+          this.limit_order_types_options[index].isChecked = true;
+          this.limit_order_types_options[index].value = value;
+        };
       }
     },
-    lps_init(){
-        for(var item of this.lps_options){
-            for(var lp of this.Attributes.lps){
-                if(lp === item.label){
-                    item.value =true;
-                    break;
-                }
+    lps_init() {
+      if (this.Attributes.lps !== undefined) {
+        for (var item of this.lps_options) {
+          for (var lp of this.Attributes.lps) {
+            if (lp === item.label) {
+              item.value = true;
+              break;
             }
-        }
-    },
-     slippages_init(){
-          var desc_dict =['>= size','Min Slippages','Max Slippages'];
-          for(var group of this.Attributes.slippages){
-              var row = [];
-              for(var i =0; i < group.length;i++){
-                    var item = group[i];
-                    row.push({
-                      value: item,
-                      desc:desc_dict[i]
-                    })
-              }
-              this.slippages_options.push(row);
           }
-     },
+        }
+      }
+    },
+    slippages_init() {
+      if (this.Attributes.lps !== undefined) {
+        var desc_dict = ['>= size', 'Min Slippages', 'Max Slippages'];
+        for (var group of this.Attributes.slippages) {
+          var row = [];
+          for (var i = 0; i < group.length; i++) {
+            var item = group[i];
+            row.push({
+              value: item,
+              desc: desc_dict[i]
+            })
+          }
+          this.slippages_options.push(row);
+        }
+      }
+    },
     addNewRow() {
       this.slippages_options.push([{
         value: '',
@@ -182,7 +186,7 @@ export default {
       result.coverage = parseInt(this.coverage);
       result.better_fill = parseInt(this.better_fill);
       result.open_partial = this.string_to_boolean(this.open_partial);
-      result.open_lp_rejected_retry =  this.string_to_boolean(this.open_lp_rejected_retry);
+      result.open_lp_rejected_retry = this.string_to_boolean(this.open_lp_rejected_retry);
       result.open_threshold = parseInt(this.open_threshold);
       result.open_probe = parseInt(this.open_probe);
       result.close_threshold = parseInt(this.close_threshold);
@@ -253,15 +257,15 @@ export default {
     },
     submit() {
       var attrs = this.get_trade_rule_attrs();
-      console.log('attrs', attrs,this.check_trade_rule_attrs(attrs) );
+      console.log('attrs', attrs, this.check_trade_rule_attrs(attrs));
       if (this.check_trade_rule_attrs(attrs) == true) {
-        var args =[this.source, this.group, this.mt4_symbol, this.std_symbol, attrs];
-        this.$emit('submit',args);
+        var args = [this.source, this.group, this.mt4_symbol, this.std_symbol, attrs];
+        this.$emit('submit', args);
       }
     }
   },
   mounted() {
     this.initObj();
-    console.log('123',this.limit_order_types_set);
+    console.log('123', this.limit_order_types_set);
   }
 }
