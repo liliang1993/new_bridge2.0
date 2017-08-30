@@ -99,9 +99,20 @@ export default {
             this.copyNewGroup_dict.source = row.source;
             this.copyNewGroup_dict.group = row.group;
         },
+        is_exist_group(submitData) {
+            for (var row of this.tableData) {
+                if (submitData.source == row.source && submitData.new_group == row.group) {
+                    return true;
+                }
+            }
+            return false;
+        },
         copyGroupSumbit() {
             var args = [];
             console.log('trade_rule', this.trade_rules);
+            if (this.is_exist_group(this.copyNewGroup_dict)) {
+                return this.$message.error('Group invalid');
+            }
             for (var item of this.trade_rules) {
                 if (item.source == this.copyNewGroup_dict.source && item.group == this.copyNewGroup_dict.group) {
                     item.group = this.copyNewGroup_dict.new_group;
@@ -194,34 +205,7 @@ export default {
         render_remarks() {
             var i, j, len, len1, remark_dict, remark, row;
             remark_dict = new Object;
-            // this.$$api_common_ajax(this, params, remarks => {
-            //     for (i = 0, len = remarks.length; i < len; i++) {
-            //         remark = remarks[i];
-            //         remark_dict[remark.group] = remark.remark;
-            //     };
-            //     console.log('remark_dict', remark_dict);
-            //     for (j = 0, len1 = this.tableData.length; j < len1; j++) {
-            //         row = this.tableData[j];
-            //         if (row.group in remark_dict) {
-            //             remark = remark_dict[row.group];
-            //             this.$set(row, 'remark', remark);
-            //         } else {
-            //             Object.assign(row, {
-            //                 remark: '----------------'
-            //             });
-            //         }
-            //     };
-            //     console.log('remark', this.tableData);
-            // }, {
-            //     errFn(err) {
-            //         for (j = 0, len1 = this.tableData.length; j < len1; j++) {
-            //             row = this.tableData[j];
-            //             Object.assign(row, {
-            //                 remark: 'Load remark error'
-            //             });
-            //         }
-            //     }
-            // });
+
             this.$$api_common_ajax({
                 data: {
                     func_name: 'trade_rule_remark.get_all_remarks',
@@ -241,7 +225,7 @@ export default {
                             this.$set(row, 'remark', remark);
                         } else {
                             Object.assign(row, {
-                                remark: '-------------------'
+                                remark: ''
                             });
                         }
                     };

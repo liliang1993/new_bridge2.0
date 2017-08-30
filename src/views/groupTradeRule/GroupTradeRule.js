@@ -210,6 +210,9 @@ export default {
         })
       }
       return result;
+    },
+    tradeRules_update_flag() {
+      return this.$store.state.traderule.update_trade_rules_flag;
     }
   },
   methods: {
@@ -218,6 +221,7 @@ export default {
         this.$message.warning('please close current edit dialog!');
         return;
       }
+      console.log('row', row);
       var dict = {};
       dict.common = {
         source: row.source,
@@ -561,7 +565,8 @@ export default {
               rule.source = source;
               rule.group = group;
               rule.attributes.open_partial = this.boolean_to_string(rule.attributes.open_partial);
-              rule.attributes.lp_rejected_retry = this.boolean_to_string(rule.attributes.lp_rejected_retry);
+              rule.attributes.open_lp_rejected_retry = this.boolean_to_string(rule.attributes.open_lp_rejected_retry);
+              console.log('rule1234', rule);
               this.tableData.push(rule);
             }
           }
@@ -576,22 +581,27 @@ export default {
   mounted() {
     this.load_data();
   },
+  beforeRouteLeave(to, from, next) {
+    if (this.editFlag == true) {
+      next(false);
+      this.$confirm('尚未提交当前编辑的规则, 是否继续?', '提示', {
+        confirmButtonText: '继续前往',
+        cancelButtonText: '留下来',
+        type: 'warning'
+      }).then(() => {
+        next();
+      }).catch(() => {});
+    }
+  },
   props: {
-    // Config: {
-    //   type: Object,
-    //   required: true
-    // }
+
   },
   watch: {
-    Config(v) {
-      // if (v) {
-      //   this.config = v;
-      // }
-    },
-    get_trade_rules(v) {
-      console.log('config', v);
-      if (v) {
+    tradeRules_update_flag(v) {
+      console.log('tradeRules_update_flag', v);
+      if (v == true) {
         this.load_data();
+        this.$store.dispatch('update_trade_rules_table', false);
       }
     }
   }

@@ -4,6 +4,8 @@ export default {
     return {
       lp_symbols: {},
       orders_value: "",
+      search_orders_loading: false,
+      submit_loading: false,
       listData: [],
       editDialogTableVisible: false,
       lpPositionData: [],
@@ -204,6 +206,7 @@ export default {
         this.$message.warning('input value should be number');
         return;
       };
+      this.search_orders_loading = true;
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.get_positions',
@@ -211,8 +214,8 @@ export default {
           kwargs: {}
         },
         fn: data => {
+          this.search_orders_loading = false;
           this.load_order_data(data);
-          console.log('listData', this.listData);
         },
         errFn: (err) => {
           // this.$message.error(err.msg);
@@ -258,6 +261,7 @@ export default {
           }
           datas.push(data);
         };
+        this.submit_loading = true;
         this.$$api_common_ajax({
           data: {
             func_name: 'router_api.delete_positions',
@@ -265,6 +269,7 @@ export default {
             kwargs: {}
           },
           fn: data => {
+            this.submit_loading = false;
             if (data == 'ok') {
               this.$emit('onRestTableDate');
               this.del_reason = '';

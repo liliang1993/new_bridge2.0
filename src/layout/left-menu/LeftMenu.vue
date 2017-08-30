@@ -63,7 +63,7 @@
                                             effect="dark"
                                             placement="right"
                                             :disabled="$store.state.leftmenu.menu_flag"
-                                            :content="item.name">
+                                            :content="$t(item.children[0].name)">
                                            <i :class="'mr10 icon icon_'+item.icon"></i>
                                         </el-tooltip>
                                         <span

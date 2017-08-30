@@ -4,7 +4,7 @@ import {
 
 
 export default {
-  trade_rules: [],
+  update_trade_rules_flag: false,
   add_trade_group: false,
   add_trade_rule: false,
   edit_trade_rule: false,

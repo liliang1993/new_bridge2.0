@@ -132,7 +132,7 @@
                              <el-option value="vwap" label="vwap"></el-option>
                              <el-option value="worst" label="worst"></el-option>           
                 </el-select>
-                <span v-if='!editFlag'>{{scope.row.attributes.bbook_exec_type}}</span>
+                <span v-if='!editFlag'>{{$t(scope.row.attributes.bbook_exec_type)}}</span>
         </template>
         <template slot="lps" scope="scope">
                   <div v-if= 'editFlag'>

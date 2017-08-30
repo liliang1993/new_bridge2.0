@@ -10,6 +10,8 @@ export default {
         },
         result: []
       },
+      search_orders_loading: false,
+      search_login_loading: false,
       logKeyword: '',
       ordKeyword: '',
       search_header: 'MT4 logins',
@@ -165,69 +167,92 @@ export default {
     onclose(type) {
       this[type].show = false;
     },
-    onSearch(type) {
-      // console.log('is_number',this.keyword,this.is_number(this.keyword));
-      var keyword, params;
-      if (type == 'MT4 logins') {
-        keyword = this.logKeyword;
-        console.log('keyword', keyword);
-        params = {
-          func_name: this.apis.mt4logins_func_name,
-          args: [
-            [Number(keyword)]
-          ],
-          kwargs: {}
+    search_login_mt4_orders() {
+      var login, login_str, logins, ref;
+      logins = [];
+      ref = this.logKeyword.split(",");
+      for (login_str of ref) {
+        login = parseInt(login_str);
+        if (!isNaN(login)) {
+          logins.push(login);
         }
-      } else {
-        keyword = this.ordKeyword;
-        params = {
-          func_name: this.apis.mt4orders_func_name,
-          args: [
-            [Number(keyword)]
-          ],
-          kwargs: {}
-        }
-      };
-      if (!this.is_number(keyword)) {
-        this.$message.warning(type + ' should be a number');
+      }
+      if (logins.length === 0) {
+        this.$message.error(this.$t("logins should be a number"));
         return;
-      };
-      this.request_search_result(params);
-    },
-    request_search_result(params) {
+      }
+      this.search_login_loading = true;
       this.$$api_common_ajax({
-        data: params,
+        data: {
+          func_name: 'mt4.get_logins_unclosed_trades',
+          args: [logins],
+          kwargs: {}
+        },
         fn: data => {
-          this.tableData = [];
-          data.forEach(item => {
-            var temp = {};
-            for (var k in item) {
-              temp[k] = {};
-              if (k === 'VOLUME') {
-                temp[k].value = Number(item[k]) / 100;
-              } else {
-                temp[k].value = item[k];
-              }
-              temp[k].class = '';
-            }
-            var spacialAttr = {
-              min_size: {
-                value: '0.01',
-                class: ''
-              },
-              step_size: {
-                value: '0.01',
-                class: ''
-              }
-            }
-            Object.assign(temp, spacialAttr);
-            this.tableData.push(temp);
-          })
+          this.search_login_loading = false;
+          this.on_orders_load(data);
         },
         errFn: err => {
 
         }
       });
+    },
+    search_mt4_orders() {
+      var order, order_str, orders, ref;
+      orders = [];
+      ref = this.ordKeyword.split(",");
+      for (order_str of ref) {
+        order = parseInt(order_str);
+        if (!isNaN(order)) {
+          orders.push(order);
+        }
+      }
+      if (orders.length === 0) {
+        this.$message.error(this.$t("orders should be a serial numbers"));
+        return;
+      }
+      this.search_orders_loading = true;
+      this.$$api_common_ajax({
+        data: {
+          func_name: 'mt4.get_unclosed_trades_by_orders',
+          args: [orders],
+          kwargs: {}
+        },
+        fn: data => {
+          this.search_orders_loading = false;
+          this.on_orders_load(data);
+        },
+        errFn: err => {
+
+        }
+      });
+    },
+    on_orders_load(data) {
+      this.tableData = [];
+      data.forEach(item => {
+        var temp = {};
+        for (var k in item) {
+          temp[k] = {};
+          if (k === 'VOLUME') {
+            temp[k].value = Number(item[k]) / 100;
+          } else {
+            temp[k].value = item[k];
+          }
+          temp[k].class = '';
+        }
+        var spacialAttr = {
+          min_size: {
+            value: '0.01',
+            class: ''
+          },
+          step_size: {
+            value: '0.01',
+            class: ''
+          }
+        }
+        Object.assign(temp, spacialAttr);
+        this.tableData.push(temp);
+      })
     },
     addNewRow() {
       console.log('row', this.newRowData);

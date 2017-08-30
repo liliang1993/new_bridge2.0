@@ -8,7 +8,7 @@
                     <router-view></router-view>
         </div>
         <drag-dialog class='add_traderule_dialog' 
-        :title = "{text:$t('Add Trade Rule')}"
+        :title = "{text:$t('Add Trade Rule Group')}"
         v-if='$store.state.traderule.add_trade_group'
         @close = 'close_add_trade_group'
         >
@@ -24,6 +24,7 @@
         >
             <traderule-dia
             :Common = 'add_tradeRule_common'
+            @submit = 'add_trade_rule_submit'
             ></traderule-dia>
         </drag-dialog>
         <drag-dialog class='add_traderule_dialog' 
@@ -33,6 +34,7 @@
         >
             <traderule-dia
             :Common = '$store.state.traderule.edit_rules_dict.common'
+             @submit = 'edit_trade_rule_submit'
             :Attributes = '$store.state.traderule.edit_rules_dict.attributes'
             ></traderule-dia>
         </drag-dialog>
@@ -82,6 +84,14 @@
             >
                 <mt4-position></mt4-position> 
           </drag-dialog>
+        <!-- ADD QuoteRule -->
+         <drag-dialog 
+            v-if='$store.state.quoterule.show_addQuoteRule_flag'
+            title="Add Quote Rule"
+            @close = "close_add_quoteRule_table()"
+            >
+                <quote-rule></quote-rule> 
+          </drag-dialog>
     </div>
 </template>
 <script>
@@ -120,12 +130,41 @@
                     kwargs: {}
                   },
                   fn: data => {
-                    // this.find_page_user();
                     this.close_add_trade_group();
+                    this.$store.dispatch('update_trade_rules_table', true);
                   },
                   errFn: (err) => {}
                 });
             },
+            add_trade_rule_submit(args){
+                 this.$$api_common_ajax({
+                  data: {
+                    func_name: 'router_api.trade_add_rule',
+                    args,
+                    kwargs: {}
+                  },
+                  fn: data => {
+                    this.close_add_trade_rule();
+                    this.$store.dispatch('update_trade_rules_table', true);
+                  },
+                  errFn: (err) => {}
+                });
+             },
+             edit_trade_rule_submit(args){
+                  this.$$api_common_ajax({
+                  data: {
+                    func_name: 'router_api.trade_add_rule',
+                    args,
+                    kwargs: {}
+                  },
+                  fn: data => {
+                    // this.find_page_user();
+                    this.close_edit_trade_rule();
+                     this.$store.dispatch('update_trade_rules_table', true);
+                  },
+                  errFn: (err) => {}
+                });  
+             },
             close_edit_trade_rule(){
                 this.$store.dispatch('hide_edit_trade_rule');
             },
@@ -146,6 +185,9 @@
             },
             close_deletePosition_Dialog(){
                 this.$store.dispatch('hide_delete_position');
+            },
+            close_add_quoteRule_table(){
+                this.$store.dispatch('hide_add_quoteRule_table');
             }
         },
         created(){

@@ -3,7 +3,7 @@ import * as types from './mutations_types';
 export default {
 	update_edit_rules_dict: ({
 		commit
-	},dict) => {
+	}, dict) => {
 		return new Promise((resolve, reject) => {
 			commit(types.UPDATE_EDIT_RULES_DICT, dict);
 			resolve();
@@ -65,13 +65,12 @@ export default {
 			resolve();
 		});
 	},
-	update_trade_rules: ({
+	update_trade_rules_table: ({
 		commit
-	}, trade_rules) => {
+	}, bool) => {
 		return new Promise((resolve, reject) => {
-			commit(types.UPDATE_TRADE_RULES, trade_rules);
+			commit(types.UPDATE_TRADE_RULES_TABLE, bool);
 			resolve();
 		});
 	},
-
 };

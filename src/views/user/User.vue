@@ -88,7 +88,7 @@
           class='user-table'
           >   
               <template slot="username" scope="scope">
-                <el-input disabled=true  v-model='scope.row.username'>
+                <el-input :disabled='true'  v-model='scope.row.username'>
                 </el-input> 
               </template>
               <template slot="password" scope="scope">

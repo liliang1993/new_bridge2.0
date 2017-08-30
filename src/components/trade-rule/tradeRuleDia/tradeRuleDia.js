@@ -18,8 +18,8 @@ export default {
       close_probe: this.Attributes.close_probe || '',
       close_threshold: this.Attributes.close_threshold || '',
       markup: this.Attributes.markup || '',
-      open_partial: this.boolean_to_string(this.Attributes.open_partial) || 'true',
-      open_lp_rejected_retry: this.boolean_to_string(this.Attributes.open_lp_rejected_retry) || 'true',
+      open_partial: this.Attributes.open_partial || 'true',
+      open_lp_rejected_retry: this.Attributes.open_lp_rejected_retry || 'true',
       bbook_exec_type: this.Attributes.bbook_exec_type || 'worst',
       limit_order_types_options: [{
         label: 'Instant',
@@ -68,7 +68,7 @@ export default {
         if (item.isChecked == true) {
           result.push({
             'type': index,
-            'tol': item.value
+            'tol': item.value == '' ? 0 : parseInt(item.value)
           })
         }
       });
@@ -149,7 +149,7 @@ export default {
       }
     },
     slippages_init() {
-      if (this.Attributes.lps !== undefined) {
+      if (this.Attributes.slippages !== undefined) {
         var desc_dict = ['>= size', 'Min Slippages', 'Max Slippages'];
         for (var group of this.Attributes.slippages) {
           var row = [];
@@ -258,10 +258,12 @@ export default {
     submit() {
       var attrs = this.get_trade_rule_attrs();
       console.log('attrs', attrs, this.check_trade_rule_attrs(attrs));
-      if (this.check_trade_rule_attrs(attrs) == true) {
-        var args = [this.source, this.group, this.mt4_symbol, this.std_symbol, attrs];
-        this.$emit('submit', args);
+      if (this.check_trade_rule_attrs(attrs) == false) {
+        return;
       }
+      var args = [this.source, this.group, this.mt4_symbol, this.std_symbol, attrs];
+      console.log('check_trade_rule_attrs', this.check_trade_rule_attrs(attrs), args);
+      this.$emit('submit', args);
     }
   },
   mounted() {

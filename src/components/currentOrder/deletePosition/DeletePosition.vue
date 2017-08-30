@@ -3,7 +3,7 @@
       <div class='search_bar'>
             <p>{{$t('Bridge Orders')}}:</p>
             <input type="text" :placeholder='$t("Input orders separated by a comma(eg:\",\")")' class='input' v-model='orders_value'>
-            <el-button type='primary' @click ='onSearch'>{{$t('Search')}}</el-button> 
+            <el-button type='primary' :loading='search_orders_loading'  @click ='onSearch'>{{$t('Search')}}</el-button> 
       </div>
       <bel-table
       ref="table"
@@ -27,7 +27,7 @@
     </bel-table>
       <input class= 'del_reason' :placeholder='$t("the reason why you want to delete these orders")' v-model="del_reason">       
       <el-col :span='24' class='confirm_btn'>
-          <el-button  type='primary'  @click='onSubmit' >{{$t('Submit')}}</el-button>
+          <el-button  type='primary' :loading='submit_loading'  @click='onSubmit' >{{$t('Submit')}}</el-button>
       </el-col> 
        <drag-dialog  
         v-if='editDialogTableVisible'
@@ -45,11 +45,23 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='edit_position_submit()'>Confirm</el-button>
+              <el-button type="primary"  @click='edit_position_submit()'>Confirm</el-button>
           </el-col>    
       </drag-dialog>
        <!-- <el-dialog title="Edit Position" :visible.sync="editDialogTableVisible" top='40%'>
-          
+           <bel-table
+          ref="table"    
+          :configs="edit_tableConfig"
+          class='edit-table'
+          >   
+              <template slot="qty" scope="scope">
+                <el-input v-model='scope.row.qty'>
+                </el-input> 
+              </template>
+          </bel-table> 
+          <el-col :span='24' class='confirm_btn'>
+              <el-button type="primary" @click='edit_position_submit()'>Confirm</el-button>
+          </el-col>    
       </el-dialog> -->
   </div>
 </template>

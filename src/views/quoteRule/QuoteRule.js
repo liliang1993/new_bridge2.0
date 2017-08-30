@@ -322,6 +322,10 @@ export default {
     }
   },
   methods: {
+    showAddQuoteRule() {
+      this.$store.dispatch('show_add_quoteRule_table');
+
+    },
     add_quoteRule_submit() {
       var attributes = {
         digits: parseInt(this.addDialog.attributes.digits),

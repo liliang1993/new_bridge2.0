@@ -43,16 +43,19 @@
   height: 100px;
   line-height: 100px;
 }
+.head-nav .nav_menu .lang {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+}
 .head-nav .nav_menu .role {
   height: 100px;
   line-height: 100px;
   float: right;
+  margin-right: 34px;
 }
-.head-nav .nav_menu .role .el-dropdown {
+.head-nav .nav_menu .el-dropdown {
   color: #fff;
-}
-.head-nav .nav_menu .role .el-dropdown .el-dropdown-link {
-  cursor: pointer;
 }
 .head-nav .nav_menu em {
   font-style: normal;
@@ -75,27 +78,12 @@
   color: #fff;
   border-bottom: 4px solid #0287fe;
 }
-/*.userinfo {
-        text-align: right;
-    }
-
-    .username {
-        height: 60px;
-        line-height: 60px;
-        cursor: pointer;
-
-        .el-dropdown {
-            color: #FFF;
-        }
-    }
-    .lang {
-          height: 60px;
-          line-height: 60px;
-          cursor: pointer;
-          color: #fff;
-        }*/
-.icon_drop_down {
-  background-position: -86px -87px;
-  width: 15px;
-  height: 9px;
+.password_dialog .el-dialog {
+  width: 350px;
+}
+.form_wrap .form_item {
+  margin-bottom: 10px;
+}
+.form_wrap .form_item p {
+  margin-bottom: 10px;
 }

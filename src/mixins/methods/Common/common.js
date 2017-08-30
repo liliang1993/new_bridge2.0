@@ -157,7 +157,7 @@ module.exports = {
     'bid': [],
     'ofr': []
   }) {
-        var bid_lps, bid_prices, i, j, k, l, len, len1, len2, lp, lp_quote, lp_quotes, lps, ofr_lps, ofr_prices, ref, ref1, side, side_quote;
+    var bid_lps, bid_prices, i, j, k, l, len, len1, len2, lp, lp_quote, lp_quotes, lps, ofr_lps, ofr_prices, ref, ref1, side, side_quote;
     lp_quotes = new Object;
     bid_lps = (function() {
       var j, len, ref, results;

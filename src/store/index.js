@@ -11,17 +11,19 @@ import currentorder from './currentorder/';
 import clienttradelog from './clienttradelog/';
 import profitlog from './profitlog/';
 import mt4position from './mt4position/';
+import quoterule from './quoterule/';
 
 export default new Vuex.Store({
-  modules: {
-    global,
-    router,
-    leftmenu,
-    user,
-    traderule,
-    currentorder,
-    clienttradelog,
-    profitlog,
-    mt4position
-  }
+    modules: {
+        global,
+        router,
+        leftmenu,
+        user,
+        traderule,
+        currentorder,
+        clienttradelog,
+        profitlog,
+        mt4position,
+        quoterule
+    }
 });

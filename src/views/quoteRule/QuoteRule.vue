@@ -2,7 +2,7 @@
   <div class='quote_rule_container'>
     <el-row>
         <el-col :span='24' class='actions-top'>
-            <el-button type='primary' @click='addDialogTableVisible=true'>{{$t('Add Rule')}}</el-button>
+            <el-button type='primary' @click='showAddQuoteRule'>{{$t('Add Rule')}}</el-button>
         </el-col> 
     </el-row>
     <bel-table
@@ -134,15 +134,15 @@
           <el-row :gutter='40'>
               <el-col :span='8'>
                   <p>{{$t('Source')}}:</p>
-                  <el-input disabled=true v-model='editDialog.source'></el-input>
+                  <el-input :disabled='true' v-model='editDialog.source'></el-input>
               </el-col>
               <el-col :span='8'>
                   <p>{{$t('MT4 Symbol')}}:</p>
-                  <el-input disabled=true v-model='editDialog.mt4_symbol'></el-input>
+                  <el-input :disabled='true' v-model='editDialog.mt4_symbol'></el-input>
               </el-col>
               <el-col :span='8'>
                   <p>{{$t('STD Symbol')}}:</p>
-                  <el-input disabled=true v-model='editDialog.std_symbol'></el-input>
+                  <el-input :disabled='true' v-model='editDialog.std_symbol'></el-input>
               </el-col>
           </el-row> 
           <el-col :span='24'>

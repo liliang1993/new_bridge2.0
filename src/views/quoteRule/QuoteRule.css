@@ -20,53 +20,6 @@
   font-size: 12px;
   line-height: 16px;
 }
-.quote_rule_container .quoteRule_dialog .el-dialog {
-  width: 537px;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap {
-  position: relative;
-  background-color: #ccc;
-  text-align: center;
-  width: 495px;
-  margin-top: 10px;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap .type_content {
-  margin: 0 auto;
-  padding: 10px 0;
-  display: inline-block;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap .type_content .type_item {
-  float: left;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap .type_content .type_item p {
-  margin-bottom: 5px;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap .type_content .type_item input {
-  width: 130px;
-  height: 36px;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap .type_content .type_item + .type_item {
-  margin-left: 23px;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .type_wrap:before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: 80px;
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #ccc;
-  border-left: 10px solid transparent;
-}
-.quote_rule_container .quoteRule_dialog .el-dialog .sub_title {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  height: 30px;
-  line-height: 30px;
-}
 .quote_rule_container .add_dialog .el-dialog {
   width: 1300px;
 }

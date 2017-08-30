@@ -32,9 +32,11 @@
                                 <el-dropdown-menu class='role_drop_down' slot="dropdown">
                                     <el-dropdown-item
                                             command='updUserPass'
-                                            >修改密码</el-dropdown-item>
+                                            >
+                                            {{$t('Change Password')}}
+                                            </el-dropdown-item>
                                     <el-dropdown-item
-                                            command='logout'>退出</el-dropdown-item>
+                                            command='logout'>{{$t('Logout')}}</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </div>
@@ -63,26 +65,24 @@
                 </div>
             </el-row>
         </header> 
-          <el-dialog title='$store.state.user.userinfo.username' :visible.sync="dialogTableVisible" top='40%'  >
-        <div class="form_item">
-            <p></p>
-
-        </div>
-        <div class="form_item">
-            <p>Origin Password:</p>
-            <el-input></el-input>        
-        </div>
-        <div class="form_item">
-            <p>New Password:</p>
-            <el-input></el-input>        
-        </div>
-        <div class="form_item">
-            <p>Confirm Password</p>
-            <el-input></el-input>        
-        </div>
-          <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
-          </el-col>    
+    <el-dialog class='password_dialog' :title='$t("Change Password")+" - "+$store.state.user.userinfo.username' :visible.sync="dialogTableVisible" top='40%'  >
+        <div class="form_wrap">
+            <div class="form_item">
+                <p>{{$t('Origin Password')}}:</p>
+                <el-input type='password' v-model='changePassDialog.old_password'></el-input>        
+            </div>
+            <div class="form_item">
+                <p>{{$t('New Password')}}:</p>
+                <el-input type='password' v-model='changePassDialog.password'></el-input>        
+            </div>
+            <div class="form_item">
+                <p>{{$t('Confirm Password')}}:</p>
+                <el-input type='password' v-model='changePassDialog.password_confirm'></el-input>        
+            </div>
+              <el-col :span='24' class='confirm_btn'>
+                  <el-button type="primary" @click='changePassSubmit()'>Confirm</el-button>
+              </el-col>  
+        </div>         
       </el-dialog>
     </div>
 </template>

@@ -6,57 +6,12 @@ export default {
     name: 'head-nav',
     data() {
         return {
-            dialogTableVisible:false,
-            changePassDialog:{
-                // origin,
-                // new
+            dialogTableVisible: false,
+            changePassDialog: {
+                old_password: '',
+                password: '',
+                password_confirm: ''
             },
-            // changePassDialog: {
-            //     show: false,
-            //     isModal: true,
-            //     default_value: {},
-            //     labelWidth: "180px",
-            //     rules: {
-            //         ori_password: [{
-            //             required: true,
-            //             message: '旧密码不能为空！',
-            //             trigger: 'blur'
-            //         }],
-            //         new_password: [{
-            //             required: true,
-            //             message: '新密码不能为空！',
-            //             trigger: 'blur'
-            //         }, {
-            //             trigger: 'blur',
-            //             validator: (rule, value, callback) => {
-            //                 if (value === '') {
-            //                     callback(new Error('请再次输入密码'));
-            //                 } else {
-            //                     if ('' !== this.changePassDialog.default_value.new_password) {
-            //                         this.$refs["changePass-form"].$refs["form-data"].validateField('confirm_password');
-            //                     }
-            //                     callback();
-            //                 }
-            //             }
-            //         }],
-            //         confirm_password: [{
-            //             required: true,
-            //             message: '确认密码不能为空！',
-            //             trigger: 'blur'
-            //         }, {
-            //             trigger: 'blur',
-            //             validator: (rule, value, callback) => {
-            //                 if (value === '') {
-            //                     callback(new Error('请再次输入密码'));
-            //                 } else if (value !== this.changePassDialog.default_value.new_password) {
-            //                     callback(new Error('两次输入密码不一致!'));
-            //                 } else {
-            //                     callback();
-            //                 }
-            //             }
-            //         }],
-            //     }
-            // },
             locale: this.$store.state.global.locale,
             langs: LANGS
         }
@@ -98,29 +53,35 @@ export default {
          */
         updUserPass(userinfo) {
             this.dialogTableVisible = true;
+        },
+        changePassSubmit() {
             this.$$api_common_ajax({
-                        data: {
-                            old_password: this.dialog.old_password,
-                            password: this.dialog.password,
-                            password_confirm: this.dialog.password_confirm
-                        },
-                        fn: data => {
-                            this.dialogTableVisible = true;
-                            this.$message.success('修改成功！');
-                        }
+                data: {
+                    func_name: 'user.change_password',
+                    args: [this.$store.state.user.userinfo.user_id, this.changePassDialog.old_password, this.changePassDialog.password],
+                    kwargs: {}
+                },
+                fn: data => {
+                    this.dialogTableVisible = false;
+                    store.dispatch('remove_userinfo');
+                    this.$message.success('修改成功！');
+                    this.$router.push('/login');
+                }
             });
         },
         toggleLeftMenu() {
             this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open');
         },
-        handleCommand(command){
-                console.log('command',command);
-                switch(command){
-                    case 'logout': this.logout(); 
+        handleCommand(command) {
+            console.log('command', command);
+            switch (command) {
+                case 'logout':
+                    this.logout();
                     break;
-                    case 'updUserPass': this.updUserPass(); 
+                case 'updUserPass':
+                    this.updUserPass();
                     break;
-                }
+            }
         },
         /**
          * 更改系统默认语言

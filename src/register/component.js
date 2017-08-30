@@ -12,7 +12,8 @@ import {
   TradeRule,
   LpQuote,
   LpOrder,
-  Mt4Position
+  Mt4Position,
+  QuoteRule
 } from 'cps/';
 
 console.log('CurrentOrder', CurrentOrder);
@@ -25,6 +26,7 @@ export default {
   LpQuote,
   LpOrder,
   Mt4Position,
+  QuoteRule,
   AddPosition: CurrentOrder.AddPosition,
   DeletePosition: CurrentOrder.DeletePosition,
   TraderuleDia: TradeRule.TradeRuleDia,

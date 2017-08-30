@@ -10,6 +10,7 @@ import CurrentOrder from './currentOrder/';
 import TradeRule from './trade-rule'
 import LpOrder from './lp-order/';
 import Mt4Position from './mt4-position/';
+import QuoteRule from './quote-rule/';
 // console.log('add', AddPosition);
 export {
   Echarts,
@@ -23,6 +24,7 @@ export {
   CurrentOrder,
   TradeRule,
   LpOrder,
-  Mt4Position
+  Mt4Position,
+  QuoteRule
   // DeletePosition
 };

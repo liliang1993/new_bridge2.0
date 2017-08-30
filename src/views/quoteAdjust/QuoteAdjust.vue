@@ -1,5 +1,5 @@
 <template>
-    <div class='list'>
+    <div class='quote_adjust_container'>
     <div class='top-action'>
             <b>{{$t('Source')}}:</b>
             <el-select class='round_select' v-model="current_source" :placeholder="$t('select source')" @change = 'changeSelect'>

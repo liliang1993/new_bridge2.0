@@ -5,7 +5,13 @@ export default {
             tableData: [],
             new_tableData: [{
                 std_symbol: '',
-                lp: '',
+                lp: (() => {
+                    if (this.$store.state.global.lps.length <= 0) {
+                        return '';
+                    } else {
+                        return this.$store.state.global.lps[0];
+                    }
+                })(),
                 lp_symbol: '',
                 weight: '',
                 min_qty: '',

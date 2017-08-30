@@ -25,7 +25,7 @@
               <a
                     href="javascript:void(0);"
                      @click = "onEditRemark(scope.row)"
-                  >{{scope.row.remark}}</a>
+                  >{{scope.row.remark||'------------------'}}</a>
           </template>
     </bel-table> 
 

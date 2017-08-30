@@ -35,6 +35,9 @@
 
 
   "Change Password": "修改密码",
+  "Origin Password": "原始密码",
+  "New Password": "新密码",
+  "Confirm Password": "确认密码",
   "Logout": "注销",
 
   "Add User": "添加",
