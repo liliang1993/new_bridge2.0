@@ -319,6 +319,18 @@ export default {
           }]
         }
       }
+    },
+    update_quoteule_flag(){
+      return this.$store.state.quoterule.update_quoteRule_flag;
+    }
+  },
+  watch: {
+    update_quoteule_flag(v) {
+      console.log('tradeRules_update_flag', v);
+      if (v == true) {
+        this.load_data();
+        this.$store.dispatch('update_quoteRule_table',false);
+      }
     }
   },
   methods: {
@@ -326,88 +338,95 @@ export default {
       this.$store.dispatch('show_add_quoteRule_table');
 
     },
-    add_quoteRule_submit() {
-      var attributes = {
-        digits: parseInt(this.addDialog.attributes.digits),
-        minimal_spread: parseInt(this.addDialog.attributes.minimal_spread),
-        maximal_spread: parseInt(this.addDialog.attributes.maximal_spread),
-        aggregator: this.addDialog.attributes.aggregator,
-        adjust: parseInt(this.addDialog.attributes.adjust),
-        markup: parseInt(this.addDialog.attributes.markup),
-      }
-      console.log('attr', attributes);
-      if (this.editDialog.type == 'delta') {
-        Object.assign(attributes, {
-          bid_delta: parseInt(this.addDialog.attributes.bid_delta),
-          ofr_delta: parseInt(this.addDialog.attributes.ofr_delta),
-          random: parseInt(this.addDialog.attributes.random)
-        });
-      } else if (this.addDialog.type == 'asian') {
-        Object.assign(attributes, {
-          asian_delta: parseInt(this.addDialog.attributes.asian_delta),
-          random: parseInt(this.addDialog.attributes.random)
-        });
-      } else if (this.addDialog.type == 'spread') {
-        Object.assign(attributes, {
-          spread: parseInt(this.addDialog.attributes.spread),
-          random: parseInt(this.addDialog.attributes.random)
-        });
-      }
-      this.$$api_common_ajax({
-        data: {
-          func_name: 'router_api.quote_add_rule',
-          args: [this.addDialog.source, this.addDialog.mt4_symbol, this.addDialog.std_symbol, this.addDialog.type, attributes],
-          kwargs: {}
-        },
-        fn: data => {
-          this.load_data();
-          this.addDialogTableVisible = false;
-        }
-      });
+    edit_quote_rule(row){
+      var dict = {};
+      dict.common = {
+        source: row.source,
+        mt4_symbol: row.mt4_symbol,
+        std_symbol: row.std_symbol
+      };
+      dict.attributes = row.attributes;
+      this.$store.dispatch('update_quoteRule_dict',dict);
+      this.$store.dispatch('show_edit_quoteRule_table');
     },
-    edit_quote_rule(row) {
-      this.editDialogTableVisible = true;
-      Object.assign(this.editDialog, row);
-    },
-    edit_quoteRule_submit() {
-      var attributes = {
-        digits: parseInt(this.editDialog.attributes.digits),
-        minimal_spread: parseInt(this.editDialog.attributes.minimal_spread),
-        maximal_spread: parseInt(this.editDialog.attributes.maximal_spread),
-        aggregator: this.editDialog.attributes.aggregator,
-        adjust: parseInt(this.editDialog.attributes.adjust),
-        markup: parseInt(this.editDialog.attributes.markup),
-      }
-      console.log('attr', attributes);
-      if (this.editDialog.type == 'delta') {
-        Object.assign(attributes, {
-          bid_delta: parseInt(this.editDialog.attributes.bid_delta),
-          ofr_delta: parseInt(this.editDialog.attributes.ofr_delta),
-          random: parseInt(this.editDialog.attributes.random)
-        });
-      } else if (this.editDialog.type == 'asian') {
-        Object.assign(attributes, {
-          asian_delta: parseInt(this.editDialog.attributes.asian_delta),
-          random: parseInt(this.editDialog.attributes.random)
-        });
-      } else if (this.editDialog.type == 'spread') {
-        Object.assign(attributes, {
-          spread: parseInt(this.editDialog.attributes.spread),
-          random: parseInt(this.editDialog.attributes.random)
-        });
-      }
-      this.$$api_common_ajax({
-        data: {
-          func_name: 'router_api.quote_update_rule',
-          args: [this.editDialog.source, this.editDialog.mt4_symbol, this.editDialog.std_symbol, this.editDialog.type, attributes],
-          kwargs: {}
-        },
-        fn: data => {
-          this.load_data();
-          this.editDialogTableVisible = false;
-        }
-      });
-    },
+    // add_quoteRule_submit() {
+    //   var attributes = {
+    //     digits: parseInt(this.addDialog.attributes.digits),
+    //     minimal_spread: parseInt(this.addDialog.attributes.minimal_spread),
+    //     maximal_spread: parseInt(this.addDialog.attributes.maximal_spread),
+    //     aggregator: this.addDialog.attributes.aggregator,
+    //     adjust: parseInt(this.addDialog.attributes.adjust),
+    //     markup: parseInt(this.addDialog.attributes.markup),
+    //   }
+    //   console.log('attr', attributes);
+    //   if (this.editDialog.type == 'delta') {
+    //     Object.assign(attributes, {
+    //       bid_delta: parseInt(this.addDialog.attributes.bid_delta),
+    //       ofr_delta: parseInt(this.addDialog.attributes.ofr_delta),
+    //       random: parseInt(this.addDialog.attributes.random)
+    //     });
+    //   } else if (this.addDialog.type == 'asian') {
+    //     Object.assign(attributes, {
+    //       asian_delta: parseInt(this.addDialog.attributes.asian_delta),
+    //       random: parseInt(this.addDialog.attributes.random)
+    //     });
+    //   } else if (this.addDialog.type == 'spread') {
+    //     Object.assign(attributes, {
+    //       spread: parseInt(this.addDialog.attributes.spread),
+    //       random: parseInt(this.addDialog.attributes.random)
+    //     });
+    //   }
+    //   this.$$api_common_ajax({
+    //     data: {
+    //       func_name: 'router_api.quote_add_rule',
+    //       args: [this.addDialog.source, this.addDialog.mt4_symbol, this.addDialog.std_symbol, this.addDialog.type, attributes],
+    //       kwargs: {}
+    //     },
+    //     fn: data => {
+    //       this.load_data();
+    //       this.addDialogTableVisible = false;
+    //     }
+    //   });
+    // },
+    // edit_quoteRule_submit() {
+    //   var attributes = {
+    //     digits: parseInt(this.editDialog.attributes.digits),
+    //     minimal_spread: parseInt(this.editDialog.attributes.minimal_spread),
+    //     maximal_spread: parseInt(this.editDialog.attributes.maximal_spread),
+    //     aggregator: this.editDialog.attributes.aggregator,
+    //     adjust: parseInt(this.editDialog.attributes.adjust),
+    //     markup: parseInt(this.editDialog.attributes.markup),
+    //   }
+    //   console.log('attr', attributes);
+    //   if (this.editDialog.type == 'delta') {
+    //     Object.assign(attributes, {
+    //       bid_delta: parseInt(this.editDialog.attributes.bid_delta),
+    //       ofr_delta: parseInt(this.editDialog.attributes.ofr_delta),
+    //       random: parseInt(this.editDialog.attributes.random)
+    //     });
+    //   } else if (this.editDialog.type == 'asian') {
+    //     Object.assign(attributes, {
+    //       asian_delta: parseInt(this.editDialog.attributes.asian_delta),
+    //       random: parseInt(this.editDialog.attributes.random)
+    //     });
+    //   } else if (this.editDialog.type == 'spread') {
+    //     Object.assign(attributes, {
+    //       spread: parseInt(this.editDialog.attributes.spread),
+    //       random: parseInt(this.editDialog.attributes.random)
+    //     });
+    //   }
+    //   this.$$api_common_ajax({
+    //     data: {
+    //       func_name: 'router_api.quote_update_rule',
+    //       args: [this.editDialog.source, this.editDialog.mt4_symbol, this.editDialog.std_symbol, this.editDialog.type, attributes],
+    //       kwargs: {}
+    //     },
+    //     fn: data => {
+    //       this.load_data();
+    //       this.editDialogTableVisible = false;
+    //     }
+    //   });
+    // },
     delete_quote_rule(row, index) {
       console.log('index', index);
       this.$$api_common_ajax({

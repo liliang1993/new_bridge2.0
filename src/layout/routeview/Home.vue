@@ -90,7 +90,22 @@
             title="Add Quote Rule"
             @close = "close_add_quoteRule_table()"
             >
-                <quote-rule></quote-rule> 
+                <quote-rule
+                @submit ='add_quoteRule_submit'
+                ></quote-rule> 
+          </drag-dialog>
+          <!-- EDIT Quote -->
+          <drag-dialog 
+            v-if='$store.state.quoterule.show_editQuoteRule_flag'
+            title="Edit Quote Rule"
+            @close = "close_edit_quoteRule_table"
+            >
+                <quote-rule
+                :Common = '$store.state.quoterule.quoteRule_dict.common'
+                :Attributes = '$store.state.quoterule.quoteRule_dict.attributes'
+                DialogType ='edit'
+                @submit ='edit_quoteRule_submit'
+                ></quote-rule> 
           </drag-dialog>
     </div>
 </template>
@@ -188,7 +203,37 @@
             },
             close_add_quoteRule_table(){
                 this.$store.dispatch('hide_add_quoteRule_table');
-            }
+            },
+            add_quoteRule_submit(args){
+                this.$$api_common_ajax({
+                data: {
+                  func_name: 'router_api.quote_add_rule',
+                  args,
+                  kwargs: {}
+                },
+                fn: data => {
+                  this.$store.dispatch('update_quoteRule_table',true);
+                   this.close_add_quoteRule_table();
+                }
+              });
+            },
+            close_edit_quoteRule_table(){
+                this.$store.dispatch('hide_edit_quoteRule_table');
+            },
+             edit_quoteRule_submit(args){
+                this.$$api_common_ajax({
+                data: {
+                  func_name: 'router_api.quote_update_rule',
+                  args,
+                  kwargs: {}
+                },
+                fn: data => {
+                  this.$store.dispatch('update_quoteRule_table',true);
+                   this.close_edit_quoteRule_table();
+                }
+              });
+            },
+
         },
         created(){
             this.setSize();

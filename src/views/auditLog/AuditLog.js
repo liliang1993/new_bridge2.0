@@ -39,7 +39,7 @@ export default {
             attr: {
               prop: 'log_id',
               label: this.$t('LOG_ID'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -47,7 +47,7 @@ export default {
             attr: {
               prop: 'username',
               label: this.$t('USERNAME'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -63,7 +63,7 @@ export default {
             attr: {
               prop: 'request',
               label: this.$t('REQUEST'),
-              width: 290,
+              minWidth: 290,
               sortable: true,
               align: 'left',
               showOverflowTooltip: false,
@@ -73,7 +73,7 @@ export default {
             attr: {
               prop: 'result',
               label: this.$t('RESULT'),
-              width: 180,
+              minWidth: 180,
               sortable: true,
               showOverflowTooltip: false,
               align: 'center'
@@ -82,7 +82,7 @@ export default {
             attr: {
               prop: 'status',
               label: this.$t('STATUS'),
-              width: 180,
+              minWidth: 80,
               sortable: true,
               align: 'center',
               scopedSlot: 'status'

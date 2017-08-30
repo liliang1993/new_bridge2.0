@@ -3,15 +3,31 @@
         <el-row :gutter='40'>
               <el-col :span='8'>
                   <p>{{$t('Source')}}:</p>
-                  <el-input :disabled='true' v-model='source'></el-input>
+                   <el-select class='w100' v-if="dialogType!=='edit'" v-model="source" placeholder="请选择">
+                    <el-option
+                      v-for="item in $store.state.global.sources"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                    </el-select>
+                  <el-input v-if="dialogType=='edit'" :disabled= "true" v-model='source'></el-input>
               </el-col>
               <el-col :span='8'>
                   <p>{{$t('MT4 Symbol')}}:</p>
-                  <el-input :disabled='true' v-model='mt4_symbol'></el-input>
+                  <el-input :disabled= "dialogType=='edit'?true:false" v-model='mt4_symbol'></el-input>
               </el-col>
               <el-col :span='8'>
                   <p>{{$t('STD Symbol')}}:</p>
-                  <el-input :disabled='true' v-model='std_symbol'></el-input>
+                   <el-select class='w100' v-if="dialogType!=='edit'" v-model="std_symbol" placeholder="请选择">
+                    <el-option
+                      v-for="item in $store.state.global.std_symbols"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                    </el-select>
+                  <el-input v-if="dialogType=='edit'" :disabled= "true" v-model='std_symbol'></el-input>
               </el-col>
           </el-row> 
           <el-col :span='24'>

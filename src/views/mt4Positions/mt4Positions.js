@@ -14,6 +14,7 @@ export default {
           table: {
             attr: {
               data: this.tableData,
+              border:false,
               maxHeight: '100%'
             }
           },

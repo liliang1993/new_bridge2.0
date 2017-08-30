@@ -32,5 +32,21 @@ export default {
 			commit(types.HIDE_EDIT_QUOTERULE_TABLE);
 			resolve();
 		});
+	},
+	update_quoteRule_table: ({
+		commit
+	},flag) => {
+		return new Promise((resolve, reject) => {
+			commit(types.UPDATE_QUOTERULE_TABLE,flag);
+			resolve();
+		});
+	},
+	update_quoteRule_dict: ({
+		commit
+	},dict) => {
+		return new Promise((resolve, reject) => {
+			commit(types.UPDATE_QUOTERULE_DICT,dict);
+			resolve();
+		});
 	}
 };

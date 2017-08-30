@@ -583,14 +583,17 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (this.editFlag == true) {
-      next(false);
       this.$confirm('尚未提交当前编辑的规则, 是否继续?', '提示', {
         confirmButtonText: '继续前往',
         cancelButtonText: '留下来',
         type: 'warning'
       }).then(() => {
         next();
-      }).catch(() => {});
+      }).catch(() => {
+        next(false);
+      });
+    }else{
+      next();
     }
   },
   props: {
