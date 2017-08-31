@@ -14,6 +14,7 @@ export default {
               data: this.tableData,
               border: false,
               maxHeight: '100%',
+              showHeader:false
 
             }
           },
@@ -21,13 +22,16 @@ export default {
             attr: {
               prop: 'key',
               label: this.$t('SYMBOL'),
+               minWidth:130,
               align: 'center',
             }
           }, {
             attr: {
               prop: 'value',
               label: this.$t('NET VOL'),
-              align: 'center',
+              width:400,
+              showOverflowTooltip:false,
+              align: 'left',
             }
           }]
         }
@@ -44,11 +48,12 @@ export default {
   },
   methods: {
     init() {
-      var row
+      var row={};
       for (var key in this.Data) {
         row.key = key;
-        row.value = this.Data[key];
+        row.value = this.Data[key].join(',');
         this.tableData.push(row);
+        console.log('tableData',this.tableData);
       }
     }
   },

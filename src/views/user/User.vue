@@ -1,7 +1,7 @@
 <template>
     <div class='user'>
           <div class='actions-top'>
-            <el-button type='primary' @click='addDialogTableVisible = true'>{{$t('Add User')}}</el-button>
+            <el-button type='primary' @click='addUser'>{{$t('Add User')}}</el-button>
           </div>
     <el-col :span="24" class='table-wrap'>
           <bel-table
@@ -35,12 +35,11 @@
             </el-pagination>
       </el-col>
 
-      <el-dialog title="Add User" v-if='addDialogTableVisible' :visible.sync="addDialogTableVisible" top='40%'  >
+      <el-dialog title="Add User"  :visible.sync="addDialogTableVisible" top='40%'  >
            <bel-table
            v-if='addDialogTableVisible'
           ref="table"    
           :configs="add_tableConfig"
-          :key='Math.random()*100'
           class='user-table'
           >   
               <template slot="username" scope="scope">

@@ -193,7 +193,7 @@ export default {
                         attr: {
                             prop: 'quote_enable',
                             label: this.$t('QUOTE ENABLE'),
-                            minWidth: 80,
+                            minWidth: 100,
                             scopedSlot: 'quote_enable',
                             align: 'center'
                         }
@@ -201,7 +201,7 @@ export default {
                         attr: {
                             prop: 'trade_enable',
                             label: this.$t('TRADE ENABLE'),
-                            minWidth: 80,
+                            minWidth: 100,
                             scopedSlot: 'trade_enable',
                             align: 'center'
                         }

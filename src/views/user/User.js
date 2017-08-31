@@ -10,8 +10,17 @@ export default {
       add_loading: false,
       edit_loading: false,
       tableData: [],
-      add_tableData: [{
-        username: '',
+      default_addUserData: [{
+       username: '',
+        password: '',
+        role: 'Admin',
+        lps: '',
+        groups: '',
+        symbols: '',
+        desc: ''
+      }],
+      add_tableData:[{
+       username: '',
         password: '',
         role: 'Admin',
         lps: '',
@@ -276,14 +285,10 @@ export default {
   },
   methods: {
 
-    // onEditUser(row) {
-    //   this.edit_user_dialog.show = true;
-    //   this.$nextTick(() => {
-    //     Object.assign(this.edit_user_dialog.default_value, row, {
-    //       password: ''
-    //     });
-    //   });
-    // },
+    addUser(){
+      this.addDialogTableVisible = true;
+      this.$$lib_$.extend(true,this.add_tableData,this.default_addUserData);
+    },
     editUser(row) {
       this.editDialogTableVisible = true;
       Object.assign(this.edit_tableData[0], row);
