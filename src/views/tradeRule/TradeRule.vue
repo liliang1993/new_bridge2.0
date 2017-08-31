@@ -29,8 +29,8 @@
           </template>
     </bel-table> 
 
-      <el-dialog :visible.sync="dialogTableVisible" top='40%' class='copy_group_dialog'>   
-          <h2>{{'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'}}</h2> 
+      <el-dialog :visible.sync="dialogTableVisible" :title="'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'" top='40%' class='copy_group_dialog'>   
+          <!-- <h2>{{'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'}}</h2>  -->
           <!-- <form-data
                 ref='form-data'
                 :FieldList='copy_to_new_group.fields'
@@ -57,8 +57,7 @@
               <el-button type="primary" @click='copyGroupSumbit'>{{$t('Confirm')}}</el-button>
           </el-col>
       </el-dialog>
-        <el-dialog :visible.sync="remarkDialogTableVisible" top='40%' class='copy_group_dialog'>   
-          <h2>{{'Edit '+remarkDialog_dict.group+' Remark'}}</h2> 
+        <el-dialog :visible.sync="remarkDialogTableVisible" :title="'Edit '+remarkDialog_dict.group+' Remark'" top='40%' class='copy_group_dialog'>   
           <div class="form_item">
               <p>{{$t("Remark")}}:</p>
                <el-input

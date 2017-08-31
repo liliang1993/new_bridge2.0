@@ -23,7 +23,7 @@ export default {
             attr: {
               prop: 'lp',
               label: this.$t('LP'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -31,7 +31,7 @@ export default {
             attr: {
               prop: 'type',
               label: this.$t('TYPE'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -39,7 +39,7 @@ export default {
             attr: {
               prop: 'username',
               label: this.$t('USERNAME'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -47,7 +47,7 @@ export default {
             attr: {
               prop: 'sender',
               label: this.$t('SENDER'),
-              width: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center',
             }
@@ -55,7 +55,7 @@ export default {
             attr: {
               prop: 'target',
               label: this.$t('TARGET'),
-              width: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center',
               scopedSlot: 'status'
@@ -64,7 +64,7 @@ export default {
             attr: {
               prop: 'host',
               label: this.$t('HOST'),
-              minWidth: 180,
+              minWidth: 150,
               sortable: true,
               align: 'center'
             }

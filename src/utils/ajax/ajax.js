@@ -97,6 +97,12 @@ export default function({
 		}).catch((err) => {
 			console.dir(err);
 			this.$store.dispatch('hide_loading');
+			if (err.response.data === 'Error: Not allowed') {
+				this.$store.dispatch('remove_userinfo').then(() => {
+					this.$router.push('/login');
+				});
+				return;
+			}
 			if (errFn) {
 				console.log('this', this);
 				errFn.call(this, err);

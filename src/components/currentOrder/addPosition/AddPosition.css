@@ -1,18 +1,15 @@
-.top-action {
-  margin-bottom: 10px;
-}
-.btm-action {
+.add_position .btm-action {
   text-align: center;
   margin-top: 10px;
 }
-.icon {
+.add_position .icon {
   font-size: 20px;
   color: blue;
 }
-.search_bar {
+.add_position .search_bar {
   margin-bottom: 10px;
 }
-.search_bar input {
+.add_position .search_bar input {
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
@@ -20,26 +17,35 @@
   height: 37px;
   margin-right: 15px;
 }
-.table_input_wrap {
+.add_position .el-table .cell {
+  padding: 1px 1px;
+}
+.add_position .el-table .cell .table_input_wrap {
   height: 25px;
   border: 1px solid #ccc;
   width: 100%;
   border-radius: 5px;
   font-size: 12px;
-  color: #ccc;
+  padding-left: 2px;
 }
-.table_input_wrap::-ms-input-placeholder {
+.add_position .el-table .cell .table_input_wrap::-ms-input-placeholder {
   text-align: center;
 }
-.table_input_wrap::-webkit-input-placeholder {
+.add_position .el-table .cell .table_input_wrap::-webkit-input-placeholder {
   text-align: center;
 }
-.confirm_btn {
+.add_position .confirm_btn {
   text-align: center;
 }
-.confirm_btn .el-button {
+.add_position .confirm_btn .el-button {
   margin-top: 20px;
   margin-bottom: 30px;
   width: 300px;
   height: 40px;
+}
+.add_position .warning {
+  background-color: #ff0000;
+}
+.add_position .success {
+  background-color: #5dcd0b;
 }

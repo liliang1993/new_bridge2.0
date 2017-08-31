@@ -156,6 +156,9 @@ a {
 .lh35 {
   line-height: 35px;
 }
+#nprogress .bar {
+  height: 4px;
+}
 .el-popover {
   border: 1px solid #3a8dff;
 }
@@ -313,6 +316,9 @@ a {
 .el-form .el-select {
   width: 100%;
 }
+.el-table__empty-block {
+  min-height: 16px;
+}
 .copy_group_dialog .el-dialog {
   width: auto;
 }
@@ -321,7 +327,8 @@ a {
   padding-top: 10px;
 }
 .copy_group_dialog .el-dialog .el-dialog__header .el-dialog__title {
-  font-size: 20px;
+  font-size: 16px;
+  padding-right: 20px;
   font-weight: bold;
 }
 .copy_group_dialog .el-dialog .el-dialog__body {

@@ -1,5 +1,5 @@
 <template>
-    <div class='clearfix'>
+    <div class='user'>
           <div class='actions-top'>
             <el-button type='primary' @click='addDialogTableVisible = true'>{{$t('Add User')}}</el-button>
           </div>
@@ -35,10 +35,12 @@
             </el-pagination>
       </el-col>
 
-      <el-dialog title="Add User" :visible.sync="addDialogTableVisible" top='40%'  >
+      <el-dialog title="Add User" v-if='addDialogTableVisible' :visible.sync="addDialogTableVisible" top='40%'  >
            <bel-table
+           v-if='addDialogTableVisible'
           ref="table"    
           :configs="add_tableConfig"
+          :key='Math.random()*100'
           class='user-table'
           >   
               <template slot="username" scope="scope">
@@ -77,7 +79,7 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
+              <el-button type="primary" :loading='add_loading' @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog>
       <el-dialog title="Edit User" :visible.sync="editDialogTableVisible" top='40%'
@@ -117,45 +119,29 @@
                 <el-input v-model='scope.row.symbols'>
                 </el-input> 
               </template>
+              <template slot="status" scope="scope">
+                  <el-select v-model="scope.row.status" placeholder="请选择">
+                      <el-option
+                        label="Enabled"
+                        :value="0"
+                         >
+                      </el-option>
+                       <el-option
+                        label="Disabled"
+                        :value="1"
+                         >
+                      </el-option>
+                  </el-select>
+              </template>
               <template slot="desc" scope="scope">
                 <el-input v-model='scope.row.desc'>
                 </el-input> 
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='edit_user_submit(edit_tableData[0])'>Confirm</el-button>
+              <el-button type="primary" :loading='edit_loading' @click='edit_user_submit(edit_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog>
-        <!-- <drag-dialog
-                v-if = 'add_user_dialog.show'
-                :title="add_user_dialog.title"
-                :isModal = 'add_user_dialog.isModal'
-                @close="onCloseDialog('add_user_dialog')"
-          >
-                <form-data
-                 ref='add_user_form'
-                  :DefaultValue='add_user_dialog.default_value'
-                  :FieldList='add_user_dialog.fields'
-                  @onSubmit='add_user_submit'
-
-                  >
-                  </form-data>
-        </drag-dialog> -->
-
-         <!-- <drag-dialog
-                v-if='edit_user_dialog.show'
-                :title="edit_user_dialog.title"
-                :isModal = 'edit_user_dialog.isModal'
-                @close="onCloseDialog('edit_user_dialog')"
-          >
-                <form-data
-                 ref='edit_user_form'
-                  :DefaultValue='edit_user_dialog.default_value'
-                  :FieldList='edit_user_dialog.fields'
-                  @onSubmit='edit_user_submit'
-                  >
-                  </form-data>
-        </drag-dialog> -->
   </div>
 </template>
   
@@ -163,6 +149,6 @@
 import UserJs from './User.js';
 export default UserJs;
 </script>
-<style scoped lang='less'>
+<style lang='less'>
      @import url(User.less);
 </style>

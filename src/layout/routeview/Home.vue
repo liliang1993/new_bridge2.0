@@ -82,7 +82,9 @@
               title="MT4 POSITION"
               @close = "close_mt4_position()"
             >
-                <mt4-position></mt4-position> 
+                <mt4-position
+                :Data ='$store.state.mt4position.result'
+                ></mt4-position> 
           </drag-dialog>
         <!-- ADD QuoteRule -->
          <drag-dialog 
@@ -168,7 +170,7 @@
              edit_trade_rule_submit(args){
                   this.$$api_common_ajax({
                   data: {
-                    func_name: 'router_api.trade_add_rule',
+                    func_name: 'router_api.trade_update_rule',
                     args,
                     kwargs: {}
                   },

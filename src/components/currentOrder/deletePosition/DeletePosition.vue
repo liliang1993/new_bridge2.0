@@ -29,9 +29,8 @@
       <el-col :span='24' class='confirm_btn'>
           <el-button  type='primary' :loading='submit_loading'  @click='onSubmit' >{{$t('Submit')}}</el-button>
       </el-col> 
-       <drag-dialog  
+      <!--  <drag-dialog  
         v-if='editDialogTableVisible'
-        :isModal='true'
         @close='closeLpPosition'
         >
          <bel-table
@@ -47,8 +46,8 @@
           <el-col :span='24' class='confirm_btn'>
               <el-button type="primary"  @click='edit_position_submit()'>Confirm</el-button>
           </el-col>    
-      </drag-dialog>
-       <!-- <el-dialog title="Edit Position" :visible.sync="editDialogTableVisible" top='40%'>
+      </drag-dialog> -->
+       <el-dialog title="Edit Position" :visible.sync="editDialogTableVisible" top='40%'>
            <bel-table
           ref="table"    
           :configs="edit_tableConfig"
@@ -62,7 +61,7 @@
           <el-col :span='24' class='confirm_btn'>
               <el-button type="primary" @click='edit_position_submit()'>Confirm</el-button>
           </el-col>    
-      </el-dialog> -->
+      </el-dialog>
   </div>
 </template>
 
@@ -70,6 +69,6 @@
 import DeletePositionJs from './DeletePosition.js';
 export default DeletePositionJs;
 </script>
-<style scoped lang='less'>
+<style lang='less'>
 @import url(./DeletePosition.less);
 </style>

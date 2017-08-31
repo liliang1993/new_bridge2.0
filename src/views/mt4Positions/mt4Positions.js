@@ -4,7 +4,11 @@ export default {
     return {
       trade_rules: {},
       trade_rule_dict: {},
-      tableData: []
+      tableData: [],
+      count: '1',
+      check_loading: false,
+      reload_loading: false,
+      prev_bridge_orders: []
     }
   },
   computed: {
@@ -14,7 +18,7 @@ export default {
           table: {
             attr: {
               data: this.tableData,
-              border:false,
+              border: false,
               maxHeight: '100%'
             }
           },
@@ -33,6 +37,9 @@ export default {
           }]
         }
       }
+    },
+    procsess_text() {
+      return this.$t('comparing positions ') + this.count + this.$t(' times')
     }
   },
   methods: {
@@ -44,10 +51,15 @@ export default {
           kwargs: {}
         },
         fn: data => {
+          this.reload_loading = false;
           this.on_trade_rules_loaded(data);
         },
         errFn: (err) => {}
       });
+    },
+    reload_data() {
+      this.reload_loading = true;
+      this.init();
     },
     on_trade_rules_loaded(trade_rules) {
       var i, len, rule;
@@ -107,6 +119,8 @@ export default {
     },
     request(count) {
       // this.$store.dispatch('update_mt4_positions_count', count);
+      this.count = count + 1;
+      this.check_loading = true;
       this.$$api_common_ajax({
         data: {
           func_name: 'check.get_mt4_bridge_diff_position_fast',
@@ -114,35 +128,46 @@ export default {
           kwargs: {}
         },
         fn: data => {
-          this.result_handle(count, result);
+          console.log('123');
+          this.result_handle(count, data);
         },
-        errFn: (err) => {}
+        errFn: (err) => {
+          this.check_loading = false;
+          this.$message({
+            showClose: true,
+            message: '请求错误：' + (err.response ? err.response.status : '') + ',' + (err.response ? err.response.statusText : ''),
+            type: 'error'
+          });
+        }
       });
     },
     request_after(count) {
-      setTimeout(request(count), 5000);
+      setTimeout(this.request(count), 3000);
     },
     show(result) {
       // this.$store.dispatch('hide_mt4_positions_loading');
       // this.$store.dispatch('update_mt4_positions_result', result);
     },
     result_handle(count, result) {
-      var last_except_orders, ok, prev_bridge_orders, check_times, show;
+      var last_except_orders, ok, check_times, show;
 
-      check_times = 3;
-      prev_bridge_orders = [];
+      check_times = 2;
       last_except_orders = result.except_bridge_orders;
       if (last_except_orders.length === 0) {
-        show(result);
+        this.check_loading = false;
+        this.$store.dispatch('update_mt4_positions_result', result);
+        this.$store.dispatch('show_mt4_positions');
         return;
       }
-      ok = this.array_compare(prev_bridge_orders, last_except_orders);
-      prev_bridge_orders = last_except_orders;
+      ok = this.array_compare(this.prev_bridge_orders, last_except_orders);
+      this.prev_bridge_orders = last_except_orders;
       if (count === 0) {
         this.request_after(count + 1);
       } else if (count === check_times - 1) {
         if (ok) {
-
+          this.check_loading = false;
+          this.$store.dispatch('update_mt4_positions_result', result);
+          this.$store.dispatch('show_mt4_positions');
         } else {
           this.request_after(0);
         }
@@ -155,7 +180,6 @@ export default {
       }
     },
     check_bridge_mt4_diff() {
-      this.$store.dispatch('show_mt4_positions');
       // this.$store.dispatch('show_mt4_positions_loading');
       this.request(0);
     }

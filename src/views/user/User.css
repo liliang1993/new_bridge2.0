@@ -1,7 +1,7 @@
-.actions-top {
+.user .actions-top {
   height: 70px;
 }
-.actions-top .el-button {
+.user .actions-top .el-button {
   border-radius: 20px;
   width: 120px;
   height: 40px;
@@ -10,44 +10,35 @@
   font-size: 14px;
   margin: 15px 0;
 }
-.btm-action {
+.user .btm-action {
   padding: 20px 0;
   text-align: center;
   background-color: #fff;
 }
-.pagination {
+.user .pagination {
   display: inline-block;
 }
-.icon_edit {
+.user .icon_edit {
   background-position: -84px -122px;
   height: 20px;
   width: 20px;
   cursor: pointer;
 }
-.icon_back {
+.user .icon_back {
   background-position: -84px -100px;
   width: 20px;
   height: 15px;
   cursor: pointer;
 }
-.btn_submit {
-  display: inline-block;
-  width: 65px;
-  height: 21px;
-  line-height: 21px;
-  text-align: center;
-  border: 1px solid #2296fd;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #2296fd;
-  margin-left: 10px;
-}
-.confirm_btn {
+.user .confirm_btn {
   text-align: center;
 }
-.confirm_btn .el-button {
+.user .confirm_btn .el-button {
   margin-top: 20px;
   margin-bottom: 30px;
   width: 300px;
   height: 40px;
+}
+.user .el-dialog {
+  width: 840px;
 }

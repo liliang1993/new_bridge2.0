@@ -88,8 +88,8 @@ export default {
                 }
             },
         },
-        get_up_traderule_table() {
-            return this.$store.state.traderule.update_traderule_table;
+        tradeRules_update_flag() {
+            return this.$store.state.traderule.update_trade_rules_flag;
         }
     },
     methods: {
@@ -262,5 +262,15 @@ export default {
     },
     mounted() {
         this.init();
+    },
+    watch: {
+        tradeRules_update_flag(v) {
+            console.log('tradeRules_update_flag', v);
+            if (v == true) {
+                this.load_data();
+                this.$store.dispatch('update_trade_rules_table', false);
+            }
+        }
     }
+
 }

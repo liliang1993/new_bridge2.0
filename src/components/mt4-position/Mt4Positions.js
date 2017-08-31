@@ -12,18 +12,20 @@ export default {
           table: {
             attr: {
               data: this.tableData,
-              maxHeight: '100%'
+              border: false,
+              maxHeight: '100%',
+
             }
           },
           columns: [{
             attr: {
-              prop: 'std_symbol',
+              prop: 'key',
               label: this.$t('SYMBOL'),
               align: 'center',
             }
           }, {
             attr: {
-              prop: 'net_vol',
+              prop: 'value',
               label: this.$t('NET VOL'),
               align: 'center',
             }
@@ -32,19 +34,22 @@ export default {
       }
     }
   },
+  props: {
+    Data: {
+      type: Object,
+      default () {
+        return [];
+      }
+    }
+  },
   methods: {
     init() {
-      this.$$api_common_ajax({
-        data: {
-          func_name: 'router_api.trade_get_all_rules',
-          args: [],
-          kwargs: {}
-        },
-        fn: data => {
-          this.on_trade_rules_loaded(data);
-        },
-        errFn: (err) => {}
-      });
+      var row
+      for (var key in this.Data) {
+        row.key = key;
+        row.value = this.Data[key];
+        this.tableData.push(row);
+      }
     }
   },
   mounted() {

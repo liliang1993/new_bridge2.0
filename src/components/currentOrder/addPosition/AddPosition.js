@@ -2,26 +2,14 @@ export default {
   name: 'add-position',
   data() {
     return {
-      addPositionDialog: {
-        show: false,
-        title: {
-          text: 'Add position result',
-          className: ''
-        },
-        result: []
-      },
       search_orders_loading: false,
       search_login_loading: false,
+      resultTableVisible: false,
       logKeyword: '',
       ordKeyword: '',
-      search_header: 'MT4 logins',
       tableData: [],
-      apis: {
-        mt4logins_func_name: 'mt4.get_logins_unclosed_trades',
-        mt4orders_func_name: 'mt4.get_unclosed_trades_by_orders',
-        createposition_func_name: 'router_api.create_positions',
-        get_list: '$$getUserListPage'
-      }
+      addPositionResult: ''
+
     }
   },
   computed: {
@@ -43,15 +31,15 @@ export default {
               prop: 'LOGIN',
               label: this.$t('LOGIN'),
               width: 60,
-              scopedSlot: this.$t('LOGIN'),
+              scopedSlot: 'login',
               align: 'center'
             }
           }, {
             attr: {
               prop: 'group',
               label: this.$t('GROUP'),
-              width: 65,
-              scopedSlot: this.$t('GROUP'),
+              width: 75,
+              scopedSlot: 'group',
               align: 'center'
             }
           }, {
@@ -59,7 +47,7 @@ export default {
               prop: 'city',
               label: this.$t('CITY'),
               width: 50,
-              scopedSlot: this.$t('CITY'),
+              scopedSlot: 'city',
               align: 'center'
             }
           }, {
@@ -67,7 +55,7 @@ export default {
               prop: 'TICKET',
               label: this.$t('ORD ID'),
               width: 65,
-              scopedSlot: this.$t('ORD ID'),
+              scopedSlot: 'order_id',
               align: 'center',
             }
           }, {
@@ -76,14 +64,14 @@ export default {
               label: this.$t('SYMBOL'),
               width: 75,
               align: 'center',
-              scopedSlot: this.$t('SYMBOL')
+              scopedSlot: 'symbol'
             }
           }, {
             attr: {
               prop: 'CMD',
               label: this.$t('CMD'),
               width: 50,
-              scopedSlot: this.$t('CMD'),
+              scopedSlot: 'CMD',
               align: 'center'
             }
           }, {
@@ -91,7 +79,7 @@ export default {
               prop: 'OPEN_PRICE',
               label: this.$t('PRICE'),
               width: 55,
-              scopedSlot: this.$t('PRICE'),
+              scopedSlot: 'price',
               align: 'center'
             }
           }, {
@@ -99,7 +87,7 @@ export default {
               prop: 'VOLUME',
               label: this.$t('SIZE'),
               width: 50,
-              scopedSlot: this.$t('SIZE'),
+              scopedSlot: 'size',
               align: 'center'
             }
           }, {
@@ -107,7 +95,7 @@ export default {
               prop: 'DIGITS',
               label: this.$t('DIGITS'),
               width: 70,
-              scopedSlot: this.$t('DIGITS'),
+              scopedSlot: 'digits',
               align: 'center'
             }
           }, {
@@ -115,7 +103,7 @@ export default {
               prop: 'CONTRACT_SIZE',
               label: this.$t('CONT SIZE'),
               width: 90,
-              scopedSlot: this.$t('CONT SIZE'),
+              scopedSlot: 'contract_size',
               align: 'center'
             }
           }, {
@@ -123,7 +111,7 @@ export default {
               prop: 'min_size',
               label: this.$t('MIN SIZE'),
               width: 80,
-              scopedSlot: this.$t('MIN SIZE'),
+              scopedSlot: 'min_size',
               align: 'center'
             }
           }, {
@@ -131,7 +119,7 @@ export default {
               prop: 'step_size',
               label: this.$t('STEP SIZE'),
               width: 90,
-              scopedSlot: this.$t('STEP SIZE'),
+              scopedSlot: 'step_size',
               align: 'center'
             }
           }, {
@@ -139,7 +127,7 @@ export default {
               prop: 'COMMENT',
               label: this.$t('COMMENT'),
               width: 90,
-              scopedSlot: this.$t('COMMENT'),
+              scopedSlot: 'comment',
               align: 'center'
             }
           }, {
@@ -310,8 +298,6 @@ export default {
           }
         }
       });
-      console.log('tableData1', this.tableData);
-      console.log('flag', flag);
       if (flag == true) {
         var position = {};
         var temp = [];
@@ -321,7 +307,7 @@ export default {
             if (column.attr.prop) {
               var k = column.attr.prop
               var [result, v] = this.parse_input(k, row[k].value);
-              position[column.attr.label] = v;
+              position[column.attr.scopedSlot] = v;
             };
           });
           var spacialAttr = {
@@ -341,16 +327,20 @@ export default {
         this.$$api_common_ajax({
           data: {
             func_name: 'router_api.create_positions',
-            args: [],
+            args: [temp],
             kwargs: {}
           },
           fn: data => {
-            this.addPositionDialog.show = true;
-            this.addPositionDialog.result = data;
+            // this.$store.dispatch('hide_add_position');
+            this.addPositionResult = JSON.stringify(data);
+            // this.resultTableVisible = true;
           },
           errFn: (err) => {
-            // this.$message.error(err.msg);
-
+            this.$message({
+              showClose: true,
+              message: err.response.data,
+              type: 'error'
+            });
           }
         });
 

@@ -1,5 +1,5 @@
 <template>
-  <div class='list'>
+  <div class='std_symbol_container'>
     <el-row>
         <el-col :span='24' class='actions-top'>
             <el-button type='primary' @click='addDialogTableVisible=true'>{{$t('Add Symbol')}}</el-button>
@@ -118,7 +118,7 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='add_symbol_submit(new_tableData[0])'>Submit</el-button>
+              <el-button type="primary" :loading='add_loading'  @click='add_symbol_submit(new_tableData[0])'>Submit</el-button>
           </el-col>    
       </el-dialog>
 
@@ -178,7 +178,7 @@
               </template>
           </bel-table> 
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='edit_symbol_submit(edit_tableData[0])'>Submit</el-button>
+              <el-button type="primary" :loading='edit_loading'  @click='edit_symbol_submit(edit_tableData[0])'>Submit</el-button>
           </el-col>    
       </el-dialog>
   </div>
@@ -188,6 +188,6 @@
 import StdSymbolJs from './StdSymbol.js';
 export default StdSymbolJs;
 </script>
-<style scoped lang='less'>
+<style lang='less'>
     @import url(StdSymbol.less);
 </style>

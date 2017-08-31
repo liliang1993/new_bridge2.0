@@ -7,6 +7,8 @@ export default {
     return {
       addDialogTableVisible: false,
       editDialogTableVisible: false,
+      add_loading: false,
+      edit_loading: false,
       tableData: [],
       add_tableData: [{
         username: '',
@@ -24,6 +26,7 @@ export default {
         lps: '',
         groups: '',
         symbols: '',
+        status: '',
         desc: ''
       }],
       pagination: {
@@ -135,7 +138,6 @@ export default {
           },
           columns: [{
             attr: {
-              prop: 'username',
               label: this.$t('USERNAME'),
               minWidth: 100,
               align: 'center',
@@ -143,7 +145,6 @@ export default {
             }
           }, {
             attr: {
-              prop: 'username',
               label: this.$t('PASSWORD'),
               minWidth: 100,
               align: 'center',
@@ -255,6 +256,13 @@ export default {
             },
           }, {
             attr: {
+              label: this.$t('STATUS'),
+              minWidth: 100,
+              align: 'center',
+              scopedSlot: 'status'
+            },
+          }, {
+            attr: {
               prop: 'desc',
               label: this.$t('DESCRIPTION'),
               minWidth: 100,
@@ -279,11 +287,9 @@ export default {
     editUser(row) {
       this.editDialogTableVisible = true;
       Object.assign(this.edit_tableData[0], row);
-      console.log('edit_tableData', this.edit_tableData);
-
     },
     add_user_submit(data) {
-      console.log('data', data);
+      this.add_loading = true;
       this.$$api_common_ajax({
         data: {
           func_name: 'user.create_user',
@@ -295,11 +301,12 @@ export default {
           }
         },
         fn: data => {
+          this.add_loading = false;
           this.find_page_user();
           this.addDialogTableVisible = false;
         },
         errFn: (err) => {
-          console.log(err);
+          this.add_loading = false;
           this.$message({
             showClose: true,
             message: err.response.data,
@@ -309,6 +316,7 @@ export default {
       });
     },
     edit_user_submit(row) {
+      this.edit_loading = true;
       this.$$api_common_ajax({
         data: {
           func_name: 'user.update_user',
@@ -320,11 +328,13 @@ export default {
           }
         },
         fn: data => {
+          this.edit_loading = false;
           this.editDialogTableVisible = false;
           this.find_page_user();
 
         },
         errFn: (err) => {
+          this.edit_loading = false;
           this.$message({
             showClose: true,
             message: err.response.data,

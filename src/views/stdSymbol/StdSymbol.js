@@ -31,7 +31,9 @@ export default {
             }],
             addDialogTableVisible: false,
             editDialogTableVisible: false,
-            visible: false
+            visible: false,
+            add_loading: false,
+            edit_loading: false
         }
     },
     computed: {
@@ -143,7 +145,7 @@ export default {
                         attr: {
                             prop: 'std_symbol',
                             label: this.$t('STD SYMBOL'),
-                            width: 90,
+                            minWidth: 90,
                             scopedSlot: 'std_symbol',
                             align: 'center'
                         }
@@ -151,7 +153,7 @@ export default {
                         attr: {
                             prop: 'lp',
                             label: this.$t('LP'),
-                            width: 100,
+                            minWidth: 100,
                             scopedSlot: 'lp',
                             align: 'center'
                         }
@@ -159,7 +161,7 @@ export default {
                         attr: {
                             prop: 'lp_symbol',
                             label: this.$t('LP SYMBOL'),
-                            width: 90,
+                            minWidth: 90,
                             scopedSlot: 'lp_symbol',
                             align: 'center'
                         }
@@ -167,7 +169,7 @@ export default {
                         attr: {
                             prop: 'weight',
                             label: this.$t('WEIGHT'),
-                            width: 90,
+                            minWidth: 90,
                             scopedSlot: 'weight',
                             align: 'center'
                         }
@@ -175,7 +177,7 @@ export default {
                         attr: {
                             prop: 'min_qty',
                             label: this.$t('MIN QTY'),
-                            width: 90,
+                            minWidth: 80,
                             scopedSlot: 'min_qty',
                             align: 'center'
                         }
@@ -183,7 +185,7 @@ export default {
                         attr: {
                             prop: 'contract_size',
                             label: this.$t('CON SIZE'),
-                            width: 110,
+                            minWidth: 90,
                             scopedSlot: 'contract_size',
                             align: 'center'
                         }
@@ -191,7 +193,7 @@ export default {
                         attr: {
                             prop: 'quote_enable',
                             label: this.$t('QUOTE ENABLE'),
-                            minWidth: 120,
+                            minWidth: 80,
                             scopedSlot: 'quote_enable',
                             align: 'center'
                         }
@@ -199,7 +201,7 @@ export default {
                         attr: {
                             prop: 'trade_enable',
                             label: this.$t('TRADE ENABLE'),
-                            minWidth: 120,
+                            minWidth: 80,
                             scopedSlot: 'trade_enable',
                             align: 'center'
                         }
@@ -294,6 +296,7 @@ export default {
             contract_size = data.contract_size * 1;
             quote_enable = this.string_to_boolean(data.quote_enable);
             trade_enable = this.string_to_boolean(data.trade_enable);
+            this.add_loading = true;
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_add_symbol',
@@ -301,11 +304,13 @@ export default {
                     kwargs: {}
                 },
                 fn: data => {
+                    this.add_loading = false;
                     this.load_data();
                     this.get_global_std_symbols();
                     this.addDialogTableVisible = false;
                 },
                 errFn: (err) => {
+                    this.add_loading = false;
                     this.$message({
                         showClose: true,
                         message: err.response.data,
@@ -325,6 +330,7 @@ export default {
             row.contract_size = row.contract_size * 1;
             var quote_enable = this.string_to_boolean(row.quote_enable);
             var trade_enable = this.string_to_boolean(row.trade_enable);
+            this.edit_loading = true;
             this.$$api_common_ajax({
                 data: {
                     func_name: 'router_api.lp_add_symbol',
@@ -332,10 +338,12 @@ export default {
                     kwargs: {}
                 },
                 fn: data => {
+                    this.edit_loading = true;
                     this.editDialogTableVisible = false;
                     this.load_data();
                 },
                 errFn: (err) => {
+                    this.add_loading = false;
                     this.$message({
                         showClose: true,
                         message: err.response.data,

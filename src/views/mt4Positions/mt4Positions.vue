@@ -1,8 +1,8 @@
 <template>
   <div class='mt4_positions clearfix'>
         <div class="top_bar">
-          <el-button>Reload</el-button>
-          <el-button type='primary' @click='check_bridge_mt4_diff' >Check MT4 Bridge Diff</el-button>
+          <el-button type='primary' :loading='reload_loading' @click = 'reload_data'>Reload</el-button>
+          <el-button type='primary' :loading='check_loading' @click='check_bridge_mt4_diff' >{{check_loading ?procsess_text :'Check MT4 Bridge Diff'}} </el-button>
           </div> 
         <div class="container">
             <bel-table

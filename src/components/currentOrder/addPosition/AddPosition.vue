@@ -16,8 +16,8 @@
       ref="table"
       class='dialog_table'
       :configs="tableConfig">
-        <template v-for='(item,index) in tableConfig.columns'  :slot="item.attr.label" scope="scope">
-              <input  :placeholder='item.attr.label.toLowerCase()' v-model='scope.row[item.attr.prop].value' class='table_input_wrap' :class='scope.row[item.attr.prop].class'></input>
+        <template v-for='(item,index) in tableConfig.columns'  :slot="item.attr.scopedSlot" scope="scope">
+              <input  :placeholder='$t(item.attr.label.toLowerCase())' v-model='scope.row[item.attr.prop].value' class='table_input_wrap' :class='scope.row[item.attr.prop].class'></input>
         </template>
         <template slot="delete" scope="scope">
               <!-- <el-button
@@ -36,7 +36,10 @@
               <el-button type="primary" @click='onSubmit'>{{$t('Submit')}}</el-button>
           </el-col> 
     </el-row>
-   
+    <el-dialog title="Add Position Result" :visible.sync="resultTableVisible" top='40%' :modal='false'
+      >
+      <pre>{{addPositionResult}}</pre> 
+      </el-dialog>
   </div>
 </template>
 
