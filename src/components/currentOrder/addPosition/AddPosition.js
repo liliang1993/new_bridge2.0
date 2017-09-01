@@ -4,6 +4,7 @@ export default {
     return {
       search_orders_loading: false,
       search_login_loading: false,
+      submit_loading: false,
       resultTableVisible: false,
       logKeyword: '',
       ordKeyword: '',
@@ -324,6 +325,7 @@ export default {
           Object.assign(position, spacialAttr);
           temp.push(position);
         });
+        this.submit_loading = true;
         this.$$api_common_ajax({
           data: {
             func_name: 'router_api.create_positions',
@@ -331,11 +333,11 @@ export default {
             kwargs: {}
           },
           fn: data => {
-            // this.$store.dispatch('hide_add_position');
+            this.submit_loading = false;
             this.addPositionResult = JSON.stringify(data);
-            // this.resultTableVisible = true;
           },
           errFn: (err) => {
+            this.submit_loading = false;
             this.$message({
               showClose: true,
               message: err.response.data,

@@ -10,7 +10,25 @@
       class='dialog_table'
       :configs="tableConfig">
         <template slot="lp_positions" scope="scope">
-            <span v-for="(value,key) in scope.row.lp_positions" v-if='value != 0 && value != undefined' >{{key}}:{{value}}</span>      
+  <!--           <el-popover
+                    class='type_attr_popover'
+                    placement="bottom-start"
+                    width="160"
+                    trigger='click'
+                    >
+                    <bel-table
+                      ref="table"
+                      class='dialog_table'
+                      :configs="lpPositionConfig">
+                           <template slot="value" scope="scope">
+                                <div>{{scope.row.value}}</div>
+                                <el-input v-model='scope.row.value'></el-button>
+                            </template>  
+                      </bel-table>
+                     <a href='javascript:void(0);' click='openLpPositionTable()' class='type_formore' slot="reference">
+                    click</a>
+              </el-popover>  -->
+            <!-- <span v-for="(value,key) in scope.row.lp_positions" v-if='value != 0 && value != undefined' >{{key}}:{{value}}</span>       -->
         </template>
         <template slot="delete" scope="scope">
                <el-button

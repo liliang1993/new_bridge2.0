@@ -329,7 +329,6 @@ export default {
         lp_positions[lp] = qty;
       }
       this.$set(this.listData[this.row_index], "lp_positions", lp_positions);
-      // console.log('lp_positions',this.lpPositionData,lp_positions);
       this.editDialogTableVisible = false;
     },
     init() {
@@ -343,7 +342,7 @@ export default {
           this.get_alive_lp_symbols(data);
         },
         errFn: (err) => {
-          // this.$message.error(err.msg);
+
         }
       });
     }

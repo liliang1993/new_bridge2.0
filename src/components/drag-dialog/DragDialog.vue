@@ -129,7 +129,7 @@ export default {
 	/*dialog*/
 	.xa-popup .layer{position:fixed;left:0;top:0;background:rgba(0,0,0,0.3);width:100%;height:100%;z-index:1000;}
 	.xa-popup .popup{min-width:300px;background:#fff;z-index:1001;position:fixed;left:50%;top:50%;box-shadow:0 0 10px #888;border-radius:5px;overflow:hidden;}
-	.xa-popup .popup>.title{width:100%;height:44px;line-height:44px;text-align:center;font-size:16px;cursor:move;position:relative;}
+	.xa-popup .popup>.title{width:100%;height:44px;line-height:44px;text-align:left;padding-left:10px;font-size:16px;cursor:move;position:relative;}
 	.xa-popup .popup>.title>.close{height:44px;width:44px;position:absolute;right:0;top:0;cursor:pointer;font-size:30px;}
 	.xa-popup .popup>.title>.close:after{content:'×';display:block;}
 	.xa-popup .popup>.title>.close:hover{background:rgba(255,255,255,0.1);}

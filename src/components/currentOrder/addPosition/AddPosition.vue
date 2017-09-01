@@ -33,13 +33,15 @@
              <i class='icon icon_add' @click='addNewRow()'></i>
         </el-col>
           <el-col :span='24' class='confirm_btn'>
-              <el-button type="primary" @click='onSubmit'>{{$t('Submit')}}</el-button>
+              <el-button type="primary" :loading='submit_loading' @click='onSubmit'>{{$t('Submit')}}</el-button>
           </el-col> 
     </el-row>
-    <el-dialog title="Add Position Result" :visible.sync="resultTableVisible" top='40%' :modal='false'
-      >
-      <pre>{{addPositionResult}}</pre> 
-      </el-dialog>
+    <el-col :span='24' >
+          <p>Result：</p>
+          <div class='show_area'>
+              <prev>{{addPositionResult}}</prev>  
+          </div>
+    </el-col> 
   </div>
 </template>
 

@@ -52,6 +52,7 @@
             <!-- clienttradelog lp_order -->
             <drag-dialog  
         v-for='(item,key) in $store.state.clienttradelog.lp_order_dicts'
+        
         @close = 'close_tlog_lp_order_table(key)'
         :key = key
         >

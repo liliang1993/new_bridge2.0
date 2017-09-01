@@ -11,14 +11,13 @@ import TradeRule from './trade-rule'
 import LpOrder from './lp-order/';
 import Mt4Position from './mt4-position/';
 import QuoteRule from './quote-rule/';
-// console.log('add', AddPosition);
+
 export {
   Echarts,
   ListData,
   FormData,
   DialogInfo,
   TraderuleDialog,
-  AddPosition,
   DragDialog,
   LpQuote,
   CurrentOrder,
@@ -26,5 +25,4 @@ export {
   LpOrder,
   Mt4Position,
   QuoteRule
-  // DeletePosition
 };
