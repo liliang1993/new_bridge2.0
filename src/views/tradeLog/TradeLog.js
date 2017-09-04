@@ -38,12 +38,12 @@ export default {
                                         name: 'size'
                                 },
                                 status: {
-                                        value: '',
+                                        value: 'all',
                                         type: 'list',
                                         name: 'status'
                                 },
                                 time_range: {
-                                        value: [],
+                                        value: '',
                                         type: 'datetime',
                                         name: 'time',
                                 },
@@ -426,10 +426,6 @@ export default {
                                                         // prop: 'exec_price',
                                                         label: this.$t('STATUS'),
                                                         minWidth: 60,
-                                                        // formatter:function(r){
-                                                        //         status = r.confirm.status;
-                                                        //         status_text = ORD_STATUS[status];
-                                                        // }
                                                         align: 'center',
                                                         scopedSlot: 'status'
                                                 }
@@ -518,8 +514,8 @@ export default {
                 },
                 show_lp_orders(row) {
                         console.log('row', row);
-                        
-                        
+
+
                         // var id = ord_id + "-" + row.time;
                         // var config = row;
                         // var lp_order = {
@@ -534,11 +530,11 @@ export default {
                         var title = {
                                 text: '#' + ord_id + ' LP Orders Settle:' + row.request.settle
                         };
-                         var param = {
-                         id: [ord_id,row.time],
-                         value: row.trade_log
-                         };
-                         this.$store.dispatch('update_tlog_lp_order_dicts', param);       
+                        var param = {
+                                id: [ord_id, row.time],
+                                value: row
+                        };
+                        this.$store.dispatch('update_tlog_lp_order_dicts', param);
                 },
                 onCloseLpOrder(index) {
                         this.lp_orders.splice(index, 1);

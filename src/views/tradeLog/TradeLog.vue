@@ -34,7 +34,7 @@
             </div>
             <div class="search_item">
               <label>{{$t('TIME')}}</label>
-            <el-date-picker class='search_date_picker' v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围" picker-options="pickerOptions" format="yyyy/MM//dd"></el-date-picker>
+            <el-date-picker class='search_date_picker' v-model="keywords.time_range.value" type="daterange" align="right" placeholder="选择日期范围"  format="yyyy/MM/dd"></el-date-picker>
             </div>
             <div class="button_bar">
               <el-button  type='primary' @click='onSearchKeyWord'>{{$t('Search')}}</el-button>

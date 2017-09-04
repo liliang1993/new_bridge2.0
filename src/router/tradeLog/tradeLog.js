@@ -12,7 +12,7 @@ import {
 
 export default {
   path: 'trade_log',
-  name: 'Client Trade Log',
+  name: 'Trade Log',
   icon: 'inbox',
   component: TradeLog
 };

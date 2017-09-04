@@ -227,9 +227,9 @@ module.exports = {
       var keyword = this.keywords[key];
       switch (keyword.type) {
         case 'list':
-          if (keyword.value) {
+          if (keyword.value && keyword.value !== 'all') {
             val[keyword.name] = keyword.value;
-          };
+          }
           break;
         case 'int':
           var value = parseInt(keyword.value);

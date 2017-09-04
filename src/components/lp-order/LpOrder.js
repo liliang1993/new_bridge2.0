@@ -57,15 +57,15 @@ export default {
           }, {
             attr: {
               prop: 'order_id',
-              label: 'ORDID',
-              minWidth: 130,
+              label: this.$t('ORDID'),
+              minWidth: 70,
               align: 'left',
               headerAlign: 'left'
             }
           }, {
             attr: {
               prop: 'exec_price',
-              label: 'EXEC PRICE',
+              label: this.$t('EXEC PRICE'),
               minWidth: 100,
               align: 'left',
               headerAlign: 'left'
@@ -73,7 +73,7 @@ export default {
           }, {
             attr: {
               prop: 'exec_qty',
-              label: 'EXEC QTY',
+              label: this.$t('EXEC QTY'),
               minWidth: 80,
               align: 'left',
               headerAlign: 'left'
@@ -81,23 +81,25 @@ export default {
           }, {
             attr: {
               prop: 'bid_size',
-              label: 'BID SIZE',
+              label: this.$t('BID SIZE'),
               width: 80,
               align: 'left',
+              scopedSlot: 'bid_size',
               headerAlign: 'left'
             }
           }, {
             attr: {
               prop: 'bid_price',
-              label: 'BID',
+              label: this.$t('BID'),
               width: 70,
               align: 'left',
               headerAlign: 'left',
-              scopedSlot: 'status'
+              scopedSlot: 'bid_price',
+              scopedSlot: 'bid_price'
             }
           }, {
             attr: {
-              prop: 'price_diff',
+              prop: this.$t('price_diff'),
               label: '!',
               minWidth: 50,
               align: 'left',
@@ -106,23 +108,25 @@ export default {
           }, {
             attr: {
               prop: 'ofr_price',
-              label: 'ASK',
+              label: this.$t('ASK'),
               minWidth: 70,
               align: 'left',
+              scopedSlot: 'ofr_price',
               headerAlign: 'left'
             }
           }, {
             attr: {
               prop: 'ofr_size',
-              label: 'ASK SIZE',
+              label: this.$t('ASK SIZE'),
               minWidth: 80,
               align: 'left',
+              scopedSlot: 'ofr_size',
               headerAlign: 'left'
             }
           }, {
             attr: {
               prop: 'lp_slippage',
-              label: 'LP Slippage ',
+              label: this.$t('LP Slippage'),
               minWidth: 100,
               align: 'left',
               headerAlign: 'left'
@@ -130,15 +134,16 @@ export default {
           }, {
             attr: {
               prop: 'client_slippage',
-              label: 'CLIENT SLIPPAGE',
+              label: this.$t('CLIENT SLIPPAGE'),
               minWidth: 135,
               align: 'left',
+              scopedSlot: 'client_slippage',
               headerAlign: 'left'
             }
           }, {
             attr: {
               prop: 'exec_time',
-              label: 'EXEC TIME',
+              label: this.$t('EXEC TIME'),
               minWidth: 90,
               align: 'left',
               headerAlign: 'left'
@@ -146,9 +151,10 @@ export default {
           }, {
             attr: {
               prop: 'status',
-              label: 'status',
+              label: this.$t('status'),
               minWidth: 60,
               align: 'left',
+              scopedSlot: 'status',
               headerAlign: 'left'
             }
           }]
@@ -166,7 +172,7 @@ export default {
         return a.exec_time > b.exec_time ? 1 : -1;
       }
     },
-    render_row(order, lp, ord_price, ord_qty, ord_status, lp_slippage, client_spread) {
+    render_row(order, lp, ord_price, ord_qty, ord_status, lp_slippage, client_spread, buyFlag, statusFlag) {
       var opts = {
         lp: order.lp,
         order_id: order.order_id,
@@ -180,7 +186,9 @@ export default {
         lp_slippage: this.num_format(lp_slippage, this.digits),
         client_slippage: this.num_format(client_spread, this.digits),
         exec_time: this.num_format(order.exec_time - order.req_time, 3),
-        status: ord_status
+        status: ord_status,
+        buyFlag: buyFlag,
+        statusFlag: statusFlag
       }
       this.tableData.push(opts);
     }
@@ -189,12 +197,12 @@ export default {
     console.log('yijinggaibian');
     // this.lp_order = v;
     var r = this.lp_order;
-    console.log('lp_order',this.lp_order);
+    console.log('lp_order', this.lp_order);
     var reqprice = r.request.price;
     var lp_quote_dict = this.get_lp_quote_dict(r.lp_quote || {
-            "bid": [],
-            "ofr": []
-          });
+      "bid": [],
+      "ofr": []
+    });
     r.orders.sort(this.order_id_sort);
     var traded_lps = {};
     this.digits = r.request.digits;
@@ -209,15 +217,22 @@ export default {
       if (order.side == "buy") {
         var client_spread = ord_price - reqprice
         var lp_slippage = ord_price - lp.ofr_price
+        var buyFlag = true;
       } else {
         var client_spread = reqprice - ord_price
         var lp_slippage = lp.bid_price - ord_price
+        var buyFlag = false;
       };
-      this.render_row(order, lp, ord_price, ord_qty, ord_status, lp_slippage, client_spread);
+      if (ord_status === 'filled' || ord_status === 'partial') {
+        var statusFlag = true;
+      } else {
+        var statusFlag = false;
+      }
+      this.render_row(order, lp, ord_price, ord_qty, ord_status, lp_slippage, client_spread, buyFlag, statusFlag);
     };
-    console.log('lp_quote',lp_quote_dict);
+    console.log('lp_quote', lp_quote_dict);
     for (var lp_name in lp_quote_dict) {
-        var quote = lp_quote_dict[lp_name];
+      var quote = lp_quote_dict[lp_name];
       if (traded_lps[lp_name] === undefined) {
         var order = {
           lp: lp_name,
@@ -225,7 +240,7 @@ export default {
         };
         this.render_row(order, quote, '-', '-', '-', '-', '-');
       };
-      
+
     };
   }
 }

@@ -7,12 +7,12 @@
 // } from 'layout/';
 
 import {
-	StdSymbolPosition
+  StdSymbolPosition
 } from 'views/';
 
 export default {
-	path: 'stdsymbol_position',
-	name: 'STD Symbol Position',
-	icon: 'inbox',
-	component: StdSymbolPosition
+  path: 'stdsymbol_position',
+  name: 'Symbol Position',
+  icon: 'inbox',
+  component: StdSymbolPosition
 };

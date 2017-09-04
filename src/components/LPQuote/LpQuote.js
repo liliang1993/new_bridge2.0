@@ -208,15 +208,6 @@ module.exports = {
       console.log('quote_lines', min_quote, max_quote, quote.bid_price, quote.ofr_price, px_per_pip, spread_pips, multiple, this.quote_lines);
     },
     update_lp_quotes() {
-      // var params = {
-      //   func_name: 'router_api.lp_get_quote',
-      //   args: [this.stdSymbol]
-      // }
-      // CommonApi.postNormalAjax.call(this, params, data => {
-      //   this.render_lp_quotes(data, this.digits);
-      //   this.settimeout_id = setTimeout(this.update_lp_quotes, 3000);
-      // });
-      // 
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.lp_get_quote',
