@@ -54,7 +54,7 @@ export default {
                         attr: {
                             prop: 'std_symbol',
                             label: this.$t('STD SYMBOL'),
-                            minWidth: 150,
+                            minWidth: 120,
                             sortable: true,
                             align: 'center'
                         }
@@ -62,7 +62,7 @@ export default {
                         attr: {
                             prop: 'lp',
                             label: this.$t('LP'),
-                            minWidth: 100,
+                            minWidth: 50,
                             sortable: true,
                             align: 'center'
                         }
@@ -70,7 +70,7 @@ export default {
                         attr: {
                             prop: 'lp_symbol',
                             label: this.$t('LP SYMBOL'),
-                            minWidth: 150,
+                            minWidth: 105,
                             sortable: true,
                             align: 'center'
                         }
@@ -78,7 +78,7 @@ export default {
                         attr: {
                             prop: 'weight',
                             label: this.$t('WEIGHT'),
-                            minWidth: 100,
+                            minWidth: 85,
                             sortable: true,
                             scopedSlot: 'weight_attr',
                             align: 'center'
@@ -87,7 +87,7 @@ export default {
                         attr: {
                             prop: 'min_qty',
                             label: this.$t('MIN QTY'),
-                            minWidth: 100,
+                            minWidth: 90,
                             sortable: true,
                             scopedSlot: 'min_qty_attr',
                             align: 'center'
@@ -96,7 +96,7 @@ export default {
                         attr: {
                             prop: 'contract_size',
                             label: this.$t('CON SIZE'),
-                            minWidth: 100,
+                            minWidth: 90,
                             sortable: true,
                             scopedSlot: 'contract_size_attr',
                             align: 'center'
@@ -123,7 +123,7 @@ export default {
                         attr: {
                             // prop: 'address',
                             label: this.$t('OPERATION'),
-                            minWidth: 100,
+                            minWidth: 85,
                             scopedSlot: 'handler',
                             align: 'center',
                         }

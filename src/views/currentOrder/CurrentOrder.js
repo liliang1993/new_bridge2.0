@@ -59,8 +59,7 @@ export default {
             attr: {
               prop: 'source',
               label: this.$t('SOURCE'),
-              minWidth: 80,
-              // scopedSlot: 'date',
+              minWidth: 60,
               align: 'center'
             }
           }, {
@@ -74,35 +73,35 @@ export default {
             attr: {
               prop: 'trade_log.request.group',
               label: this.$t('GROUP'),
-              minWidth: 120,
+              minWidth: 80,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'trade_log.request.login',
               label: this.$t('CLIENT'),
-              width: 80,
+              minWidth: 75,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'std_symbol',
               label: this.$t('SYMBOL'),
-              width: 80,
+              minWidth: 75,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'status',
               label: this.$t('STATUS'),
-              minWidth: 70,
+              minWidth: 58,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'side',
               label: this.$t('SIDE'),
-              minWidth: 60,
+              minWidth: 58,
               align: 'center',
               formatter(item) {
                 if (item.trade_log.request.settle == 0) {
@@ -124,7 +123,7 @@ export default {
             attr: {
               prop: 'order_size',
               label: this.$t('ORDER SIZE'),
-              minWidth: 80,
+              minWidth: 55,
               align: 'center',
               renderHeader(createElement, {
                 column
@@ -151,7 +150,7 @@ export default {
             attr: {
               prop: 'bbook_size',
               label: this.$t('B BOOK SIZE'),
-              minWidth: 100,
+              minWidth: 90,
               align: 'center',
               formatter(item) {
                 return item.bbook_quantity / item.trade_log.request.contract_size;
@@ -161,7 +160,7 @@ export default {
             attr: {
               prop: 'trade_log.request.contract_size',
               label: this.$t('CON SIZE'),
-              minWidth: 100,
+              minWidth: 68,
               align: 'center'
             }
           }, {
@@ -185,7 +184,7 @@ export default {
                   ]);
                 }
               },
-              minWidth: 90,
+              minWidth: 73,
               align: 'center',
               formatter(item) {
                 return item.trade_log.request.size + '/' + item.trade_log.confirm.size;
@@ -202,14 +201,14 @@ export default {
             attr: {
               prop: 'slippage',
               label: this.$t('SLIPPAGE'),
-              minWidth: 50,
+              minWidth: 69,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'trade_log.trade_rule.attributes.coverage',
               label: this.$t('COVERAGE'),
-              minWidth: 80,
+              minWidth: 77,
               align: 'center'
             }
           }, {
@@ -224,7 +223,7 @@ export default {
             attr: {
               prop: 'cost',
               label: this.$t('COST'),
-              minWidth: 80,
+              minWidth: 50,
               align: 'center',
               formatter(item) {
                 return parseInt((item.trade_log.end_time - item.trade_log.start_time) * 1000) + "ms";
@@ -234,7 +233,7 @@ export default {
             attr: {
               prop: 'time',
               label: this.$t('TIME'),
-              minWidth: 150,
+              minWidth: 60,
               align: 'center',
               formatter(item) {
                 return (new Date((item.trade_log.time + 8 * 3600) * 1000)).toISOString();
@@ -244,14 +243,14 @@ export default {
             attr: {
               prop: 'done',
               label: this.$t('DONE'),
-              minWidth: 70,
+              minWidth: 56,
               align: 'center'
             }
           }, {
             attr: {
               prop: 'operation',
               label: this.$t('DETAIL'),
-              minWidth: 80,
+              minWidth: 60,
               scopedSlot: 'detail',
               align: 'center'
             }

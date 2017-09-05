@@ -35,7 +35,7 @@ export default {
                         attr: {
                             prop: 'source',
                             label: this.$t('SOURCE'),
-                            // width: 120,
+                            minWidth: 100,
                             sortable: true,
                             // scopedSlot: 'date',
                             align: 'center'
@@ -51,7 +51,7 @@ export default {
                     }, {
                         attr: {
                             label: this.$t('MT4 SYMBOL'),
-                            // width: 150,
+                            minWidth: 120,
                             sortable: true,
                             formatter(item) {
                                 return item.mt4_symbols.length;
@@ -62,7 +62,7 @@ export default {
                         attr: {
                             // prop: 'weight',
                             label: this.$t('VIEW RULES'),
-                            // width: 100,
+                            minWidth: 120,
                             sortable: true,
                             align: 'center',
                             scopedSlot: 'rulesdetail',
@@ -70,7 +70,7 @@ export default {
                     }, {
                         attr: {
                             label: this.$t('CREATE TO NEW RULES'),
-                            // width: 180,
+                            minWidth: 180,
                             sortable: true,
                             align: 'center',
                             scopedSlot: 'copygroup',

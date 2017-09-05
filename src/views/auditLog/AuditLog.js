@@ -47,7 +47,7 @@ export default {
             attr: {
               prop: 'username',
               label: this.$t('USERNAME'),
-              minWidth: 100,
+              minWidth: 110,
               sortable: true,
               align: 'center'
             }
@@ -63,7 +63,7 @@ export default {
             attr: {
               prop: 'request',
               label: this.$t('REQUEST'),
-              minWidth: 290,
+              minWidth: 190,
               sortable: true,
               align: 'left',
               showOverflowTooltip: false,
@@ -91,7 +91,7 @@ export default {
             attr: {
               prop: 'remote_ip',
               label: this.$t('IP'),
-              minWidth: 180,
+              minWidth: 100,
               sortable: true,
               align: 'center'
             }
@@ -99,7 +99,7 @@ export default {
             attr: {
               prop: 'create_time',
               label: this.$t('TIME'),
-              minWidth: 180,
+              minWidth: 160,
               sortable: true,
               align: 'center'
             }

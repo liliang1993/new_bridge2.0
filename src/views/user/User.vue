@@ -35,7 +35,7 @@
             </el-pagination>
       </el-col>
 
-      <el-dialog title="Add User"  :visible.sync="addDialogTableVisible" top='40%'  >
+      <el-dialog :title="$t('Add User')"  :visible.sync="addDialogTableVisible" top='40%'  >
            <bel-table
            v-if='addDialogTableVisible'
           ref="table"    
@@ -81,7 +81,7 @@
               <el-button type="primary" :loading='add_loading' @click='add_user_submit(add_tableData[0])'>Confirm</el-button>
           </el-col>    
       </el-dialog>
-      <el-dialog title="Edit User" :visible.sync="editDialogTableVisible" top='40%'
+      <el-dialog :title="$t('Edit User')" :visible.sync="editDialogTableVisible" top='40%'
       >
            <bel-table
           ref="table"    

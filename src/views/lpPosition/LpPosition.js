@@ -138,7 +138,8 @@ export default {
           this.request_symbol_positions();
         },
         errFn: (err) => {
-          this.$message.error(err.msg);
+          // this.$message.error(err.msg);
+
         }
       });
     },
@@ -180,20 +181,34 @@ export default {
           label: this.$t('STD SYMBOL'),
           sortable: true,
           fixed: 'left',
-          minwidth: '220',
+          minWidth: '115',
           align: 'center'
         }
       });
       this.lp_names.forEach((lp_name, index) => {
-        this.columns.push({
-          attr: {
-            prop: lp_name,
-            label: this.$t(lp_name.toUpperCase()),
-            sortable: true,
-            scopedSlot: lp_name,
-            align: 'center'
-          }
-        });
+        if (lp_name === 'unexpect_bbook') {
+          this.columns.push({
+            attr: {
+              prop: lp_name,
+              label: this.$t(lp_name.toUpperCase()),
+              sortable: true,
+              scopedSlot: lp_name,
+              minWidth: '150',
+              align: 'center'
+            }
+          });
+        } else {
+          this.columns.push({
+            attr: {
+              prop: lp_name,
+              label: this.$t(lp_name.toUpperCase()),
+              sortable: true,
+              scopedSlot: lp_name,
+              align: 'center'
+            }
+          });
+        }
+
       });
       this.columns.push({
         attr: {
@@ -201,35 +216,15 @@ export default {
           label: this.$t('TOTAL'),
           sortable: true,
           scopedSlot: 'total',
-          minwidth: '220',
+          minWidth: '80',
           fixed: 'right',
           align: 'center'
         }
       });
       for (j = 0, len1 = std_symbol_names.length; j < len1; j++) {
         std_name = std_symbol_names[j];
-        // this.tableData.push({
-        //   std_symbol: std_name
-        // });
       }
     },
-    // request_symbol_positions(){
-    //  this.load_status = 'Reqesting positions ...';
-    //  this.load_text_color= 'black';
-    //   var params ={
-    //     func_name: "router_api.get_symbol_positions"
-    //   };
-    //   CommonApi.postFormAjax.call(this,params,data=>{
-    //     console.log('data',data);
-    //     console.log('123',this.std_symbols);
-    //     this.render_symbol_positions(data);
-    //     this.next_fresh_time = (new Date()).getTime() + 2000;
-    //     this.api_requested = false;
-    //     this.load_status = 'Reqested position OK!';
-    //     this.load_text_color = 'green';
-    //   });
-    //   this.api_requested = true;
-    // },
     request_symbol_positions() {
       this.load_status = 'Reqesting positions ...';
       this.load_text_color = 'black';

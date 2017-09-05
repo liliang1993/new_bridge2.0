@@ -37,7 +37,7 @@ module.exports = {
             attr: {
               prop: 'lp',
               label: this.$t('LP'),
-              width: 100,
+              minWidth: 55,
               sortable: true,
               align: 'center',
             }
@@ -45,7 +45,7 @@ module.exports = {
             attr: {
               prop: 'bid_time',
               label: this.$t('TIME'),
-              width: 150,
+              minWidth: 140,
               sortable: true,
               align: 'center',
             }
@@ -53,7 +53,7 @@ module.exports = {
             attr: {
               prop: 'bid_size',
               label: this.$t('Size'),
-              width: 100,
+              minWidth: 60,
               sortable: true,
               align: 'center',
             }
@@ -61,7 +61,7 @@ module.exports = {
             attr: {
               prop: 'bid',
               label: this.$t('BID'),
-              width: 100,
+              minWidth: 60,
               sortable: true,
               align: 'center',
               scopedSlot: 'bid',
@@ -71,14 +71,14 @@ module.exports = {
             attr: {
               prop: 'price_diff',
               label: '!',
-              width: 100,
+              minWidth: 40,
               align: 'center',
             }
           }, {
             attr: {
               prop: 'ofr',
               label: this.$t('OFR'),
-              width: 100,
+              minWidth: 60,
               sortable: true,
               align: 'center',
               scopedSlot: 'ofr',
@@ -88,7 +88,7 @@ module.exports = {
             attr: {
               prop: 'ofr_size',
               label: this.$t('SIZE'),
-              width: 100,
+              minWidth: 50,
               sortable: true,
               align: 'center',
             }

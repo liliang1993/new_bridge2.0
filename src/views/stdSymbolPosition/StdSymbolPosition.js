@@ -73,7 +73,7 @@ module.exports = {
               }));
             }
           }
-          console.log('this.std_symbols',this.std_symbols);
+          console.log('this.std_symbols', this.std_symbols);
           this.load_status = 'Load symbols success';
           this.load_text_color = 'green';
           if (this.current_std_symbol) {
@@ -91,7 +91,6 @@ module.exports = {
       max_weight = Math.max.apply(Math, (function() {
         var i, len, results;
         results = [];
-        console.log('lp_symbols',this.std_symbols,lp_symbols);
         for (i = 0, len = lp_symbols.length; i < len; i++) {
           s = lp_symbols[i];
           results.push(s.weight);
@@ -209,21 +208,24 @@ module.exports = {
         this.editLpSymbolDialogTableVisible = true;
         var quote_enable = this.boolean_to_string(item.lp_symbol.quote_enable);
         var trade_enable = this.boolean_to_string(item.lp_symbol.trade_enable);
-        Object.assign(this.dialog, item.lp_symbol,{quote_enable,trade_enable});
+        Object.assign(this.dialog, item.lp_symbol, {
+          quote_enable,
+          trade_enable
+        });
       }
     },
-    edit_lpSymbol_submit(){
-      var  quote_enable = this.string_to_boolean(this.dialog.quote_enable);
-      var  trade_enable = this.string_to_boolean(this.dialog.trade_enable);
+    edit_lpSymbol_submit() {
+      var quote_enable = this.string_to_boolean(this.dialog.quote_enable);
+      var trade_enable = this.string_to_boolean(this.dialog.trade_enable);
       var weight = parseInt(this.dialog.weight);
       this.$$api_common_ajax({
         data: {
           func_name: 'router_api.lp_add_symbol',
-          args: [this.dialog.lp, this.dialog.lp_symbol,this.dialog.std_symbol,quote_enable, trade_enable,weight,this.dialog.min_qty,this.dialog.contract_size],
+          args: [this.dialog.lp, this.dialog.lp_symbol, this.dialog.std_symbol, quote_enable, trade_enable, weight, this.dialog.min_qty, this.dialog.contract_size],
           kwargs: {}
         },
         fn: data => {
-          this.editLpSymbolDialogTableVisible  = false;
+          this.editLpSymbolDialogTableVisible = false;
           this.load_std_symbols();
 
         },

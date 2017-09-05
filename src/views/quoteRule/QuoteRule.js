@@ -103,7 +103,7 @@ export default {
             attr: {
               prop: 'source',
               label: this.$t('SOURCE'),
-              minWidth: 100,
+              minWidth: 82,
               sortable: true,
               align: 'center'
             }
@@ -111,7 +111,7 @@ export default {
             attr: {
               prop: 'mt4_symbol',
               label: this.$t('MT4 SYMBOL'),
-              minWidth: 120,
+              minWidth: 114,
               sortable: true,
               align: 'center'
             }
@@ -119,7 +119,7 @@ export default {
             attr: {
               prop: 'std_symbol',
               label: this.$t('STD SYMBOL'),
-              minWidth: 120,
+              minWidth: 112,
               sortable: true,
               align: 'center'
             }
@@ -127,7 +127,7 @@ export default {
             attr: {
               prop: 'type',
               label: this.$t('TYPE'),
-              minWidth: 120,
+              minWidth: 62,
               sortable: true,
               scopedSlot: 'type_attr',
               align: 'center'
@@ -135,7 +135,7 @@ export default {
           }, {
             attr: {
               label: this.$t('DIGITS'),
-              minWidth: 120,
+              minWidth: 74,
               sortable: true,
               scopedSlot: 'digits_attr',
               align: 'center'
@@ -144,7 +144,7 @@ export default {
             attr: {
               prop: 'attributes.bid_delta',
               label: this.$t('BID DELTA'),
-              minWidth: 100,
+              minWidth: 96,
               sortable: true,
               align: 'center'
             }
@@ -152,7 +152,7 @@ export default {
             attr: {
               prop: 'attributes.ofr_delta',
               label: this.$t('OFR DELTA'),
-              minWidth: 100,
+              minWidth: 99,
               sortable: true,
               scopedSlot: 'ofr_delta_attr',
               align: 'center'
@@ -161,7 +161,7 @@ export default {
             attr: {
               prop: 'attributes.minimal_spread',
               label: this.$t('MIN SPREAD'),
-              minWidth: 100,
+              minWidth: 110,
               sortable: true,
               scopedSlot: 'min_spread_attr',
               align: 'center'
@@ -170,7 +170,7 @@ export default {
             attr: {
               prop: 'attributes.maximal_spread',
               label: this.$t('MAX SPREAD'),
-              minWidth: 100,
+              minWidth: 114,
               sortable: true,
               scopedSlot: 'max_spread_attr',
               align: 'center'
@@ -179,7 +179,7 @@ export default {
             attr: {
               prop: 'attributes.adjust',
               label: this.$t('ADJUST'),
-              minWidth: 100,
+              minWidth: 80,
               sortable: true,
               scopedSlot: 'adjust_attr',
               align: 'center'
@@ -188,7 +188,7 @@ export default {
             attr: {
               prop: 'attributes.markup',
               label: this.$t('MARKUP'),
-              minWidth: 100,
+              minWidth: 87,
               sortable: true,
               align: 'center'
             }
@@ -196,7 +196,7 @@ export default {
             attr: {
               prop: 'attributes.aggregator',
               label: this.$t('AGGREGATOR'),
-              minWidth: 100,
+              minWidth: 118,
               sortable: true,
               scopedSlot: 'aggregator_attr',
               align: 'center'
@@ -205,7 +205,7 @@ export default {
             attr: {
               // prop: 'address',
               label: this.$t('OPERATION'),
-              minWidth: 100,
+              minWidth: 84,
               scopedSlot: 'handler',
               align: 'center'
             }
@@ -320,7 +320,7 @@ export default {
         }
       }
     },
-    update_quoteule_flag(){
+    update_quoteule_flag() {
       return this.$store.state.quoterule.update_quoteRule_flag;
     }
   },
@@ -329,7 +329,7 @@ export default {
       console.log('tradeRules_update_flag', v);
       if (v == true) {
         this.load_data();
-        this.$store.dispatch('update_quoteRule_table',false);
+        this.$store.dispatch('update_quoteRule_table', false);
       }
     }
   },
@@ -338,7 +338,7 @@ export default {
       this.$store.dispatch('show_add_quoteRule_table');
 
     },
-    edit_quote_rule(row){
+    edit_quote_rule(row) {
       var dict = {};
       dict.common = {
         source: row.source,
@@ -346,7 +346,7 @@ export default {
         std_symbol: row.std_symbol
       };
       dict.attributes = row.attributes;
-      this.$store.dispatch('update_quoteRule_dict',dict);
+      this.$store.dispatch('update_quoteRule_dict', dict);
       this.$store.dispatch('show_edit_quoteRule_table');
     },
     // add_quoteRule_submit() {

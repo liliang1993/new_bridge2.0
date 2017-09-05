@@ -159,6 +159,10 @@ a {
 #nprogress .bar {
   height: 4px;
 }
+.el-switch .el-switch__label,
+.el-switch .el-switch__label * {
+  font-size: 12px;
+}
 .el-popover {
   border: 1px solid #3a8dff;
 }
@@ -173,7 +177,6 @@ a {
 }
 .round_select .el-input__inner {
   width: 154px;
-  border-radius: 20px;
   border: 2px solid #e0eefa;
   padding-left: 20px;
 }

@@ -40,12 +40,13 @@
   float: right;
 }
 .head-nav .nav_menu ul li {
+  font-size: 14px;
+  color: #fff;
   height: 60px;
   line-height: 60px;
 }
 .head-nav .nav_menu .lang {
   float: right;
-  cursor: pointer;
   color: #fff;
 }
 .head-nav .nav_menu .role {
@@ -56,6 +57,9 @@
 }
 .head-nav .nav_menu .el-dropdown {
   color: #fff;
+}
+.head-nav .nav_menu .el-dropdown .el-dropdown-link {
+  cursor: pointer;
 }
 .head-nav .nav_menu em {
   font-style: normal;

@@ -25,19 +25,11 @@
               <a
                     href="javascript:void(0);"
                      @click = "onEditRemark(scope.row)"
-                  >{{scope.row.remark||'------------------'}}</a>
+                  >{{scope.row.remark||'-----------'}}</a>
           </template>
     </bel-table> 
 
-      <el-dialog :visible.sync="dialogTableVisible" :title="'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'" top='40%' class='copy_group_dialog'>   
-          <!-- <h2>{{'Copy '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' to new group'}}</h2>  -->
-          <!-- <form-data
-                ref='form-data'
-                :FieldList='copy_to_new_group.fields'
-                :DefaultValue='copy_to_new_group.default_value'
-                @onSubmit= "copyGroupSumbit"
-                >  
-          </form-data> -->
+      <el-dialog :visible.sync="dialogTableVisible" :title="$t('Copy')+' '+copyNewGroup_dict.source+'-'+copyNewGroup_dict.group+' '+$t('to new group')" top='40%' class='copy_group_dialog'>   
           <div class="form_item">
               <p>{{$t("Source")}}:</p>
                <el-select v-model='copyNewGroup_dict.source' class='w100'>
@@ -50,14 +42,14 @@
               </el-select>
           </div>
            <div class="form_item">
-              <p>{{$t("NewGroup")}}:</p>
+              <p>{{$t("New Group")}}:</p>
                <el-input v-model='copyNewGroup_dict.new_group'></el-input> 
           </div>
           <el-col :span='24' class='confirm_btn'>
               <el-button type="primary" @click='copyGroupSumbit'>{{$t('Confirm')}}</el-button>
           </el-col>
       </el-dialog>
-        <el-dialog :visible.sync="remarkDialogTableVisible" :title="'Edit '+remarkDialog_dict.group+' Remark'" top='40%' class='copy_group_dialog'>   
+        <el-dialog :visible.sync="remarkDialogTableVisible" :title="$t('Edit')+' '+remarkDialog_dict.group+' '+$t('Remark')" top='40%' class='copy_group_dialog'>   
           <div class="form_item">
               <p>{{$t("Remark")}}:</p>
                <el-input

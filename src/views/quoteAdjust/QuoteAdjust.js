@@ -50,7 +50,7 @@ export default {
               attr: {
                 prop: 'source',
                 label: this.$t('SOURCE'),
-                minWidth: 80,
+                minWidth: 82,
                 sortable: true,
                 align: 'center'
               }
@@ -58,7 +58,7 @@ export default {
               attr: {
                 prop: 'std_symbol',
                 label: this.$t('STD SYMBOL'),
-                minWidth: 120,
+                minWidth: 112,
                 sortable: true,
                 scopedSlot: 'std_symbol',
                 align: 'center'
@@ -67,7 +67,7 @@ export default {
               attr: {
                 prop: 'mt4_symbol',
                 label: this.$t('MT4 SYMBOL'),
-                minWidth: 120,
+                minWidth: 114,
                 sortable: true,
                 align: 'center'
               }
@@ -83,7 +83,7 @@ export default {
               attr: {
                 prop: 'bid',
                 label: this.$t('BID'),
-                minWidth: 80,
+                minWidth: 60,
                 sortable: true,
                 align: 'center',
                 className: 'positive'
@@ -92,7 +92,7 @@ export default {
               attr: {
                 prop: 'ask',
                 label: this.$t('ASK'),
-                minWidth: 80,
+                minWidth: 60,
                 sortable: true,
                 align: 'center',
                 className: 'negative'
@@ -109,7 +109,7 @@ export default {
               attr: {
                 prop: 'spread',
                 label: this.$t('SREPAD'),
-                minWidth: 100,
+                minWidth: 80,
                 sortable: true,
                 align: 'center'
               }
@@ -117,7 +117,7 @@ export default {
               attr: {
                 prop: 'attributes.adjust',
                 label: this.$t('ADJUST'),
-                minWidth: 100,
+                minWidth: 80,
                 sortable: true,
                 scopedSlot: 'adjust',
                 align: 'center'
@@ -126,7 +126,7 @@ export default {
               attr: {
                 prop: 'edit_adjust',
                 label: this.$t('EDIT ADJUST'),
-                minWidth: 130,
+                minWidth: 115,
                 sortable: true,
                 align: 'center',
                 scopedSlot: 'edit_adjust'
@@ -135,7 +135,7 @@ export default {
               attr: {
                 prop: 'rule',
                 label: this.$t('RULE'),
-                minWidth: 100,
+                minWidth: 65,
                 sortable: true,
                 align: 'center',
                 scopedSlot: 'rule_type'
@@ -154,7 +154,7 @@ export default {
               attr: {
                 prop: 'attributes.maximal_spread',
                 label: this.$t('MAX SPREAD'),
-                minWidth: 125,
+                minWidth: 114,
                 sortable: true,
                 align: 'center',
               }
@@ -162,7 +162,7 @@ export default {
               attr: {
                 prop: 'attributes.minimal_spread',
                 label: this.$t('MIN SPREAD'),
-                minWidth: 120,
+                minWidth: 110,
                 sortable: true,
                 align: 'center',
               }
@@ -188,7 +188,7 @@ export default {
               attr: {
                 prop: 'update_at',
                 label: this.$t('UPDATE AT'),
-                minWidth: 120,
+                minWidth: 105,
                 sortable: true,
                 align: 'center',
               }
@@ -196,7 +196,7 @@ export default {
               attr: {
                 prop: 'adjust_enabled',
                 label: this.$t('Adjust Enabled'),
-                minWidth: 130,
+                minWidth: 125,
                 sortable: true,
                 align: 'center',
                 scopedSlot: 'adjust_enabled'

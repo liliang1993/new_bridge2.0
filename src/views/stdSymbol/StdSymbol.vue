@@ -16,10 +16,10 @@
                     placement="top"
                     width="160"
                     v-model="scope.row.visible">
-                    <p>确定删除？</p>
+                    <p>{{$t('Sure Delete？')}}</p>
                     <div style="text-align: right; margin: 0">
-                      <el-button size="mini" type="text" @click="scope.row.visible=false">取消</el-button>
-                      <el-button type="primary" size="mini" @click="delete_symbol(scope.row,scope.$index)">确定</el-button>
+                      <el-button size="mini" type="text" @click="scope.row.visible=false">{{$t('Cancel')}}</el-button>
+                      <el-button type="primary" size="mini" @click="delete_symbol(scope.row,scope.$index)">{{$t('Apply')}}</el-button>
                     </div>
                   </el-popover>   
                   <i class="icon icon_delete" v-popover:popover{{$index}} v-if='!scope.row.editFlag' ></i>
@@ -62,7 +62,7 @@
         </bel-table> 
     </el-col>
 
-    <el-dialog title="Add LP Symbols" :visible.sync="addDialogTableVisible" top='40%'>
+    <el-dialog :title="$t('Add LP Symbols')" :visible.sync="addDialogTableVisible" top='40%'>
            <bel-table
           ref="table"    
           :configs="new_tableConfig"
@@ -122,7 +122,7 @@
           </el-col>    
       </el-dialog>
 
-      <el-dialog title="Edit LP Symbols" :visible.sync="editDialogTableVisible" top='40%'>
+      <el-dialog :title="$t('Edit LP Symbols')" :visible.sync="editDialogTableVisible" top='40%'>
            <bel-table
           ref="table"    
           :configs="edit_tableConfig"

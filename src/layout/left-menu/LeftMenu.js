@@ -46,10 +46,13 @@ export default {
     computed: {
         routesFilter: function() {
             var routesList = this.$router.options.routes;
-            console.log('router', this.$router.options.routes);
             var routers = routesList.filter(item => {
-                return item.direction == 'vertical';
-            });
+                //     if (this.$store.state.user.userinfo.role == 'RulesEditor') {
+                //         return (item.direction == 'vertical' && item.children[0].path != 'users' && item.children[0].path != 'aduit_log')
+                //     } else {
+                //         return item.direction == 'vertical';
+                //     }
+                // });
             console.log('routers', routers);
             return routers;
         }

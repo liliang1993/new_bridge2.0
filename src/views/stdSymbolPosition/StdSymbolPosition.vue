@@ -65,14 +65,14 @@
                     </div>
             </div>  
        </div>
-        <el-dialog class='edit_lpSymbol' title="Edit LP symbol" :visible.sync="editLpSymbolDialogTableVisible" top='30%'>
+        <el-dialog class='edit_lpSymbol' :title="$t('Edit LP Symbols')" :visible.sync="editLpSymbolDialogTableVisible" top='30%'>
             <el-row :gutter='20'>
                 <el-col :span='12'>
-                    <p>STD Symbol:</p>
+                    <p>{{$t('STD Symbol')}}:</p>
                     <el-input v-model='dialog.std_symbol'></el-input>  
                 </el-col>
                 <el-col :span='12'>
-                    <p>Quote Enable:</p>
+                    <p>{{$t('Quote Enable')}}:</p>
                      <el-select class='w100' v-model="dialog.quote_enable" placeholder="请选择">
                         <el-option
                           key="true"
@@ -87,11 +87,11 @@
                       </el-select>  
                 </el-col>
                 <el-col :span='12'>
-                    <label>LP:</label>
+                    <label>{{$t('LP')}}:</label>
                     <el-input v-model='dialog.lp'></el-input>  
                 </el-col>
                 <el-col :span='12'>
-                    <label>Trade Enable:</label>
+                    <label>{{$t('Trade Enable')}}:</label>
                     <el-select class='w100' v-model="dialog.trade_enable" placeholder="请选择">
                         <el-option
                           key="true"
@@ -106,15 +106,15 @@
                     </el-select>  
                 </el-col>
                 <el-col :span='12'>
-                    <label>LP Symbol:</label>
+                    <label>{{$t('LP Symbol')}}:</label>
                     <el-input v-model='dialog.lp_symbol'></el-input>  
                 </el-col>
                 <el-col :span='12'>
-                    <label>Weight:</label>
+                    <label>{{$t('Weight')}}:</label>
                     <el-input v-model='dialog.weight'></el-input>  
                 </el-col> 
                 <el-col :span='24' class='confirm_btn'>
-                    <el-button type="primary" @click='edit_lpSymbol_submit' >Confirm</el-button>
+                    <el-button type="primary" @click='edit_lpSymbol_submit' >{{$t('Confirm')}}</el-button>
                 </el-col>  
             </el-row>
         </el-table>
