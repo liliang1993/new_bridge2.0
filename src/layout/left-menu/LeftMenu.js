@@ -47,12 +47,14 @@ export default {
         routesFilter: function() {
             var routesList = this.$router.options.routes;
             var routers = routesList.filter(item => {
-                //     if (this.$store.state.user.userinfo.role == 'RulesEditor') {
-                //         return (item.direction == 'vertical' && item.children[0].path != 'users' && item.children[0].path != 'aduit_log')
-                //     } else {
-                //         return item.direction == 'vertical';
-                //     }
-                // });
+
+                    if (this.$store.state.user.userinfo.role == 'RulesEditor') {
+                        console.log('we',this.$store.state.user.userinfo.role,item);
+                        return (item.direction == 'vertical' && item.children[0].path != 'user' && item.children[0].path != 'audit_log')
+                    } else {
+                         return item.direction == 'vertical';   
+                    }
+                });
             console.log('routers', routers);
             return routers;
         }

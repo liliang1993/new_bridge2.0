@@ -30,7 +30,6 @@ export default TopTradersJs;
         right:8px;
       }
       .el-input__inner{
-        border-radius: 20px;
         width:210px;
         padding-right:25px; 
       }
@@ -40,13 +39,10 @@ export default TopTradersJs;
     display:inline-block;
     width:110px;
     .el-input__inner{
-      border-radius: 20px;
-      /*padding-left: 20px;*/
     }
   }
   .el-button{
     margin-left: 15px;
-    border-radius: 20px;
     padding-left:20px;
     padding-right:20px;
   }

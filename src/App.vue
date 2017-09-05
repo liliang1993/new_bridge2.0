@@ -19,10 +19,6 @@ import Vue from 'vue';
         methods:{
 			init(){
 
-                var CancelToken = Vue.axios.CancelToken;
-                var source = CancelToken.source();
-                console.log('thisll',this);
-                this.$store.dispatch('update_global_ajax_source',source);
             },
         },
         mounted(){

@@ -25,39 +25,11 @@
                   <i class="icon icon_delete" v-popover:popover{{$index}} v-if='!scope.row.editFlag' ></i>
                   
               </template>
-              <template slot="weight_attr" scope="scope">
-                  <span v-if='!scope.row.editFlag' >{{scope.row.weight}}</span>
-                  <el-input v-if='scope.row.editFlag' v-model='scope.row.weight'></el-input>  
-              </template>
-              <template slot="min_qty_attr" scope="scope">
-                  <span v-if='!scope.row.editFlag' >{{scope.row.min_qty}}</span>
-                  <el-input v-if='scope.row.editFlag' v-model='scope.row.min_qty'></el-input>  
-              </template>
-               <template slot="contract_size_attr" scope="scope">
-                  <span v-if='!scope.row.editFlag' >{{scope.row.contract_size}}</span>
-                  <el-input v-if='scope.row.editFlag' v-model='scope.row.contract_size'></el-input>  
-              </template>
               <template slot="quote_attr" scope="scope">
-                  <span v-if='!scope.row.editFlag' :style="scope.row.quote_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.quote_enable == "true" ? 'O' : 'X'}}</span>
-                  <el-switch
-                    v-if='scope.row.editFlag'
-                    v-model="scope.row.quote_enable"
-                    on-color="#13ce66"
-                    off-color="#ff4949"
-                    on-value="true"
-                    off-value="false">
-                  </el-switch>
+                  <span :style="scope.row.quote_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.quote_enable == "true" ? 'O' : 'X'}}</span>
               </template>
               <template slot="trade_attr" scope="scope">
-                  <span v-if='!scope.row.editFlag' :style="scope.row.trade_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.trade_enable == "true" ? 'O' : 'X'}}</span>
-                  <el-switch
-                    v-if='scope.row.editFlag'
-                    v-model="scope.row.trade_enable"
-                    on-color="#13ce66"
-                    off-color="#ff4949"
-                    on-value='true'
-                    off-value='false'>
-                  </el-switch>
+                  <span  :style="scope.row.trade_enable== 'true' ? 'color:green;' : 'color:red;' ">{{scope.row.trade_enable == "true" ? 'O' : 'X'}}</span>
               </template>
         </bel-table> 
     </el-col>
@@ -96,6 +68,10 @@
               </template>
               <template slot="contract_size" scope="scope">
                 <el-input v-model='scope.row.contract_size'>
+                </el-input> 
+              </template>
+                 <template slot="markup" scope="scope">
+                <el-input v-model='scope.row.markup'>
                 </el-input> 
               </template>
               <template slot="quote_enable" scope="scope">
@@ -156,6 +132,10 @@
               </template>
               <template slot="contract_size" scope="scope">
                 <el-input v-model='scope.row.contract_size'>
+                </el-input> 
+              </template>
+               <template slot="markup" scope="scope">
+                <el-input v-model='scope.row.markup'>
                 </el-input> 
               </template>
               <template slot="quote_enable" scope="scope">

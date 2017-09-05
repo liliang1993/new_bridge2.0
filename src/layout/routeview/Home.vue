@@ -251,7 +251,7 @@
 </script>
 <style scoped lang='less'>
     .content{
-        margin-top: 100px;
+        margin-top: 60px;
         background-color: #f5f5f5;
         padding: 0 16px;
     }
